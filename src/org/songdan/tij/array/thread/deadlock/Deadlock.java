@@ -1,4 +1,4 @@
-package org.songdan.tij.array.thread;
+package org.songdan.tij.array.thread.deadlock;
 
 public class Deadlock extends Object {
 
