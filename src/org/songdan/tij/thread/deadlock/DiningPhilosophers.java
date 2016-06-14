@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
+ * 非死锁版本的哲学家进餐问题
  * Created by PC on 2016/5/21.
  */
 public class DiningPhilosophers {
