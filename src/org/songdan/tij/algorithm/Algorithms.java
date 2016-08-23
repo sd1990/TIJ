@@ -1,6 +1,9 @@
 package org.songdan.tij.algorithm;
 
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 算法集合
@@ -115,6 +118,148 @@ public class Algorithms {
             System.out.println("time : "+(System.nanoTime()-startTime));
             System.out.println(toString(arr));
         }
+    }
+
+    /**
+     * 字符串算法
+     */
+    static class StringAlgorithms{
+
+        /**
+         * 字符串反转
+         */
+       public static String reverse(String target) {
+//           StringBuilder builder = new StringBuilder(target);
+           StringBuilder builder = new StringBuilder();
+           String[] strs = target.split("\\s+");
+           for (int i = 0; i < strs.length; i++) {
+               builder.append(strs[strs.length - i - 1]).append(" ");
+           }
+           return builder.toString().trim();
+       }
+
+        /**
+         * 字符串反转，完整的反转，利用栈结构
+          * @param target
+         * @return
+         */
+       public static String reverse2(String target) {
+           boolean isBlank = false;
+           StringBuilder build = new StringBuilder();
+           char[] chars = target.toCharArray();
+           LinkedList<String> list = new LinkedList<>();
+           for (int i = 0; i < chars.length; i++) {
+
+               char ch = chars[i];
+               if(" ".equals(String.valueOf(ch))){
+                   if(!isBlank) {
+                       list.add(build.toString());
+                       build = new StringBuilder();
+                   }
+                   isBlank = true;
+               }else {
+                   if (isBlank) {
+                       list.add(build.toString());
+                       build = new StringBuilder();
+                   }
+                   isBlank = false;
+               }
+               build.append(ch);
+           }
+           list.add(build.toString());
+           String str = null;
+           StringBuilder builder = new StringBuilder();
+           while ((str=list.pollLast())!=null) {
+               builder.append(str);
+           }
+           return builder.toString();
+       }
+
+    }
+
+    /**
+     * 缓存算法
+     */
+    static class CacheAlgorithms{
+
+        /**
+         * LRU算法，最近最少被使用算法，移除时间最久远的元素
+         */
+        static class LRUCache<K,V>{
+
+            private LinkedList<K> list = new LinkedList<>();
+
+            private Map<K, V> cache = new ConcurrentHashMap<>();
+            private int size;
+
+            public LRUCache(int size) {
+                this.size = size;
+            }
+
+            public V get(K key) {
+                if (!cache.containsKey(key)) {
+                    return null;
+                }
+                useLRUKey(key);
+                return cache.get(key);
+            }
+
+            public void put(K key, V value) {
+                V v = cache.get(key);
+                if (v!=null) {
+                    cache.replace(key,v,value);
+                } else {
+                    if (isFull()) {
+                        cache.remove(getLRUKey());
+                    }
+                    cache.putIfAbsent(key, value);
+                }
+                useLRUKey(key);
+            }
+
+            private K getLRUKey() {
+                return list.removeLast();
+            }
+
+            private boolean isFull() {
+                return cache.size() >= size;
+            }
+
+            /**
+             * 使用LRUkey
+             * @param key
+             */
+            private synchronized void useLRUKey(K key) {
+                //将这个key对应的元素移动到链表的头部
+                list.remove(key);
+                list.addFirst(key);
+            }
+
+            @Override
+            public String toString() {
+                StringBuilder stringBuilder = new StringBuilder();
+                for (K key:list) {
+                    stringBuilder.append(key + ":" + cache.get(key)).append(" ");
+                }
+                return stringBuilder.toString();
+            }
+        }
+
+    }
+
+    public static void main(String[] args) {
+        String reverse = StringAlgorithms.reverse("i   am  songdan");
+        System.out.println(reverse);
+        String reverse2 = StringAlgorithms.reverse2("i   am  songdan");
+        System.out.println(reverse2);
+        CacheAlgorithms.LRUCache<String, Integer> cache = new CacheAlgorithms.LRUCache<>(3);
+        cache.put("2",1);
+        cache.put("1",1);
+        cache.put("2",1);
+        cache.put("1",1);
+        cache.put("4",1);
+        cache.put("3",1);
+        System.out.println(cache);
     }
 
 }
