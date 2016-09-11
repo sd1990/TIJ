@@ -1,4 +1,4 @@
-package org.songdan.tij.thread;
+package org.songdan.tij.thread.productAndConsumer;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

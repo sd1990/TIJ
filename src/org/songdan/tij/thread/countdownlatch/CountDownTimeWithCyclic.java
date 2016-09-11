@@ -1,4 +1,4 @@
-package org.songdan.tij.thread;
+package org.songdan.tij.thread.countdownlatch;
 
 import java.util.ArrayList;
 import java.util.List;

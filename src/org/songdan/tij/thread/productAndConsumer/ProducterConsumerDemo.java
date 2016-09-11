@@ -1,4 +1,4 @@
-package org.songdan.tij.thread;
+package org.songdan.tij.thread.productAndConsumer;
 
 /*
  * 线程模拟生产者与消费者 要求：生产一个消费一个

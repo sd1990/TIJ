@@ -1,4 +1,4 @@
-package org.songdan.tij.thread;
+package org.songdan.tij.thread.lockdemo;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author Songdan
  * @date 2016/6/3
  */
-public class ConcurrentLinkedList {
+public class ConcurrentLinkedSortList {
 
     private class Node{
         private int value;
@@ -30,7 +30,7 @@ public class ConcurrentLinkedList {
 
     private Node tail;
 
-    public ConcurrentLinkedList() {
+    public ConcurrentLinkedSortList() {
         head = new Node();
         tail = new Node();
         head.next = tail;

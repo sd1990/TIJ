@@ -1,4 +1,4 @@
-package org.songdan.tij.thread;
+package org.songdan.tij.thread.cooperation;
 
 import java.util.Timer;
 import java.util.TimerTask;

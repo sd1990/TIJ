@@ -1,6 +1,6 @@
 package org.songdan.tij.thread.evenchecker;
 
-import org.songdan.tij.thread.CountDownTime;
+import org.songdan.tij.thread.countdownlatch.CountDownTime;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

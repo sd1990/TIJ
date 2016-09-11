@@ -20,8 +20,8 @@ public class SubSychronize extends SuperSynchronize {
     }
 
     public static void main(String[] args) {
-        SuperSynchronize superSynchronize = new SuperSynchronize();
-        SuperSynchronize father = new SubSychronize(superSynchronize);
+        final SuperSynchronize superSynchronize = new SuperSynchronize();
+        final SuperSynchronize father = new SubSychronize(superSynchronize);
         new Thread(new Runnable() {
             @Override
             public void run() {

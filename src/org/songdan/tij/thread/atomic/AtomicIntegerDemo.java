@@ -1,6 +1,6 @@
 package org.songdan.tij.thread.atomic;
 
-import org.songdan.tij.thread.ExecutorsUtil;
+import org.songdan.tij.thread.executors.ExecutorsUtil;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;

@@ -1,4 +1,4 @@
-package org.songdan.tij.thread;
+package org.songdan.tij.thread.productAndConsumer;
 
 import org.songdan.tij.random.RandomUtil;
 
