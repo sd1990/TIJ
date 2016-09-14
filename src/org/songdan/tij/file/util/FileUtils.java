@@ -1,6 +1,5 @@
-package org.songdan.tij.file.util;
+package com.vpiaotong.file.util;
 
-import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
@@ -12,7 +11,7 @@ import java.util.List;
 
 /**
  * 文件工具类
- * 
+ *
  * @author Songdan
  * @date 2016/9/14 9:49
  */
@@ -35,7 +34,7 @@ public final class FileUtils {
 
     /**
      * 复制文件
-     * 
+     *
      * @param sourceFile
      * @param targetFile
      */
@@ -85,14 +84,24 @@ public final class FileUtils {
             }
         }
         finally {
-            IOUtils.closeQuietly(output);
-            IOUtils.closeQuietly(fos);
-            IOUtils.closeQuietly(input);
-            IOUtils.closeQuietly(fis);
+            closeQuietly(output);
+            closeQuietly(fos);
+            closeQuietly(input);
+            closeQuietly(fis);
         }
 
         if (sourceFile.length() != targetFile.length()) {
             throw new IOException("Failed to copy full contents from '" + sourceFile + "' to '" + targetFile + "'");
+        }
+    }
+
+    public static void closeQuietly(Closeable closeable) {
+        try {
+            if (closeable != null) {
+                closeable.close();
+            }
+        } catch (IOException ioe) {
+            // ignore
         }
     }
 
@@ -160,7 +169,7 @@ public final class FileUtils {
      * 获取sourceDir中与targetDir中有差别的文件
      * @param sourceDir
      * @param targetDir
-     * @throws java.io.IOException
+     * @throws IOException
      */
     public static void getDifferent(String sourceDir, String targetDir) throws IOException {
         File sourceDirectory = new File(sourceDir);
@@ -227,7 +236,7 @@ public final class FileUtils {
      * @param sourceDir
      * @param targetDir
      * @return 移除的文件集合
-     * @throws java.io.IOException
+     * @throws IOException
      */
     public static List<File> compare4Remove(String sourceDir, String targetDir) throws IOException {
         List<File> fileList = new ArrayList<>();
