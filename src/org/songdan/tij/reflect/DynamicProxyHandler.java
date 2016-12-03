@@ -15,13 +15,18 @@ public class DynamicProxyHandler implements InvocationHandler{
     
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println(proxy);
-        return null;
+        System.out.println(method.getName());
+        return method.invoke(proxied,args);
     }
 
     public static void main(String[] args) {
-        Interface proxy = 
-                (Interface)Proxy.newProxyInstance(DynamicProxyHandler.class.getClassLoader(), new Class[]{Interface.class}, new DynamicProxyHandler(new RealObject()));
+        System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
+        RealObject realObject = new RealObject();
+        System.out.println(realObject.hashCode());
+        Interface proxy =
+                (Interface)Proxy.newProxyInstance(realObject.getClass().getClassLoader(), realObject.getClass().getInterfaces(), new DynamicProxyHandler(realObject));
+        System.out.println(proxy.hashCode());
         proxy.dosomething();
+        proxy.somethingElse("");
     }
 }
