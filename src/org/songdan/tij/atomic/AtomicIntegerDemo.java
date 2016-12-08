@@ -18,6 +18,7 @@ public class AtomicIntegerDemo {
         System.out.println("class loader is :"+this.getClass().getClassLoader());
     }
     public static void main(String[] args) {
+        new AtomicIntegerDemo();
         AtomicInteger ai= new AtomicInteger(0);
         get(ai);
         ai.set(10);
@@ -27,7 +28,7 @@ public class AtomicIntegerDemo {
         ai.incrementAndGet();
         get(ai);
     }
-    public static void get(AtomicInteger ai){
+    public static void get(AtomicInteger ai) {
         System.out.println(ai.get());
     }
 }
