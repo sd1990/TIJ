@@ -42,7 +42,7 @@ public class NumberRange {
         NumberRange numberRange = new NumberRange();
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         Random random = new Random();
-        executorService.submit(() -> {
+        /*executorService.submit(() -> {
             while (numberRange.isOK()) {
                 try {
                     TimeUnit.MILLISECONDS.sleep(100);
@@ -61,7 +61,7 @@ public class NumberRange {
                 }
                 numberRange.setUpper(4);
             }
-        });
+        });*/
         TimeUnit.SECONDS.sleep(10);
         System.out.println(numberRange.lower.get());
         System.out.println(numberRange.upper.get());

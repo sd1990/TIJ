@@ -2,9 +2,6 @@ package org.songdan.tij.thread.observers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * 订阅的主题
@@ -47,11 +44,11 @@ public class ObservableSet<E> {
     }
 
     public static void main(String[] args) {
-        ObservableSet<String> observableSet = new ObservableSet<>();
+        /*ObservableSet<String> observableSet = new ObservableSet<>();
         observableSet.add((observableSet1, str) -> {
             System.out.println(str);
         });
-        observableSet.updateTopic("hello observe");
+        observableSet.updateTopic("hello observe");*/
 
         /*
         这个问题跟同步没有关系，因为synchronized锁是对单个线程来说是可重入的，此问题展示的是在遍历过程中，移除列表中的元素，导致ConcurrentModificationException
@@ -66,7 +63,7 @@ public class ObservableSet<E> {
         /*
         此问题展示的线程饥饿死锁，主线程持有锁并等待第二个线程完成，而第二个线程获取不到锁（因为锁被第一个线程持有，必须等到第一个线程执行完毕才能获取锁）
          */
-        observableSet.add(new ObserveSet<String>() {
+        /*observableSet.add(new ObserveSet<String>() {
 
             @Override
             public void added(ObservableSet<String> observableSet, String s) {
@@ -86,6 +83,6 @@ public class ObservableSet<E> {
                 executorService.shutdown();
             }
         });
-        observableSet.updateTopic("hello deadlock");
+        observableSet.updateTopic("hello deadlock");*/
     }
 }

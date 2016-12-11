@@ -1,15 +1,5 @@
 package org.songdan.tij.thread;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
 /**
  * @author Songdan
  * @date 2016/9/12 12:56
@@ -18,7 +8,7 @@ public class DateFormatMultiThreadEnv {
 
     public static void main(String[] args) throws Exception {
 
-        final DateFormat format = new SimpleDateFormat("yyyyMMdd");
+       /* final DateFormat format = new SimpleDateFormat("yyyyMMdd");
 
         Callable<Date> task = () -> format.parse("20101022");
 
@@ -35,6 +25,6 @@ public class DateFormatMultiThreadEnv {
         //look at the results
         for(Future<Date> result : results){
             System.out.println(result.get());
-        }
+        }*/
     }
 }

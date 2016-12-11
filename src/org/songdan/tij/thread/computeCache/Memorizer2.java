@@ -11,7 +11,7 @@ public class Memorizer2<A,V> implements Computable<A,V> {
 
     private Computable<A,V> target;
 
-    private Map<A, V> map = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<A, V> map = new ConcurrentHashMap<>();
 
     public Memorizer2(Computable<A,V> target) {
         this.target = target;
