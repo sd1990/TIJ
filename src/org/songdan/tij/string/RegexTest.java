@@ -1,5 +1,7 @@
 package org.songdan.tij.string;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,5 +77,28 @@ public class RegexTest {
         String num = "10000100";
         String reg = "([0]+)$";
         System.out.println(num.replaceAll(reg,""));
+    }
+
+    @Test
+    public void testFileSuffiex() {
+//        Pattern pattern = Pattern.compile("(.+)(?=\\.[^.]+)");
+        Pattern pattern = Pattern.compile("([^（）.]+)（?([^（）]+)）(\\..+)");
+//        Pattern pattern = Pattern.compile("([^（）]+)");
+        Matcher matcher = pattern.matcher("温柔（五月天）.mp3");
+//        Matcher matcher = pattern.matcher("温柔.mp3");
+//        System.out.println(matcher.groupCount());
+//        System.out.println(matcher.end());
+        while (matcher.find()) {
+            System.out.println(matcher.group());
+            System.out.println(matcher.group(0));
+            System.out.println(matcher.group(1));
+            System.out.println(matcher.group(2));
+            System.out.println(matcher.group(3));
+        }
+    }
+
+    @Test
+    public void testDemo() {
+        System.out.println("hell reg");
     }
 }
