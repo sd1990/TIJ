@@ -5,6 +5,7 @@ import java.util.EmptyStackException;
 
 /**
  * 不带泛型的Stack
+ *
  * @author Songdan
  * @date 2016/4/26
  */
@@ -20,7 +21,6 @@ public class StackNoGeneric {
         elements = new Object[DEFAULT_INITAL_CAPACITY];
     }
 
-
     public void push(Object o) {
         /*
         确保数组大小
@@ -30,13 +30,13 @@ public class StackNoGeneric {
     }
 
     private void ensureCapacity() {
-        if (elements.length==size) {
+        if (elements.length == size) {
             Arrays.copyOf(elements, 2 * size + 1);
         }
     }
 
     public Object pop() {
-        if (size==0) {
+        if (size == 0) {
             throw new EmptyStackException();
         }
         Object o = elements[--size];
@@ -47,6 +47,5 @@ public class StackNoGeneric {
     public boolean isEmpty() {
         return size == 0;
     }
-
 
 }

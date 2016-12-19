@@ -7,17 +7,18 @@ import java.util.Set;
 
 /**
  * 自定义hashMap
- * @author SONGDAN
- * @param <K>
  *
+ * @param <K>
+ * @author SONGDAN
  */
-public class MyHashMap<K,V> extends HashMap<K,V>{
-    
+public class MyHashMap<K, V> extends HashMap<K, V> {
+
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
-    private Map<K,V> map;
+
+    private Map<K, V> map;
 
     public MyHashMap(Map<K, V> treeMap) {
         super();
@@ -69,7 +70,6 @@ public class MyHashMap<K,V> extends HashMap<K,V>{
         return map.containsValue(value);
     }
 
-
     @Override
     public Set<K> keySet() {
         return map.keySet();
@@ -84,5 +84,5 @@ public class MyHashMap<K,V> extends HashMap<K,V>{
     public Set<Map.Entry<K, V>> entrySet() {
         return map.entrySet();
     }
-    
+
 }

@@ -7,21 +7,24 @@ import java.util.Properties;
 
 /**
  * 属性文件管理器，可以动态的管理.properties文件的属性
+ *
  * @author SONGDAN
  */
 public final class PropertiesManager {
+
     private static Map<String, PropertiesManager> map = new HashMap<>();
-    
+
     private File m_file = null;
-    
+
     private long m_lastModifiedTime = 0;
-    
+
     private Properties m_props = null;
-    
+
     /**
      * 获取配置文件中的属性
-     * @param fileName 配置文件名称
-     * @param name 属性名称
+     *
+     * @param fileName   配置文件名称
+     * @param name       属性名称
      * @param defaultVal 默认值
      * @return
      */
@@ -37,13 +40,14 @@ public final class PropertiesManager {
 
     /**
      * 私有化构造方法
+     *
      * @param fileName
      */
     private PropertiesManager(String fileName) {
         String path = this.getClass().getClassLoader().getResource("").getPath();
         m_file = new File(path + fileName);
         try {
-            InputStreamReader in = new InputStreamReader(new FileInputStream(m_file),"utf-8");
+            InputStreamReader in = new InputStreamReader(new FileInputStream(m_file), "utf-8");
             m_props = new Properties();
             m_props.load(in);
         }
@@ -54,9 +58,10 @@ public final class PropertiesManager {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * 获取properties的方法
+     *
      * @param fileName
      * @return
      */
@@ -83,7 +88,7 @@ public final class PropertiesManager {
         else if (newTime > m_lastModifiedTime) {
             m_props.clear();
             try {
-                m_props.load(new InputStreamReader(new FileInputStream(m_file),"utf-8"));
+                m_props.load(new InputStreamReader(new FileInputStream(m_file), "utf-8"));
             }
             catch (Exception e) {
                 e.printStackTrace();

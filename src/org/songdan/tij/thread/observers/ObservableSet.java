@@ -13,6 +13,7 @@ public class ObservableSet<E> {
 
     /**
      * 添加订阅者
+     *
      * @param observeSet 订阅者
      */
     public void add(ObserveSet<E> observeSet) {
@@ -23,6 +24,7 @@ public class ObservableSet<E> {
 
     /**
      * 移除订阅者
+     *
      * @param observeSet 需要被移除的订阅者
      */
     public void remove(ObserveSet<E> observeSet) {

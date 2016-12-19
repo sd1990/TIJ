@@ -30,31 +30,29 @@ public class ListDemo {
             list.add(p);
         }
         System.out.println(list);*/
-        
-        ArrayList<String> list = new ArrayList<>(Arrays.asList("aaa","abc","bbb","aaa","fds"));
+
+        ArrayList<String> list = new ArrayList<>(Arrays.asList("aaa", "abc", "bbb", "aaa", "fds"));
         List<String> copyList = new ArrayList<>(list);
         for (String string : copyList) {
             System.out.println(copyList.size());
-            if("aaa".equalsIgnoreCase(string)||"bbb".equalsIgnoreCase(string)){
+            if ("aaa".equalsIgnoreCase(string) || "bbb".equalsIgnoreCase(string)) {
                 list.remove(string);
                 string = null;
             }
-            
+
         }
         System.out.println(list);
-//        System.out.println(remove(list));
+        //        System.out.println(remove(list));
     }
-    
-    
-    
-    public static ArrayList<String> remove(ArrayList<String> list){
-        if(list==null || list.size()==0){
+
+    public static ArrayList<String> remove(ArrayList<String> list) {
+        if (list == null || list.size() == 0) {
             return list;
         }
         Iterator<String> iterator = list.iterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             String ele = iterator.next();
-            if("aaa".equalsIgnoreCase(ele)||"bbb".equalsIgnoreCase(ele)){
+            if ("aaa".equalsIgnoreCase(ele) || "bbb".equalsIgnoreCase(ele)) {
                 iterator.remove();
             }
         }

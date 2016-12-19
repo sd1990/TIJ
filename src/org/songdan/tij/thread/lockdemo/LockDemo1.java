@@ -11,26 +11,26 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class LockDemo1 {
 
-    static class InterrupedWait{
+    static class InterrupedWait {
 
         private static Lock lock = new ReentrantLock();
 
         public static void lock() {
             boolean b = lock.tryLock();
-            System.out.println(Thread.currentThread()+"after try lock");
-            if (b) {
-                lock.unlock();
-            }
-        }
-        public static void lockInterrupted() throws InterruptedException {
-            boolean b = lock.tryLock(2,TimeUnit.SECONDS);
-            System.out.println(Thread.currentThread()+"after try lock,result :"+b);
-            TimeUnit.SECONDS.sleep(3);
+            System.out.println(Thread.currentThread() + "after try lock");
             if (b) {
                 lock.unlock();
             }
         }
 
+        public static void lockInterrupted() throws InterruptedException {
+            boolean b = lock.tryLock(2, TimeUnit.SECONDS);
+            System.out.println(Thread.currentThread() + "after try lock,result :" + b);
+            TimeUnit.SECONDS.sleep(3);
+            if (b) {
+                lock.unlock();
+            }
+        }
 
     }
 

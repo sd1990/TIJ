@@ -3,7 +3,7 @@ package org.songdan.tij.inherit;
 /**
  * Created by PC on 2016/6/12.
  */
-public class Child extends Father{
+public class Child extends Father {
 
     protected String value = "456";
 
@@ -24,7 +24,7 @@ public class Child extends Father{
     }
 }
 
-class Father{
+class Father {
 
     protected String value = "123";
 

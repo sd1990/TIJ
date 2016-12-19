@@ -97,8 +97,8 @@ public class Algorithms {
                 if (i == arr.length - 1) {
                     builder.append(arr[i]);
                 } else {
-                    builder.append(arr[i]).append(",");
-                }
+                    builder.append(arr[i]);
+            }
             }
             return builder.toString();
         }

@@ -21,10 +21,12 @@ public class DataBaseRow {
         return column.getType().cast(map.get(column.getType()));
     }
 
-    private abstract static class Column<T>{
+    private abstract static class Column<T> {
+
         private Class<T> type;
-        Column(){
-            ParameterizedType parameterizedType = (ParameterizedType)this.getClass().getGenericSuperclass();
+
+        Column() {
+            ParameterizedType parameterizedType = (ParameterizedType) this.getClass().getGenericSuperclass();
             Type type1 = parameterizedType.getActualTypeArguments()[0];
             type = (Class<T>) type1;
         }
@@ -35,16 +37,14 @@ public class DataBaseRow {
     }
 
     private static class StringColumn extends Column<String> {
-    }
-//    private static class IntegerColumn<T> extends Column<T> {
-//    }
 
+    }
     public static void main(String[] args) {
-//        Column<String> c = new IntegerColumn<>();
+        //        Column<String> c = new IntegerColumn<>();
         Column<String> c = new StringColumn();
         DataBaseRow dataBaseRow = new DataBaseRow();
-        dataBaseRow.set(c,"Hello world");
-        dataBaseRow.set(c,"明天会更好！");
+        dataBaseRow.set(c, "Hello world");
+        dataBaseRow.set(c, "明天会更好！");
         System.out.println(dataBaseRow.get(c));
     }
 

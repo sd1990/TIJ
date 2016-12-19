@@ -1,6 +1,5 @@
 package org.songdan.tij.generics.coffee;
 
-
-public class Mocha extends Coffee{
+public class Mocha extends Coffee {
 
 }

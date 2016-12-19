@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
+ * 哲学家进餐问题死锁版
  * Created by PC on 2016/5/21.
  */
 public class DeadLockingDiningPhilosophers {
@@ -15,7 +16,7 @@ public class DeadLockingDiningPhilosophers {
             chopsticks[i] = new Chopstick();
         }
         for (int i = 0; i < 5; i++) {
-            executorService.execute(new Philosopher(chopsticks[i],chopsticks[(i+1)%5],i+1));
+            executorService.execute(new Philosopher(chopsticks[i], chopsticks[(i + 1) % 5], i + 1));
         }
     }
 }

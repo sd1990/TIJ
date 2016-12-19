@@ -21,9 +21,9 @@ public class DirList {
 /**
  * 创建一个类实现FilenameFilter,策略模式的体现
  */
-class DirFilter implements FilenameFilter{
+class DirFilter implements FilenameFilter {
 
-    private Pattern pattern ;
+    private Pattern pattern;
 
     public DirFilter(String regex) {
         this.pattern = Pattern.compile(regex);

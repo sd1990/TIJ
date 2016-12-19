@@ -4,6 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 线程池工具类
+ *
  * @author Songdan
  * @date 2016/6/3
  */

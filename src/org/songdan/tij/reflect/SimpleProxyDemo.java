@@ -1,12 +1,13 @@
 package org.songdan.tij.reflect;
 
-interface Interface{
+interface Interface {
+
     public void dosomething();
-    
+
     public void somethingElse(String args);
 }
 
-class RealObject implements Interface{
+class RealObject implements Interface {
 
     @Override
     public void dosomething() {
@@ -15,27 +16,28 @@ class RealObject implements Interface{
 
     @Override
     public void somethingElse(String args) {
-        System.out.println("do something else:"+args);
+        System.out.println("do something else:" + args);
     }
-    
+
 }
 
-class SimpleProxy implements Interface{
+class SimpleProxy implements Interface {
 
     private Interface proxied;
-    
+
     private int doSomethingTimes;
 
     private int doSomethingElseTimes;
-    
+
     public SimpleProxy() {
     }
-    
-    SimpleProxy(Interface realObject){
-        proxied=realObject;
-        doSomethingTimes=0;
-        doSomethingElseTimes=0;
+
+    SimpleProxy(Interface realObject) {
+        proxied = realObject;
+        doSomethingTimes = 0;
+        doSomethingElseTimes = 0;
     }
+
     @Override
     public void dosomething() {
         doSomethingTimes++;
@@ -49,16 +51,16 @@ class SimpleProxy implements Interface{
         System.out.println(doSomethingElseTimes);
         proxied.dosomething();
     }
-    
-    
-    
+
 }
 
-public class SimpleProxyDemo{
-    public static void consumer(Interface inter){
+public class SimpleProxyDemo {
+
+    public static void consumer(Interface inter) {
         inter.dosomething();
         inter.somethingElse("tim dunc");
     }
+
     public static void main(String[] args) {
         consumer(new RealObject());
         consumer(new SimpleProxy(new RealObject()));

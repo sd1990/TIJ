@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 另外一种方式实现哲学家进餐问题
  * Created by PC on 2016/6/14.
  */
-public class Philosopher2 implements Runnable{
+public class Philosopher2 implements Runnable {
 
     private ReentrantLock table;
 
@@ -24,7 +24,7 @@ public class Philosopher2 implements Runnable{
 
     private int i;
 
-    public Philosopher2(ReentrantLock table,int i) {
+    public Philosopher2(ReentrantLock table, int i) {
         this.table = table;
         condition = table.newCondition();
         this.i = i;
@@ -42,10 +42,11 @@ public class Philosopher2 implements Runnable{
         table.lock();
         try {
             eating = false;
-            System.out.println("哲学家"+i+"思考问题。。。");
+            System.out.println("哲学家" + i + "思考问题。。。");
             left.condition.signal();
             right.condition.signal();
-        }finally {
+        }
+        finally {
             table.unlock();
         }
         Thread.sleep(500);
@@ -53,19 +54,21 @@ public class Philosopher2 implements Runnable{
 
     /**
      * 如果左边或右边的哲学家正在进餐，等待
+     *
      * @throws InterruptedException
      */
     public void eat() throws InterruptedException {
-        System.out.println("哲学家"+i+"准备进餐。。。");
+        System.out.println("哲学家" + i + "准备进餐。。。");
         table.lock();
         try {
             while (right.eating || left.eating) {
-                System.out.println("哲学家"+i+"不能进餐，需要等待。。。");
+                System.out.println("哲学家" + i + "不能进餐，需要等待。。。");
                 condition.await();
             }
-            System.out.println("哲学家"+i+"进餐中。。。");
+            System.out.println("哲学家" + i + "进餐中。。。");
             this.eating = true;
-        }finally {
+        }
+        finally {
             table.unlock();
         }
         Thread.sleep(500);
@@ -88,11 +91,11 @@ public class Philosopher2 implements Runnable{
         ReentrantLock table = new ReentrantLock();
         Philosopher2[] philosopher2s = new Philosopher2[5];
         for (int i = 0; i < 5; i++) {
-            philosopher2s[i] = new Philosopher2(table,i+1);
+            philosopher2s[i] = new Philosopher2(table, i + 1);
         }
         for (int i = 0; i < philosopher2s.length; i++) {
             Philosopher2 philosopher = philosopher2s[i];
-            philosopher.setLeft(philosopher2s[(i+4)%philosopher2s.length]);
+            philosopher.setLeft(philosopher2s[(i + 4) % philosopher2s.length]);
             philosopher.setRight(philosopher2s[(i + 1) % philosopher2s.length]);
         }
         ExecutorService executorService = Executors.newFixedThreadPool(5);

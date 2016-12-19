@@ -5,12 +5,12 @@ import org.songdan.tij.generics.Generator;
 import java.util.Iterator;
 import java.util.Random;
 
-public class StoryGenerator implements Generator<StoryCharacters>,Iterable<StoryCharacters>{
+public class StoryGenerator implements Generator<StoryCharacters>, Iterable<StoryCharacters> {
 
-    private int size=0;
-    
-    private Class[] types={GoodGuys.class,BadGuys.class};
-    
+    private int size = 0;
+
+    private Class[] types = { GoodGuys.class, BadGuys.class };
+
     @Override
     public StoryCharacters next() {
         try {
@@ -24,13 +24,13 @@ public class StoryGenerator implements Generator<StoryCharacters>,Iterable<Story
         }
     }
 
-    class StoryIterator implements Iterator<StoryCharacters>{
+    class StoryIterator implements Iterator<StoryCharacters> {
 
-        private int count=size;
-        
+        private int count = size;
+
         @Override
         public boolean hasNext() {
-            return count>0;
+            return count > 0;
         }
 
         @Override
@@ -43,14 +43,12 @@ public class StoryGenerator implements Generator<StoryCharacters>,Iterable<Story
         public void remove() {
             throw new UnsupportedOperationException();
         }
-        
+
     }
-    
+
     @Override
     public Iterator<StoryCharacters> iterator() {
         return new StoryIterator();
     }
 
-    
-    
 }

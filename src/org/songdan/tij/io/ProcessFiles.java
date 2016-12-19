@@ -17,17 +17,18 @@ public class ProcessFiles {
     /**
      * 处理文件的策略接口
      */
-    public interface Strategy{
+    public interface Strategy {
 
         void process(File file);
     }
 
     public void start(String path) {
         File targetFile = new File(path);
-        if (targetFile.isFile()){
+        if (targetFile.isFile()) {
             //处理文件
             strategy.process(targetFile);
-        }else {
+        }
+        else {
             processDirectoryTree(targetFile);
         }
     }
@@ -37,6 +38,5 @@ public class ProcessFiles {
             strategy.process(file);
         }
     }
-
 
 }

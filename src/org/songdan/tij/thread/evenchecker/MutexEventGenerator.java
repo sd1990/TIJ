@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 通过Lock来同步生成偶数
  * Created by PC on 2016/5/14.
  */
-public class MutexEventGenerator extends IntGenerator{
+public class MutexEventGenerator extends IntGenerator {
 
     /**
      * 使用可重入的Lock锁
@@ -19,11 +19,12 @@ public class MutexEventGenerator extends IntGenerator{
     @Override
     public int next() {
         lock.lock();
-        try{
+        try {
             val++;
             val++;
             return val;
-        }finally {
+        }
+        finally {
             lock.unlock();
         }
 

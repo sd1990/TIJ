@@ -2,25 +2,29 @@ package org.songdan.tij.thread;
 
 /**
  * 生产者消费者模型
- * @author SONGDAN
  *
+ * @author SONGDAN
  */
 public class ProductConsumerDemo2 {
+
     /**
      * 共享资源
-     * @author SONGDAN
      *
+     * @author SONGDAN
      */
-    class Resource{
-        /**生产开关*/
-        private boolean flag=true;
-        
+    class Resource {
+
+        /**
+         * 生产开关
+         */
+        private boolean flag = true;
+
         private String name;
-        
+
         private int count;
-        
-        public synchronized void set(String name){
-            if(!flag){
+
+        public synchronized void set(String name) {
+            if (!flag) {
                 try {
                     this.wait();
                 }
@@ -28,15 +32,16 @@ public class ProductConsumerDemo2 {
                     e.printStackTrace();
                 }
             }
-            this.name=name;
+            this.name = name;
             this.count++;
-            flag=false;
-            System.out.println(Thread.currentThread().getName()+": 生产者----"+this.name+"----"+this.count);
+            flag = false;
+            System.out.println(Thread.currentThread().getName() + ": 生产者----" + this.name + "----" + this.count);
             //唤醒消费者
             this.notifyAll();
         }
-        public synchronized void get(){
-            if(flag){
+
+        public synchronized void get() {
+            if (flag) {
                 try {
                     this.wait();
                 }
@@ -44,19 +49,19 @@ public class ProductConsumerDemo2 {
                     e.printStackTrace();
                 }
             }
-            System.out.println(Thread.currentThread().getName()+": 消费者----"+this.name+"---"+this.count);
-            flag=true;
+            System.out.println(Thread.currentThread().getName() + ": 消费者----" + this.name + "---" + this.count);
+            flag = true;
             this.notifyAll();
         }
     }
-    
-    class Productor implements Runnable{
+
+    class Productor implements Runnable {
 
         private Resource resource;
-        
+
         public Productor(Resource resource) {
             super();
-            this.resource=resource;
+            this.resource = resource;
         }
 
         @Override
@@ -65,30 +70,31 @@ public class ProductConsumerDemo2 {
                 resource.set("product--");
             }
         }
-        
+
     }
-    class Consumer implements Runnable{
-        
+
+    class Consumer implements Runnable {
+
         private Resource resource;
-        
+
         public Consumer(Resource resource) {
             super();
-            this.resource=resource;
+            this.resource = resource;
         }
-        
+
         @Override
         public void run() {
             for (; ; ) {
                 resource.get();
             }
         }
-        
+
     }
-    
+
     public static void main(String[] args) {
-        ProductConsumerDemo2.Resource r=new ProductConsumerDemo2().new Resource();
-        Productor p=new ProductConsumerDemo2().new Productor(r);
-        Consumer c=new ProductConsumerDemo2().new Consumer(r);
+        ProductConsumerDemo2.Resource r = new ProductConsumerDemo2().new Resource();
+        Productor p = new ProductConsumerDemo2().new Productor(r);
+        Consumer c = new ProductConsumerDemo2().new Consumer(r);
         Thread t1 = new Thread(p);
         Thread t2 = new Thread(p);
         Thread t4 = new Thread(c);

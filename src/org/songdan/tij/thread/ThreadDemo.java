@@ -1,12 +1,10 @@
 package org.songdan.tij.thread;
 
 public class ThreadDemo implements Runnable {
-    
-    
-    
+
     public static void main(String[] args) {
-        ThreadDemo td=new ThreadDemo();
-        Thread t1=new Thread(td);
+        ThreadDemo td = new ThreadDemo();
+        Thread t1 = new Thread(td);
         t1.start();
         try {
             Thread.sleep(1000l);

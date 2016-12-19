@@ -1,7 +1,7 @@
 package org.songdan.tij.thread;
 
-
 public class PendingInterrupt {
+
     public static void main(String[] args) {
         Thread.currentThread().interrupt();
         System.out.println("main run ...");

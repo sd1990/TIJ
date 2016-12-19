@@ -1,7 +1,7 @@
 package org.songdan.tij.innerclass;
 
-
 public class Test20 {
+
     public static void main(String[] args) {
         Inter20 inter = new InterImpl();
         Inter20.Inner inner = new Inter20.Inner();
@@ -11,21 +11,24 @@ public class Test20 {
 
 /**
  * 在接口中创建嵌套类
- * @author SONGDAN
  *
+ * @author SONGDAN
  */
-interface Inter20{
+interface Inter20 {
+
     void say();
-    public static class Inner{
-        int i ;
+
+    public static class Inner {
+
+        int i;
     }
 }
 
-class InterImpl implements Inter20{
+class InterImpl implements Inter20 {
 
     @Override
     public void say() {
         System.out.println("hello world ...");
     }
-    
+
 }

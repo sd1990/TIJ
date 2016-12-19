@@ -24,7 +24,6 @@ class Horse implements Runnable {
 
     private static Random random = new Random();
 
-
     private int strides = 0;
 
     public Horse(CyclicBarrier cyclicBarrier) {
@@ -55,7 +54,7 @@ class Horse implements Runnable {
 
     @Override
     public String toString() {
-        return "Horse "+ id +" ";
+        return "Horse " + id + " ";
     }
 
     public String tracks() {
@@ -76,9 +75,9 @@ public class HorseRace {
 
     private ExecutorService executors = Executors.newCachedThreadPool();
 
-    private CyclicBarrier barrier ;
+    private CyclicBarrier barrier;
 
-    public HorseRace(int nHorse,int pause) {
+    public HorseRace(int nHorse, int pause) {
         barrier = new CyclicBarrier(nHorse, new Runnable() {
 
             @Override
@@ -95,7 +94,7 @@ public class HorseRace {
                 //如果有一匹马达到了终点，终止比赛
                 for (Horse horse : horses) {
                     if (horse.getStrides() >= FINISH_LINE) {
-                        System.out.println(horse+"win");
+                        System.out.println(horse + "win");
                         executors.shutdownNow();
                         return;
                     }

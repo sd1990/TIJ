@@ -28,7 +28,7 @@ public class WaxOMatic {
     }
 }
 
-class Car{
+class Car {
 
     private boolean waxOn = false;
 
@@ -64,6 +64,7 @@ class Car{
 
     /**
      * 等待抛光结束
+     *
      * @throws InterruptedException
      */
     public synchronized void waitForBuffering() throws InterruptedException {
@@ -87,7 +88,7 @@ class WaxOn implements Runnable {
     @Override
     public void run() {
         try {
-            while (!Thread.interrupted()){
+            while (!Thread.interrupted()) {
                 System.out.println("wax on ...");
                 TimeUnit.MILLISECONDS.sleep(300);
                 car.waxOn();
@@ -115,7 +116,7 @@ class WaxOff implements Runnable {
     @Override
     public void run() {
         try {
-            while (!Thread.interrupted()){
+            while (!Thread.interrupted()) {
                 car.waitForWaxing();
                 System.out.println("wax off ...");
                 TimeUnit.MILLISECONDS.sleep(300);

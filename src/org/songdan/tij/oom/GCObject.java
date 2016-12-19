@@ -30,13 +30,13 @@ public class GCObject {
 
     public void useLocal() {
         PersonContainer personContainer = new PersonContainer(person);
-//        System.out.println("using personContainer:" + personContainer);
+        //        System.out.println("using personContainer:" + personContainer);
         list.add(personContainer);
     }
 
 }
 
-class PersonContainer{
+class PersonContainer {
 
     private Person person;
 

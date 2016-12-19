@@ -1,4 +1,5 @@
 package org.songdan.tij.generics.story;
 
+public class GoodGuys extends StoryCharacters {
 
-public class GoodGuys extends StoryCharacters{}
+}

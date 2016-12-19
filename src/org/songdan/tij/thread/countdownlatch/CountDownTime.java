@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 
 /**
  * 使用倒计数锁存器实现 计算运行时间的功能
+ *
  * @author Songdan
  * @date 2016/5/9
  */
@@ -32,7 +33,8 @@ public class CountDownTime {
                     }
                     catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
-                    }finally {
+                    }
+                    finally {
                         end.countDown();
                     }
                 }
@@ -46,9 +48,8 @@ public class CountDownTime {
         start.countDown();
         //阻塞，等待end倒计数为0
         end.await();
-        return System.nanoTime()-startTime;
+        return System.nanoTime() - startTime;
     }
-
 
     public static void main(String[] args) throws InterruptedException {
         long time = time(Executors.newFixedThreadPool(5), 5, new Runnable() {
@@ -56,7 +57,7 @@ public class CountDownTime {
             @Override
             public void run() {
                 for (int i = 0; i < 10; i++) {
-                    System.out.println(Thread.currentThread()+"--> jump :"+(i+1));
+                    System.out.println(Thread.currentThread() + "--> jump :" + (i + 1));
                 }
             }
         });

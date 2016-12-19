@@ -3,7 +3,6 @@ package org.songdan.tij.enums;
 import java.util.Random;
 
 /**
- *
  * 随机存取的工具类
  * Created by PC on 2016/4/4.
  */
@@ -27,8 +26,8 @@ public class Enums {
     }
 }
 
-enum Activity{
-    SITTING,LYING,STANDING,HOPPING,RUNNING,DODGING,JUMPING,FAILING,FLYING
+enum Activity {
+    SITTING, LYING, STANDING, HOPPING, RUNNING, DODGING, JUMPING, FAILING, FLYING
 }
 
 

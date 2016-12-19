@@ -2,6 +2,7 @@ package org.songdan.tij.node;
 
 /**
  * 节点反转
+ *
  * @author Songdan
  * @date 2016/5/26
  */
@@ -10,7 +11,7 @@ public class NodeReverse2 {
     public static Node reverseLoop(Node head) {
         Node prev = head;
         Node curr = prev.next;
-        while (curr!=null) {
+        while (curr != null) {
             Node next = curr.next;
             curr.next = prev;
             prev.next = null;
@@ -23,7 +24,7 @@ public class NodeReverse2 {
     }
 
     public static Node reverseRecurise(Node head) {
-        if (head == null ||head.next==null) {
+        if (head == null || head.next == null) {
             return head;
         }
         Node reverseNode = reverseRecurise(head.next);

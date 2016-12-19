@@ -1,7 +1,6 @@
 package org.songdan.tij.oom;
 
 /**
- *
  * Created by SongDan on 2016/10/11.
  */
 public class JavaVMStackOOM {
@@ -14,7 +13,7 @@ public class JavaVMStackOOM {
 
     public void stackLeakByThread() {
         while (true) {
-            new Thread(()-> {
+            new Thread(() -> {
                 dontStop();
             }).start();
         }

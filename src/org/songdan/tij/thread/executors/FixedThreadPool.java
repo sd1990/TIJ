@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 
 /**
  * FixedThreadPool 一次性预先执行代价高昂的线程分配，不会滥用资源
+ *
  * @author Songdan
  * @date 2016/5/11
  */

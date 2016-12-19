@@ -59,7 +59,7 @@ public class StringUtils {
             if (cp == '\\') {
                 saw_backslash = false;
                 newstr.append('\\');
-//                newstr.append('\\');
+                //                newstr.append('\\');
                 continue; /* switch */
             }
 
@@ -204,7 +204,8 @@ public class StringUtils {
 
                         if (saw_brace && ch == '}') {
                             break;
-                            /* for */ }
+                            /* for */
+                        }
 
                         if (!((ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F'))) {
                             die(String.format("illegal hex digit #%d '%c' in \\x", ch, ch));
@@ -329,11 +330,11 @@ public class StringUtils {
     private static final void say(String what) {
         System.out.println(what);
     }
-    
-    public static void say2(String str){
-        System.out.println("father say:"+str);
+
+    public static void say2(String str) {
+        System.out.println("father say:" + str);
     }
-    
+
     public static void main(String[] args) {
         System.out.println(unescape_perl_string("1\n2\n3\n\\\\\\\n!@#$%^&amp;*()\nLLLIII\n李占泉\n123"));
     }

@@ -11,6 +11,7 @@ public abstract class IntGenerator {
     /**
      * 生成int<br>
      * 核心方法
+     *
      * @return
      */
     public abstract int next();

@@ -6,18 +6,24 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * 使用ReentrantLock实现交替锁,它只锁链表的一部分<br><br/>
  * 创建一个有序的安全的list
+ *
  * @author Songdan
  * @date 2016/6/3
  */
 public class ConcurrentLinkedSortList {
 
-    private class Node{
+    private class Node {
+
         private int value;
+
         private Node pre;
+
         private Node next;
 
         private Lock lock = new ReentrantLock();
-        public Node(){}
+
+        public Node() {
+        }
 
         public Node(int value, Node pre, Node next) {
             this.value = value;
@@ -41,18 +47,19 @@ public class ConcurrentLinkedSortList {
         Node current = head;
         Node next = head.next;
         current.lock.lock();
-        try{
+        try {
             while (true) {
                 next.lock.lock();
-                try{
+                try {
                     //如果到达尾节点或者插入的值大于它后面的值，在next节点前面插入一个节点
-                    if (next==tail||value>next.value) {
+                    if (next == tail || value > next.value) {
                         Node node = new Node(value, current, next);
                         current.next = node;
                         next.pre = node;
                         return;
                     }
-                }finally {
+                }
+                finally {
                     current.lock.unlock();
                 }
                 //修改迭代指向，继续遍历
@@ -60,7 +67,8 @@ public class ConcurrentLinkedSortList {
                 next = current.next;
 
             }
-        }finally {
+        }
+        finally {
             next.lock.unlock();
         }
     }
@@ -70,10 +78,11 @@ public class ConcurrentLinkedSortList {
         Node current = tail;
         while (current.pre != head) {
             current.lock.lock();
-            try{
+            try {
                 count++;
                 current = current.pre;
-            }finally {
+            }
+            finally {
                 current.lock.unlock();
             }
         }

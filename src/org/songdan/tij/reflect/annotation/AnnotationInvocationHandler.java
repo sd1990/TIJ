@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 
 /**
  * 使用动态代理技术,替换注解
+ *
  * @author Songdan
  * @date 2016/6/16
  */
@@ -35,7 +36,7 @@ public class AnnotationInvocationHandler implements InvocationHandler {
     }
 
     private static Class<?>[] toClassArray(Object[] args) {
-        if (args==null||args.length==0) {
+        if (args == null || args.length == 0) {
             return null;
         }
         Class<?>[] classArr = new Class[args.length];

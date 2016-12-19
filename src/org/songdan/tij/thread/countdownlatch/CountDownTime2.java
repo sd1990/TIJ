@@ -45,7 +45,7 @@ public class CountDownTime2 {
 
             @Override
             public void run() {
-                System.out.println(Thread.currentThread().getName()+" : hello world");
+                System.out.println(Thread.currentThread().getName() + " : hello world");
                 try {
                     TimeUnit.MILLISECONDS.sleep(500);
                 }

@@ -9,19 +9,19 @@ public class Chopstick {
     private static int counter = 0;
 
     private int id = counter++;
-    private boolean token = false;
 
+    private boolean token = false;
 
     public synchronized void take() throws InterruptedException {
         if (token) {
             wait();
         }
-        System.out.println(this+"被占有");
+        System.out.println(this + "被占有");
         token = true;
     }
 
     public synchronized void drop() {
-        System.out.println(this+"被释放");
+        System.out.println(this + "被释放");
         token = false;
         notifyAll();
     }

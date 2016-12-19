@@ -15,57 +15,58 @@ public class PostOffice {
             boolean handle(Mail mail) {
                 switch (mail.generalDelivery) {
                     case YES:
-                        System.out.println("Using general delivery for "+mail);
+                        System.out.println("Using general delivery for " + mail);
                         return true;
                     default:
                         return false;
 
                 }
             }
-        },MACHINE_SCAN {
+        }, MACHINE_SCAN {
             @Override
             boolean handle(Mail mail) {
                 switch (mail.scannability) {
                     case UNSCANNABILITY:
                         return false;
                     default:
-                        System.out.println("Deliverying "+mail+" automatically");
+                        System.out.println("Deliverying " + mail + " automatically");
                         return true;
                 }
             }
-        },VISUAL_INSPECTION {
+        }, VISUAL_INSPECTION {
             @Override
             boolean handle(Mail mail) {
                 switch (mail.readability) {
                     case ILLEGBLE:
                         return false;
                     default:
-                        System.out.println("Deliverying "+mail+" normally");
+                        System.out.println("Deliverying " + mail + " normally");
                         return true;
                 }
             }
-        },RETURN_TO_SENDER {
+        }, RETURN_TO_SENDER {
             @Override
             boolean handle(Mail mail) {
                 switch (mail.returnAddress) {
                     case MISSING:
                         return false;
                     default:
-                        System.out.println("returning "+mail+" to sender");
+                        System.out.println("returning " + mail + " to sender");
                         return true;
                 }
             }
         };
+
         abstract boolean handle(Mail mail);
     }
 
-    static void handle(Mail m){
+    static void handle(Mail m) {
         for (Mail_Handler mailHandler : Mail_Handler.values()) {
             if (mailHandler.handle(m)) {
                 return;
             }
         }
-        System.out.println(m+"is a dead mail");
+        System.out.println(m + "is a dead mail");
     }
 
     public static void main(String[] args) {
@@ -122,8 +123,8 @@ class Mail {
 
     public String detail() {
         return toString() + " ,General Delivery : " + generalDelivery + " , Address Scanability : " + scannability
-                + " , Address Readability : " + scannability + " , Address address : " + address + " , Return Address : "
-                + returnAddress;
+                + " , Address Readability : " + scannability + " , Address address : " + address
+                + " , Return Address : " + returnAddress;
     }
 
     public static Mail randomMail() {
@@ -136,7 +137,7 @@ class Mail {
         return mail;
     }
 
-    public static Iterable<Mail> generator(final int count){
+    public static Iterable<Mail> generator(final int count) {
         return new Iterable<Mail>() {
 
             @Override

@@ -23,7 +23,7 @@ class SortedDirList {
 
     public String[] list() {
         String[] list = file.list();
-        Arrays.sort(list,String.CASE_INSENSITIVE_ORDER);
+        Arrays.sort(list, String.CASE_INSENSITIVE_ORDER);
         return list;
     }
 

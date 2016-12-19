@@ -1,14 +1,16 @@
 package org.songdan.tij.thread;
 
+public class SuspendThread implements Runnable {
 
-public class SuspendThread implements Runnable{
-    
-    private volatile int firstValue=0;
-    private volatile int secondValue=0;
+    private volatile int firstValue = 0;
+
+    private volatile int secondValue = 0;
+
     private volatile boolean suspended;
+
     @Override
     public void run() {
-        suspended=false;
+        suspended = false;
         try {
             workMethod();
         }
@@ -16,10 +18,10 @@ public class SuspendThread implements Runnable{
             e.printStackTrace();
         }
     }
-    
+
     private void workMethod() throws InterruptedException {
-        int value=1;
-        while(true){
+        int value = 1;
+        while (true) {
             waitWhileSleep();
             setFirstValue(value);
             setSecondValue(value);
@@ -27,32 +29,31 @@ public class SuspendThread implements Runnable{
             waitWhileSleep();
             Thread.sleep(100l);
         }
-            
+
     }
 
     private void setSecondValue(int value) {
-        secondValue=value;
+        secondValue = value;
     }
 
     private void setFirstValue(int value) throws InterruptedException {
-        firstValue=value;
+        firstValue = value;
         Thread.sleep(100l);
     }
 
     private void waitWhileSleep() throws InterruptedException {
-        if(suspended){
+        if (suspended) {
             Thread.sleep(200l);
         }
     }
 
-    public boolean areEqual(){
-        return firstValue==secondValue;
+    public boolean areEqual() {
+        return firstValue == secondValue;
     }
-    
-    
+
     public static void main(String[] args) throws InterruptedException {
-        SuspendThread st=new SuspendThread();
-        Thread t=new Thread(st);
+        SuspendThread st = new SuspendThread();
+        Thread t = new Thread(st);
         t.start();
         try {
             Thread.sleep(1000l);
@@ -61,12 +62,11 @@ public class SuspendThread implements Runnable{
             e.printStackTrace();
         }
         for (int i = 0; i < 100; i++) {
-            st.suspended=true;
+            st.suspended = true;
             Thread.sleep(500);
             System.out.println(st.areEqual());
-            st.suspended=false;
-            Thread.sleep(  
-                    ( long ) (Math.random() * 2000.0) );
+            st.suspended = false;
+            Thread.sleep((long) (Math.random() * 2000.0));
         }
         System.exit(0);
     }
