@@ -93,12 +93,12 @@ public class CustomClassLoader extends ClassLoader {
     }
  
     public static void test(ClassLoader loader) throws Exception {
-        Class<?> clazz = loader.loadClass("com.songdan.demo.atomic.AtomicIntegerDemo");
+        Class<?> clazz = loader.loadClass("org.songdan.tij.atomic.AtomicIntegerDemo");
         Object object = clazz.newInstance();
     }
  
     public static void testNameSpace(ClassLoader loader) throws Exception {
-        Class<?> clazz = loader.loadClass("com.songdan.demo.atomic.AtomicIntegerDemo");
+        Class<?> clazz = loader.loadClass("org.songdan.tij.atomic.AtomicIntegerDemo");
         Object object = clazz.newInstance();
         try{
             AtomicIntegerDemo lc = (AtomicIntegerDemo) object;
