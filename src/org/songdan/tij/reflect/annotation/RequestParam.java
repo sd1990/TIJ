@@ -19,7 +19,6 @@ public class RequestParam<T> {
     @XmlElement(name = "REQUEST_FPCX_PTCXS")
     private RequestContent<T> requestContent;
 
-
     public void setClassName(String className) {
         this.className = className;
     }

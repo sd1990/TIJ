@@ -5,18 +5,18 @@ import java.util.Iterator;
 
 /**
  * 学会使用面向对象的思想
- * @author SONGDAN
  *
+ * @author SONGDAN
  */
 public class Sequence {
-    
+
     private ArrayList<Object> list = new ArrayList<>();
-    
-    public void add(Object obj){
+
+    public void add(Object obj) {
         list.add(obj);
     }
-    
-    public Iterator iterator(){
+
+    public Iterator iterator() {
         return list.iterator();
     }
 }

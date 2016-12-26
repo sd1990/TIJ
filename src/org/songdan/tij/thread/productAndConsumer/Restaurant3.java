@@ -27,7 +27,7 @@ class BusBoy implements Runnable {
                     }
                     notify = false;
                 }
-                System.out.println("busboy got the meal :"+meal);
+                System.out.println("busboy got the meal :" + meal);
                 synchronized (restaurant.waiter) {
                     restaurant.waiter.notified = true;
                     restaurant.waiter.notifyAll();
@@ -39,6 +39,7 @@ class BusBoy implements Runnable {
         }
     }
 }
+
 class Waiter3 implements Runnable {
 
     private Restaurant3 restaurant;
@@ -59,7 +60,7 @@ class Waiter3 implements Runnable {
                         wait();
                     }
                 }
-                System.out.println("waiter got the meal :"+restaurant.meal);
+                System.out.println("waiter got the meal :" + restaurant.meal);
                 synchronized (restaurant.busBoy) {
                     restaurant.busBoy.notify = true;
                     restaurant.busBoy.meal = restaurant.meal;

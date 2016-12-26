@@ -14,7 +14,7 @@ public class SubSychronize extends SuperSynchronize {
 
     @Override
     public synchronized void run() {
-//        superSynchronize.run();
+        //        superSynchronize.run();
         super.run();
         System.out.println("child run ...");
     }
@@ -23,6 +23,7 @@ public class SubSychronize extends SuperSynchronize {
         final SuperSynchronize superSynchronize = new SuperSynchronize();
         final SuperSynchronize father = new SubSychronize(superSynchronize);
         new Thread(new Runnable() {
+
             @Override
             public void run() {
                 System.out.println("thread 1 run ....");
@@ -30,6 +31,7 @@ public class SubSychronize extends SuperSynchronize {
             }
         }).start();
         new Thread(new Runnable() {
+
             @Override
             public void run() {
                 System.out.println("thread 2 run ....");

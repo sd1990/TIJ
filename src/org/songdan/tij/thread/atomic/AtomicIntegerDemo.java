@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * AtomicInteger示例类
+ *
  * @author Songdan
  * @date 2016/6/3
  */
@@ -17,11 +19,11 @@ public class AtomicIntegerDemo {
     private int count = 20;
 
     public void increate() throws InterruptedException {
-        if (atomicInteger.get()<=20) {
+        if (atomicInteger.get() <= 20) {
             TimeUnit.MILLISECONDS.sleep(200);
             int x = atomicInteger.incrementAndGet();
             System.out.println(x);
-            if (x>count) {
+            if (x > count) {
                 return;
             }
         }

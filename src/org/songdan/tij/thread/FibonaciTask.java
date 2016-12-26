@@ -30,7 +30,7 @@ public class FibonaciTask implements Runnable {
     @Override
     public void run() {
         while (n-- != 0) {
-            System.out.println(id+":"+fibonacci.next());
+            System.out.println(id + ":" + fibonacci.next());
         }
     }
 

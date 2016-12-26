@@ -5,11 +5,12 @@ import java.io.FilenameFilter;
 import java.util.regex.Pattern;
 
 /**
+ *
  * Created by PC on 2016/3/26.
  */
 public class DirList2 {
 
-    public static FilenameFilter filter(final String regex){
+    public static FilenameFilter filter(final String regex) {
         return new FilenameFilter() {
 
             @Override

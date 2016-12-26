@@ -3,7 +3,8 @@ package org.songdan.tij.holding;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Test27{
+public class Test27 {
+
     public static void main(String[] args) {
         Commond c1 = new Commond("abc");
         Commond c2 = new Commond("bcd");
@@ -13,14 +14,15 @@ public class Test27{
         for (Commond commond : fillQueue) {
             commond.operation();
         }
-        
+
     }
 }
 
 class Commond {
+
     private String name;
-    
-    public void operation(){
+
+    public void operation() {
         System.out.println(name);
     }
 
@@ -28,12 +30,14 @@ class Commond {
         super();
         this.name = name;
     }
-    
+
 }
 
-class CommondFill{
+class CommondFill {
+
     Queue<Commond> queue = new LinkedList<>();
-    public Queue<Commond> fillQueue(Commond commond){
+
+    public Queue<Commond> fillQueue(Commond commond) {
         queue.add(commond);
         return queue;
     }

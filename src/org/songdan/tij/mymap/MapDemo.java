@@ -5,8 +5,9 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class MapDemo {
+
     public static void main(String[] args) {
-        HashMap<String, String> map = new MyHashMap<>(new TreeMap<String,String>());
+        HashMap<String, String> map = new MyHashMap<>(new TreeMap<String, String>());
         map.put("1000", "0");
         map.put("10001001", "0-1");
         map.put("1001", "1");
@@ -22,7 +23,7 @@ public class MapDemo {
         map.put("10031001", "3-1");
         map.put("10031003", "3-3");
         System.out.println(map);
-        Map<String,String> _map = map;
+        Map<String, String> _map = map;
         System.out.println(_map);
     }
 }

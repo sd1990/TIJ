@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class InnerClassTest {
-    public ArrayList<Object> test(){
+
+    public ArrayList<Object> test() {
         class MyList<T> extends ArrayList<T> {
+
             /**
-             * 
+             *
              */
             private static final long serialVersionUID = -7658125417511242426L;
 
@@ -17,12 +19,12 @@ public class InnerClassTest {
         }
         return new MyList<Object>();
     }
-    
+
     public static void main(String[] args) {
-        InnerClassTest test=new InnerClassTest();
+        InnerClassTest test = new InnerClassTest();
         ArrayList<Object> list = test.test();
-        Collection<Object> c=new ArrayList<>();
+        Collection<Object> c = new ArrayList<>();
         list.addAll(c);
-        
+
     }
 }

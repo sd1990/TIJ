@@ -4,14 +4,14 @@ import java.util.UUID;
 
 /**
  * 随机字符串产生工具
- * 
+ *
  * @author jwh
  */
 public final class RandomUtil {
 
     /**
      * 取UUID字符串
-     * 
+     *
      * @return UUID字符串
      */
     public static String getUUIDString() {
@@ -21,7 +21,7 @@ public final class RandomUtil {
 
     /**
      * 随机产生16位字符串
-     * 
+     *
      * @return 16位字符串
      */
     public static String getRandom16String() {

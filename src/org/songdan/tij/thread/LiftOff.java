@@ -2,10 +2,11 @@ package org.songdan.tij.thread;
 
 /**
  * 发射之前的倒计时
+ *
  * @author Songdan
  * @date 2016/5/11
  */
-public class LiftOff implements Runnable{
+public class LiftOff implements Runnable {
 
     private static int count = 0;
 

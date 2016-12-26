@@ -1,23 +1,23 @@
 package org.songdan.tij.exception;
 
-
 public class ExceptionSilencer {
 
     @SuppressWarnings("finally")
     public static void main(String[] args) {
-        try{
+        try {
             throw new MyRuntimeException();
-        }finally{
+        }
+        finally {
             return;
         }
     }
 }
 
-class MyRuntimeException extends RuntimeException{
+class MyRuntimeException extends RuntimeException {
 
     public MyRuntimeException() {
         super();
         System.out.println("hello runtime exception ...");
     }
-    
+
 }

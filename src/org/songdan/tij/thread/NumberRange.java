@@ -14,6 +14,7 @@ public class NumberRange {
 
     //不变性条件：lower<=upper
     private final AtomicInteger lower = new AtomicInteger(0);
+
     private final AtomicInteger upper = new AtomicInteger(10);
 
     public void setLower(int i) {

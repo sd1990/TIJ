@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * 封装运行时修改注解的实体
+ *
  * @author Songdan
  * @date 2016/6/16
  */
@@ -61,10 +62,6 @@ public class ModifyObject<A> {
         this.fieldName = fieldName;
     }
 
-
-
-
-
     public ElementType getType() {
         return type;
     }
@@ -72,8 +69,6 @@ public class ModifyObject<A> {
     public void setType(ElementType type) {
         this.type = type;
     }
-
-
 
     public String getTargetAnnotationName() {
         return targetAnnotationName;

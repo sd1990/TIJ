@@ -29,13 +29,14 @@ public class NotifyVsNotifyAll {
                 if (prod) {
                     System.out.println("\nnotify() ");
                     Task1.blocker.prod();
-                } else{
+                }
+                else {
                     System.out.println("\nnotifyAll() ");
                     Task1.blocker.prodAll();
                 }
                 prod = !prod;
             }
-        },500,500);
+        }, 500, 500);
         TimeUnit.SECONDS.sleep(5);
         timer.cancel();
         System.out.println("\nTimer canceled");

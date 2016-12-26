@@ -8,7 +8,6 @@ package org.songdan.tij.thread.executors;
  */
 public class SerialWork implements IWork {
 
-
     @Override
     public void work() {
         long start = System.currentTimeMillis();
@@ -16,9 +15,10 @@ public class SerialWork implements IWork {
             for (int i = 0; i < 5; i++) {
                 new Worker().work();
             }
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        System.out.println(System.currentTimeMillis()-start);
+        System.out.println(System.currentTimeMillis() - start);
     }
 }

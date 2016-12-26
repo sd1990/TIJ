@@ -7,13 +7,12 @@ class HasF {
     }
 }
 
-
 public class Manipulation<T extends HasF> {
 
     private T t;
 
     public Manipulation(T t) {
-        this.t=t;
+        this.t = t;
     }
 
     public void fun() {

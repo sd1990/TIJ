@@ -43,7 +43,7 @@ class Meal2 {
 
     @Override
     public String toString() {
-        return "Meal2 "+id;
+        return "Meal2 " + id;
     }
 }
 
@@ -64,20 +64,22 @@ class WaitPerson2 implements Runnable {
         try {
             while (!Thread.interrupted()) {
                 lock.lock();
-                try{
+                try {
                     while (restaurant.meal == null) {
                         condition.await();
                     }
-                }finally {
+                }
+                finally {
                     lock.unlock();
                 }
                 //消费
                 restaurant.chef.lock.lock();
-                try{
-                    System.out.println("消费 "+restaurant.meal);
+                try {
+                    System.out.println("消费 " + restaurant.meal);
                     restaurant.meal = null;
                     restaurant.chef.condition.signalAll();
-                }finally {
+                }
+                finally {
                     restaurant.chef.lock.unlock();
                 }
 
@@ -111,24 +113,26 @@ class Chef2 implements Runnable {
         try {
             while (!Thread.interrupted()) {
                 lock.lock();
-                try{
+                try {
                     while (restaurant.meal != null) {
                         condition.await();
                     }
-                }finally {
+                }
+                finally {
                     lock.unlock();
                 }
-                if (count==10) {
+                if (count == 10) {
                     System.out.println("不再生产");
                     System.exit(0);
                 }
                 //消费
                 restaurant.waitPerson.lock.lock();
-                try{
+                try {
                     restaurant.meal = new Meal2(++count);
-                    System.out.println("生产 "+restaurant.meal);
+                    System.out.println("生产 " + restaurant.meal);
                     restaurant.waitPerson.condition.signalAll();
-                }finally {
+                }
+                finally {
                     restaurant.waitPerson.lock.unlock();
                 }
 

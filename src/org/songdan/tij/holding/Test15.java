@@ -6,7 +6,7 @@ public class Test15 {
         String source = "+U+n+c---+e+r+t---+a-+i-+n+t+y---+ -+r+u--+l+e+s---";
         char[] charArray = source.toCharArray();
         Stack stack = new Stack<>();
-        for (int i = 0; i < charArray.length;) {
+        for (int i = 0; i < charArray.length; ) {
             char c = charArray[i];
             switch (c) {
                 case '+':
@@ -27,7 +27,7 @@ public class Test15 {
     private static Stack evaluate(String expr) {
         Stack<Character> stack = new Stack();
         char data[] = expr.toCharArray();
-        for (int i = 0; i < data.length;){
+        for (int i = 0; i < data.length; ) {
             switch (data[i++]) {
                 case '+':
                     stack.push(data[i++]);
@@ -38,5 +38,5 @@ public class Test15 {
         }
         return stack;
     }
-    
+
 }

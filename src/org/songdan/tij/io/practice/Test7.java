@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 /**
+ * 练习题7
  * Created by PC on 2016/3/27.
  */
 public class Test7 {
@@ -18,7 +19,7 @@ public class Test7 {
                     new FileReader("D:\\workplace\\songdanDemo\\src\\com\\songdan\\demo\\io\\practice\\Test2.java"),
                     2048);
             String line = "";
-            while ((line=reader.readLine())!=null) {
+            while ((line = reader.readLine()) != null) {
                 System.out.println(line);
                 list.add(line);
             }
@@ -29,10 +30,9 @@ public class Test7 {
         Collections.reverse(list);
         list.listIterator();
         ListIterator<String> stringListIterator = list.listIterator(list.size());
-        while (stringListIterator.hasPrevious()){
+        while (stringListIterator.hasPrevious()) {
             System.out.println(stringListIterator.previous());
         }
-
 
     }
 }

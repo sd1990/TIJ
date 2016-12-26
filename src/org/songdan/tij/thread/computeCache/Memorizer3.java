@@ -21,7 +21,7 @@ public class Memorizer3<A, V> implements Computable<A, V> {
     public V compute(final A a) {
         Future<V> futureTask = map.get(a);
         //如果没有正在执行计算的任务，就放置
-        if (futureTask==null) {
+        if (futureTask == null) {
             Callable<V> eval = new Callable<V>() {
 
                 @Override

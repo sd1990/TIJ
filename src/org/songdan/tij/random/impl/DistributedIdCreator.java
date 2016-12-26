@@ -4,7 +4,7 @@ import org.songdan.tij.random.IMajorKey;
 
 /**
  * 流水号创建工具类
- * 
+ *
  * @author jwh
  */
 public class DistributedIdCreator implements IMajorKey {
@@ -16,7 +16,7 @@ public class DistributedIdCreator implements IMajorKey {
 
     /**
      * 主键生成类
-     * 
+     *
      * @author jwh
      */
     private static class MajorKeyFactory {
@@ -74,8 +74,9 @@ public class DistributedIdCreator implements IMajorKey {
             long timestamp = timeGen();
             if (timestamp < lastTimestamp) {
                 try {
-                    throw new Exception("Clock moved backwards.  Refusing to generate id for "
-                            + (lastTimestamp - timestamp) + " milliseconds");
+                    throw new Exception(
+                            "Clock moved backwards.  Refusing to generate id for " + (lastTimestamp - timestamp)
+                                    + " milliseconds");
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -95,8 +96,8 @@ public class DistributedIdCreator implements IMajorKey {
             lastTimestamp = timestamp;
             // ID偏移组合生成最终的ID，并返回ID
             long nextId =
-                    ((timestamp - twepoch) << timestampLeftShift) | (datacenterId << datacenterIdShift)
-                            | (workerId << workerIdShift) | sequence;
+                    ((timestamp - twepoch) << timestampLeftShift) | (datacenterId << datacenterIdShift) | (workerId
+                            << workerIdShift) | sequence;
             return String.valueOf(nextId);
         }
 

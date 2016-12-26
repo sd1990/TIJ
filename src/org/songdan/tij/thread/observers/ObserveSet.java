@@ -8,8 +8,9 @@ public interface ObserveSet<E> {
 
     /**
      * 当主题发生变化时的回调函数
+     *
      * @param e 订阅的内容
      */
-    public void added(ObservableSet<E> observableSet,E e);
+    public void added(ObservableSet<E> observableSet, E e);
 
 }

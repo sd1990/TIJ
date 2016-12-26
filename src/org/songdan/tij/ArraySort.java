@@ -46,8 +46,8 @@ public class ArraySort {
      * @param arr
      */
     public static void quickSort(int[] arr, int left, int right) {
-        if(left>=right){
-            return ;
+        if (left >= right) {
+            return;
         }
         int i = left;
         int j = right;
@@ -58,13 +58,13 @@ public class ArraySort {
             for (; i < j && arr[i] <= arr[left]; i++) {
                 continue;
             }
-            if (i < j){
-                swap(arr,i,j);
+            if (i < j) {
+                swap(arr, i, j);
             }
         }
-        swap(arr,left,i);
-        quickSort(arr,left,i-1);
-        quickSort(arr,i+1,right);
+        swap(arr, left, i);
+        quickSort(arr, left, i - 1);
+        quickSort(arr, i + 1, right);
     }
 
     private static void swap(int[] arr, int i, int j) {
@@ -100,9 +100,9 @@ public class ArraySort {
     public static void main(String[] args) {
         int[] arr = buildArray(10, true);
         System.out.println(toString(arr));
-//      bubble(arr);
-//      select(arr);
-        quickSort(arr,0,arr.length-1);
+        //      bubble(arr);
+        //      select(arr);
+        quickSort(arr, 0, arr.length - 1);
         System.out.println(toString(arr));
     }
 }

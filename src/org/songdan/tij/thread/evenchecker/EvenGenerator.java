@@ -7,7 +7,6 @@ public class EvenGenerator extends IntGenerator {
 
     private int val = 0;
 
-
     @Override
     public int next() {
         val++;

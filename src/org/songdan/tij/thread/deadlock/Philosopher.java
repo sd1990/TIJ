@@ -28,7 +28,7 @@ public class Philosopher implements Runnable {
     private static Random random = new Random(47);
 
     public void thinking() throws InterruptedException {
-        if (ponder<=0) {
+        if (ponder <= 0) {
             return;
         }
         TimeUnit.MILLISECONDS.sleep(random.nextInt(ponder));
@@ -37,18 +37,17 @@ public class Philosopher implements Runnable {
     @Override
     /**
      * 描述哲学家这个任务是干什么的
-     */
-    public void run() {
+     */ public void run() {
         try {
-            while (!Thread.interrupted()){
-                System.out.println(this+"要思考了。。。");
-//                thinking();
+            while (!Thread.interrupted()) {
+                System.out.println(this + "要思考了。。。");
+                //                thinking();
                 System.out.println(this + "要开始拿筷子。。。");
                 left.take();
                 right.take();
                 System.out.println(this + "又要思考了。。。");
-//                thinking();
-                System.out.println(this+"释放筷子了。。。");
+                //                thinking();
+                System.out.println(this + "释放筷子了。。。");
                 left.drop();
                 right.drop();
             }
@@ -60,6 +59,6 @@ public class Philosopher implements Runnable {
 
     @Override
     public String toString() {
-        return "哲学家_"+id;
+        return "哲学家_" + id;
     }
 }

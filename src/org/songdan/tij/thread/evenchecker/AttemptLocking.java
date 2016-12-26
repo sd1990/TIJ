@@ -15,8 +15,9 @@ public class AttemptLocking {
     public void untimed() {
         boolean capture = lock.tryLock();
         try {
-            System.out.println("tryLock(): "+capture);
-        }finally {
+            System.out.println("tryLock(): " + capture);
+        }
+        finally {
             if (capture) {
                 lock.unlock();
             }
@@ -32,7 +33,7 @@ public class AttemptLocking {
             throw new RuntimeException(e);
         }
         try {
-            System.out.println("lock.tryLock(3, TimeUnit.SECONDS):"+capture);
+            System.out.println("lock.tryLock(3, TimeUnit.SECONDS):" + capture);
         }
         finally {
             if (capture) {
@@ -45,7 +46,7 @@ public class AttemptLocking {
         final AttemptLocking attemptLocking = new AttemptLocking();
         attemptLocking.untimed();
         attemptLocking.timed();
-        new Thread(){
+        new Thread() {
 
             @Override
             public void run() {

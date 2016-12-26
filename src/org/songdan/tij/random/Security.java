@@ -25,7 +25,7 @@ import java.util.Random;
 
 /**
  * 加密方式
- * 
+ *
  * @author jwh
  */
 public class Security {
@@ -97,11 +97,9 @@ public class Security {
 
     /**
      * 默认密钥字节数
-     * 
      * <pre>
-     * 
-     * DH 
-     * Default Keysize 1024 
+     * DH
+     * Default Keysize 1024
      * Keysize must be a multiple of 64, ranging from 512 to 1024 (inclusive).
      * </pre>
      */
@@ -131,11 +129,9 @@ public class Security {
 
     /**
      * 信息摘要算法
-     * 
-     * @param algorithm
-     *            算法类型
-     * @param data
-     *            要加密的字符串
+     *
+     * @param algorithm 算法类型
+     * @param data      要加密的字符串
      * @return 返回加密后的摘要信息
      */
     private static String encryptEncode(String algorithm, String data) {
@@ -151,9 +147,8 @@ public class Security {
 
     /**
      * 使用MD5加密
-     * 
-     * @param data
-     *            要加密的字符串
+     *
+     * @param data 要加密的字符串
      * @return 返回加密后的信息
      */
     public static String MD5Encode(String data) {
@@ -162,9 +157,8 @@ public class Security {
 
     /**
      * 使用SHA加密
-     * 
-     * @param data
-     *            要加密的字符串
+     *
+     * @param data 要加密的字符串
      * @return 返回加密后的信息
      */
     public static String SHAEncode(String data) {
@@ -173,11 +167,9 @@ public class Security {
 
     /**
      * 使用SHA1加密
-     * 
-     * @param data
-     *            要加密的字符串
-     * @param key
-     *            秘钥
+     *
+     * @param data 要加密的字符串
+     * @param key  秘钥
      * @return 返回加密后的信息
      */
     public static String SHA1Encode(String data, String key) {
@@ -205,7 +197,7 @@ public class Security {
 
     /**
      * 生成HMAC密钥
-     * 
+     *
      * @return 返回密钥信息
      */
     public static String generateMACKey() {
@@ -222,11 +214,9 @@ public class Security {
 
     /**
      * 使用HMAC加密
-     * 
-     * @param data
-     *            要加密的字符串
-     * @param key
-     *            密钥
+     *
+     * @param data 要加密的字符串
+     * @param key  密钥
      * @return 返回加密后的信息
      */
     public static String HMACEncode(String data, String key) {
@@ -247,11 +237,9 @@ public class Security {
 
     /**
      * 将base64编码后的密钥字符串转换成密钥对象
-     * 
-     * @param key
-     *            密钥字符串
-     * @param algorithm
-     *            加密算法
+     *
+     * @param key       密钥字符串
+     * @param algorithm 加密算法
      * @return 返回密钥对象
      */
     private static Key toKey(String key, String algorithm) {
@@ -261,20 +249,19 @@ public class Security {
 
     /**
      * 生成DES密钥
-     * 
-     * @param seed
-     *            密钥种子(加密算法,可用DES,DESede,Blowfish)
+     *
+     * @param seed 密钥种子(加密算法,可用DES,DESede,Blowfish)
      * @return 返回base64编码的密钥字符串
      */
     public static String generateDESKey(String seed) {
         try {
-//            KeyGenerator kg = KeyGenerator.getInstance(ALGORITHM_DES);
-//            kg.init(new SecureRandom(seed.getBytes()));
-//            SecretKey secretKey = kg.generateKey();
-            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALGORITHM_DES);  
-            DESKeySpec keySpec = new DESKeySpec(seed.getBytes());  
-            keyFactory.generateSecret(keySpec);  
-            SecretKey secretKey = keyFactory.generateSecret(keySpec);  
+            //            KeyGenerator kg = KeyGenerator.getInstance(ALGORITHM_DES);
+            //            kg.init(new SecureRandom(seed.getBytes()));
+            //            SecretKey secretKey = kg.generateKey();
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALGORITHM_DES);
+            DESKeySpec keySpec = new DESKeySpec(seed.getBytes());
+            keyFactory.generateSecret(keySpec);
+            SecretKey secretKey = keyFactory.generateSecret(keySpec);
             return TranscodeUtil.byteArrayToBase64Str(secretKey.getEncoded());
         }
         catch (NoSuchAlgorithmException e) {
@@ -291,11 +278,9 @@ public class Security {
 
     /**
      * DES加密
-     * 
-     * @param data
-     *            要加密的数据
-     * @param key
-     *            密钥
+     *
+     * @param data 要加密的数据
+     * @param key  密钥
      * @return 返回加密后的数据(经过base64编码)
      */
     public static String DESEncrypt(String data, String key) {
@@ -304,11 +289,9 @@ public class Security {
 
     /**
      * DES解密
-     * 
-     * @param data
-     *            要解密的数据
-     * @param key
-     *            密钥
+     *
+     * @param data 要解密的数据
+     * @param key  密钥
      * @return 返回解密后的数据
      */
     public static String DESDecrypt(String data, String key) {
@@ -317,13 +300,10 @@ public class Security {
 
     /**
      * DES的加密解密
-     * 
-     * @param data
-     *            要加密或解密的数据
-     * @param key
-     *            密钥
-     * @param mode
-     *            加密或解密模式
+     *
+     * @param data 要加密或解密的数据
+     * @param key  密钥
+     * @param mode 加密或解密模式
      * @return 返回加密或解密的数据
      */
     private static String DESCipher(String data, String key, int mode) {
@@ -331,8 +311,8 @@ public class Security {
             Key k = toKey(key, ALGORITHM_DES);
             Cipher cipher = Cipher.getInstance(ALGORITHM_DES);
             cipher.init(mode, k);
-            return mode == Cipher.DECRYPT_MODE ? new String(cipher.doFinal(TranscodeUtil.base64StrToByteArray(data)))
-                    : TranscodeUtil.byteArrayToBase64Str(cipher.doFinal(data.getBytes()));
+            return mode == Cipher.DECRYPT_MODE ? new String(cipher.doFinal(TranscodeUtil.base64StrToByteArray(data))) :
+                    TranscodeUtil.byteArrayToBase64Str(cipher.doFinal(data.getBytes()));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -342,7 +322,7 @@ public class Security {
 
     /**
      * 生成盐
-     * 
+     *
      * @return 返回base64编码后的盐信息
      */
     public static String generatePBESalt() {
@@ -354,13 +334,10 @@ public class Security {
 
     /**
      * PBE(Password-based encryption基于密码加密)加密
-     * 
-     * @param data
-     *            要加密的数据
-     * @param password
-     *            密码
-     * @param salt
-     *            盐
+     *
+     * @param data     要加密的数据
+     * @param password 密码
+     * @param salt     盐
      * @return 返回加密后的数据(经过base64编码)
      */
     public static String PBEEncrypt(String data, String password, String salt) {
@@ -369,13 +346,10 @@ public class Security {
 
     /**
      * PBE(Password-based encryption基于密码加密)解密
-     * 
-     * @param data
-     *            要解密的数据
-     * @param password
-     *            密码
-     * @param salt
-     *            盐
+     *
+     * @param data     要解密的数据
+     * @param password 密码
+     * @param salt     盐
      * @return 返回解密后的数据
      */
     public static String PBEDecrypt(String data, String password, String salt) {
@@ -384,15 +358,11 @@ public class Security {
 
     /**
      * PBE加密解密
-     * 
-     * @param data
-     *            要加密解密的信息
-     * @param password
-     *            密码
-     * @param salt
-     *            盐
-     * @param mode
-     *            加密或解密模式
+     *
+     * @param data     要加密解密的信息
+     * @param password 密码
+     * @param salt     盐
+     * @param mode     加密或解密模式
      * @return 返回加密解密后的数据
      */
     private static String PBECipher(String data, String password, String salt, int mode) {
@@ -401,8 +371,8 @@ public class Security {
             PBEParameterSpec paramSpec = new PBEParameterSpec(TranscodeUtil.base64StrToByteArray(salt), 100);
             Cipher cipher = Cipher.getInstance(ALGORITHM_PBE);
             cipher.init(mode, secretKey, paramSpec);
-            return mode == Cipher.DECRYPT_MODE ? new String(cipher.doFinal(TranscodeUtil.base64StrToByteArray(data)))
-                    : TranscodeUtil.byteArrayToBase64Str(cipher.doFinal(data.getBytes()));
+            return mode == Cipher.DECRYPT_MODE ? new String(cipher.doFinal(TranscodeUtil.base64StrToByteArray(data))) :
+                    TranscodeUtil.byteArrayToBase64Str(cipher.doFinal(data.getBytes()));
         }
         catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -427,9 +397,8 @@ public class Security {
 
     /**
      * 生成PBEkey
-     * 
-     * @param password
-     *            使用的密码
+     *
+     * @param password 使用的密码
      * @return 返回生成的PBEkey
      */
     private static Key toPBEKey(String password) {
@@ -450,11 +419,9 @@ public class Security {
 
     /**
      * 生成AESkey
-     * 
-     * @param keySize
-     *            key的位数
-     * @param seed
-     *            随机种子
+     *
+     * @param keySize key的位数
+     * @param seed    随机种子
      * @return 返回base64编码后的key信息
      */
     public static String generateAESKey(int keySize, String seed) {
@@ -472,13 +439,10 @@ public class Security {
 
     /**
      * AES加密
-     * 
-     * @param data
-     *            要加密的数据
-     * @param key
-     *            密钥
-     * @param algorithmParameter
-     *            算法参数(叫密码也不为过：长度为16字节)
+     *
+     * @param data               要加密的数据
+     * @param key                密钥
+     * @param algorithmParameter 算法参数(叫密码也不为过：长度为16字节)
      * @return 返回加密数据
      */
     public static String AESEncrypt(String data, String key, String algorithmParameter) {
@@ -487,13 +451,10 @@ public class Security {
 
     /**
      * AES解密
-     * 
-     * @param data
-     *            要解密的数据
-     * @param key
-     *            密钥
-     * @param algorithmParameter
-     *            算法参数(叫密码也不为过：长度为16字节)
+     *
+     * @param data               要解密的数据
+     * @param key                密钥
+     * @param algorithmParameter 算法参数(叫密码也不为过：长度为16字节)
      * @return 返回解密数据
      */
     public static String AESDecrypt(String data, String key, String algorithmParameter) {
@@ -502,15 +463,11 @@ public class Security {
 
     /**
      * 实现AES加密解密
-     * 
-     * @param data
-     *            要加密或解密的数据
-     * @param key
-     *            密钥
-     * @param algorithmParameter
-     *            算法参数
-     * @param mode
-     *            加密或解密
+     *
+     * @param data               要加密或解密的数据
+     * @param key                密钥
+     * @param algorithmParameter 算法参数
+     * @param mode               加密或解密
      * @return 返回加密或解密的数据
      */
     private static String AESCipher(String data, String key, String algorithmParameter, int mode) {
@@ -519,8 +476,8 @@ public class Security {
             AlgorithmParameterSpec paramSpec = new IvParameterSpec(algorithmParameter.getBytes());
             Cipher ecipher = Cipher.getInstance(ALGORITHM_AES);
             ecipher.init(mode, k, paramSpec);
-            return mode == Cipher.DECRYPT_MODE ? new String(ecipher.doFinal(TranscodeUtil.base64StrToByteArray(data)))
-                    : TranscodeUtil.byteArrayToBase64Str(ecipher.doFinal(data.getBytes()));
+            return mode == Cipher.DECRYPT_MODE ? new String(ecipher.doFinal(TranscodeUtil.base64StrToByteArray(data))) :
+                    TranscodeUtil.byteArrayToBase64Str(ecipher.doFinal(data.getBytes()));
         }
         catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -545,11 +502,9 @@ public class Security {
 
     /**
      * 数字签名
-     * 
-     * @param data
-     *            要签名的密文(经对方公钥加密过的密文)
-     * @param privateKey
-     *            私钥（自己的私钥）
+     *
+     * @param data       要签名的密文(经对方公钥加密过的密文)
+     * @param privateKey 私钥（自己的私钥）
      * @return 返回签名信息
      */
     public static String RSASign(String data, String privateKey) {
@@ -585,13 +540,10 @@ public class Security {
 
     /**
      * 验证签名
-     * 
-     * @param data
-     *            要验证的密文(经对方公钥加密过的密文)
-     * @param publicKey
-     *            公钥(对方公钥)
-     * @param sign
-     *            签名信息(经自己的私钥签名的密文)
+     *
+     * @param data      要验证的密文(经对方公钥加密过的密文)
+     * @param publicKey 公钥(对方公钥)
+     * @param sign      签名信息(经自己的私钥签名的密文)
      * @return 返回验证成功状态
      */
     public static boolean RSAVerify(String data, String publicKey, String sign) {
@@ -628,11 +580,9 @@ public class Security {
 
     /**
      * 私钥解密
-     * 
-     * @param data
-     *            要解密的字符串
-     * @param key
-     *            私钥
+     *
+     * @param data 要解密的字符串
+     * @param key  私钥
      * @return 返回解密后的字符串
      */
     public static String RSADecryptByPrivateKey(String data, String key) {
@@ -671,11 +621,9 @@ public class Security {
 
     /**
      * 公钥解密
-     * 
-     * @param data
-     *            要解密的数据
-     * @param key
-     *            公钥
+     *
+     * @param data 要解密的数据
+     * @param key  公钥
      * @return 返回解密后的数据
      */
     public static String RSADecryptByPublicKey(String data, String key) {
@@ -714,11 +662,9 @@ public class Security {
 
     /**
      * 公钥加密
-     * 
-     * @param data
-     *            要加密的数据
-     * @param key
-     *            对方公钥
+     *
+     * @param data 要加密的数据
+     * @param key  对方公钥
      * @return 返回加密的数据
      */
     public static String RSAEncryptByPublicKey(String data, String key) {
@@ -757,11 +703,9 @@ public class Security {
 
     /**
      * 私钥加密
-     * 
-     * @param data
-     *            要加密的数据
-     * @param key
-     *            私钥
+     *
+     * @param data 要加密的数据
+     * @param key  私钥
      * @return 返回加密后的数据
      */
     public static String RSAEncryptByPrivateKey(String data, String key) {
@@ -800,9 +744,8 @@ public class Security {
 
     /**
      * 获得私钥
-     * 
-     * @param keyMap
-     *            密钥对
+     *
+     * @param keyMap 密钥对
      * @return 返回经过base64编码的私钥
      */
     public static String getRSAPrivateKey(Map<String, Object> keyMap) {
@@ -812,9 +755,8 @@ public class Security {
 
     /**
      * 获得公钥(base64编码)
-     * 
-     * @param keyMap
-     *            密钥对
+     *
+     * @param keyMap 密钥对
      * @return 返回经过base64编码的公钥
      */
     public static String getRSAPublicKey(Map<String, Object> keyMap) {
@@ -824,7 +766,7 @@ public class Security {
 
     /**
      * 初始化密钥对
-     * 
+     *
      * @return 返回密钥对
      */
     public static Map<String, Object> initRSAKey() {
@@ -848,7 +790,7 @@ public class Security {
 
     /**
      * 初始化甲方密钥对
-     * 
+     *
      * @return 返回甲方密钥对
      */
     public static Map<String, Object> initDHKey() {
@@ -873,9 +815,8 @@ public class Security {
 
     /**
      * 使用甲方公钥初始化乙方密钥对
-     * 
-     * @param key
-     *            甲方公钥
+     *
+     * @param key 甲方公钥
      * @return 返回乙方密钥对
      */
     public static Map<String, Object> initDHKey(String key) {
@@ -913,13 +854,10 @@ public class Security {
 
     /**
      * DH加密
-     * 
-     * @param data
-     *            要加密的数据
-     * @param publicKey
-     *            甲方或乙方公钥
-     * @param privateKey
-     *            甲方或乙方私钥
+     *
+     * @param data       要加密的数据
+     * @param publicKey  甲方或乙方公钥
+     * @param privateKey 甲方或乙方私钥
      * @return 加密结果
      */
     public static String DHEncrypt(String data, String publicKey, String privateKey) {
@@ -951,13 +889,10 @@ public class Security {
 
     /**
      * DH解密
-     * 
-     * @param data
-     *            要解密的数据
-     * @param publicKey
-     *            公钥
-     * @param privateKey
-     *            私钥
+     *
+     * @param data       要解密的数据
+     * @param publicKey  公钥
+     * @param privateKey 私钥
      * @return 返回解密结果
      */
     public static String DHDecrypt(String data, String publicKey, String privateKey) {
@@ -989,11 +924,9 @@ public class Security {
 
     /**
      * 生成本地密钥
-     * 
-     * @param publicKey
-     *            公钥
-     * @param privateKey
-     *            私钥
+     *
+     * @param publicKey  公钥
+     * @param privateKey 私钥
      * @return 返回本地密钥
      */
     private static SecretKey getDHSecretKey(String publicKey, String privateKey) {
@@ -1028,9 +961,8 @@ public class Security {
 
     /**
      * 获取私钥
-     * 
-     * @param keyMap
-     *            密钥对
+     *
+     * @param keyMap 密钥对
      * @return 返回base64编码的私钥
      */
     public static String getDHPrivateKey(Map<String, Object> keyMap) {
@@ -1040,9 +972,8 @@ public class Security {
 
     /**
      * 获取公钥
-     * 
-     * @param keyMap
-     *            密钥对
+     *
+     * @param keyMap 密钥对
      * @return 返回base64编码的公钥
      */
     public static String getDHPublicKey(Map<String, Object> keyMap) {
@@ -1052,13 +983,10 @@ public class Security {
 
     /**
      * 获取私钥
-     * 
-     * @param keyStorePath
-     *            keystore文件路径
-     * @param alias
-     *            别名
-     * @param password
-     *            密码
+     *
+     * @param keyStorePath keystore文件路径
+     * @param alias        别名
+     * @param password     密码
      * @return 返回私钥
      */
     private static PrivateKey getKeyStorePrivateKey(String keyStorePath, String alias, String password) {
@@ -1081,9 +1009,8 @@ public class Security {
 
     /**
      * 获取公钥
-     * 
-     * @param certificatePath
-     *            证书文件路径
+     *
+     * @param certificatePath 证书文件路径
      * @return 返回公钥
      */
     private static PublicKey getCertificatePublicKey(String certificatePath) {
@@ -1100,9 +1027,8 @@ public class Security {
 
     /**
      * 加载证书文件
-     * 
-     * @param certificatePath
-     *            证书文件路径
+     *
+     * @param certificatePath 证书文件路径
      * @return 返回证书
      */
     private static Certificate getCertificate(String certificatePath) {
@@ -1127,13 +1053,10 @@ public class Security {
 
     /**
      * 获取证书
-     * 
-     * @param keyStorePath
-     *            keystore文件路径
-     * @param alias
-     *            别名
-     * @param password
-     *            密码
+     *
+     * @param keyStorePath keystore文件路径
+     * @param alias        别名
+     * @param password     密码
      * @return 返回证书
      */
     private static Certificate getCertificate(String keyStorePath, String alias, String password) {
@@ -1150,11 +1073,9 @@ public class Security {
 
     /**
      * 加载KeyStore文件
-     * 
-     * @param keyStorePath
-     *            keystore文件地址
-     * @param password
-     *            keystore密码
+     *
+     * @param keyStorePath keystore文件地址
+     * @param password     keystore密码
      * @return 返回KeyStore
      */
     private static KeyStore getKeyStore(String keyStorePath, String password) {
@@ -1185,15 +1106,11 @@ public class Security {
 
     /**
      * 加密数据
-     * 
-     * @param data
-     *            要加密的数据
-     * @param keyStorePath
-     *            keystore路径
-     * @param alias
-     *            别名
-     * @param password
-     *            密码
+     *
+     * @param data         要加密的数据
+     * @param keyStorePath keystore路径
+     * @param alias        别名
+     * @param password     密码
      * @return 返回加密后的数据
      */
     public static String encryptByPrivateKey(String data, String keyStorePath, String alias, String password) {
@@ -1225,15 +1142,11 @@ public class Security {
 
     /**
      * 私钥解密
-     * 
-     * @param data
-     *            要解密的数据
-     * @param keyStorePath
-     *            keystore路径
-     * @param alias
-     *            别名
-     * @param password
-     *            密码
+     *
+     * @param data         要解密的数据
+     * @param keyStorePath keystore路径
+     * @param alias        别名
+     * @param password     密码
      * @return 返回解密后的数据
      */
     public static String decryptByPrivateKey(String data, String keyStorePath, String alias, String password) {
@@ -1265,11 +1178,9 @@ public class Security {
 
     /**
      * 私钥加密
-     * 
-     * @param data
-     *            要加密的数据
-     * @param certificatePath
-     *            证书路径
+     *
+     * @param data            要加密的数据
+     * @param certificatePath 证书路径
      * @return 返回加密后的信息
      */
     public static String encryptByPublicKey(String data, String certificatePath) {
@@ -1301,11 +1212,9 @@ public class Security {
 
     /**
      * 公钥解密
-     * 
-     * @param data
-     *            要解密的数据
-     * @param certificatePath
-     *            证书路径
+     *
+     * @param data            要解密的数据
+     * @param certificatePath 证书路径
      * @return 返回解密信息
      */
     public static String decryptByPublicKey(String data, String certificatePath) {
@@ -1337,9 +1246,8 @@ public class Security {
 
     /**
      * 验证证书是否过期
-     * 
-     * @param certificatePath
-     *            证书路径
+     *
+     * @param certificatePath 证书路径
      * @return 返回验证结果
      */
     public static boolean verifyCertificate(String certificatePath) {
@@ -1348,11 +1256,9 @@ public class Security {
 
     /**
      * 验证证书是否过期
-     * 
-     * @param date
-     *            日期
-     * @param certificatePath
-     *            证书路径
+     *
+     * @param date            日期
+     * @param certificatePath 证书路径
      * @return 返回验证结果
      */
     public static boolean verifyCertificate(Date date, String certificatePath) {
@@ -1371,11 +1277,9 @@ public class Security {
 
     /**
      * 验证证书是否过期
-     * 
-     * @param date
-     *            日期
-     * @param certificate
-     *            证书
+     *
+     * @param date        日期
+     * @param certificate 证书
      * @return 返回验证结果
      */
     private static boolean verifyCertificate(Date date, Certificate certificate) {
@@ -1392,15 +1296,11 @@ public class Security {
 
     /**
      * 对于数据进行签名
-     * 
-     * @param sign
-     *            要签名的信息
-     * @param keyStorePath
-     *            keystore文件位置
-     * @param alias
-     *            别名
-     * @param password
-     *            密码
+     *
+     * @param sign         要签名的信息
+     * @param keyStorePath keystore文件位置
+     * @param alias        别名
+     * @param password     密码
      * @return 返回签名信息
      */
     public static String sign(String sign, String keyStorePath, String alias, String password) {
@@ -1437,13 +1337,10 @@ public class Security {
 
     /**
      * 验证签名信息
-     * 
-     * @param data
-     *            要验证的信息
-     * @param sign
-     *            签名信息
-     * @param certificatePath
-     *            证书路径
+     *
+     * @param data            要验证的信息
+     * @param sign            签名信息
+     * @param certificatePath 证书路径
      * @return 返回验证结果
      */
     public static boolean verify(String data, String sign, String certificatePath) {
@@ -1472,15 +1369,11 @@ public class Security {
 
     /**
      * 验证证书
-     * 
-     * @param date
-     *            日期
-     * @param keyStorePath
-     *            keystore文件路径
-     * @param alias
-     *            别名
-     * @param password
-     *            密码
+     *
+     * @param date         日期
+     * @param keyStorePath keystore文件路径
+     * @param alias        别名
+     * @param password     密码
      * @return 返回验证结果
      */
     public static boolean verifyCertificate(Date date, String keyStorePath, String alias, String password) {
@@ -1497,13 +1390,10 @@ public class Security {
 
     /**
      * 验证证书
-     * 
-     * @param keyStorePath
-     *            keystore文件路径
-     * @param alias
-     *            别名
-     * @param password
-     *            密码
+     *
+     * @param keyStorePath keystore文件路径
+     * @param alias        别名
+     * @param password     密码
      * @return 返回验证结果
      */
     public static boolean verifyCertificate(String keyStorePath, String alias, String password) {

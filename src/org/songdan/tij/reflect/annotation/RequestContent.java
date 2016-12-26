@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * 主体
+ *
  * @author Songdan
  * @date 2016/6/16
  */
@@ -22,17 +23,13 @@ public class RequestContent<T> {
     @XmlElement(name = "REQUEST_FPCX_PTCX")
     private List<T> list = new ArrayList<T>();
 
-
     public void setClassName(String className) {
         this.className = className;
     }
 
-
-
     public void setList(List<T> list) {
         this.list = list;
     }
-
 
     public void setSize(int size) {
         this.size = size;

@@ -114,10 +114,12 @@ public final class FileUtils {
         public int compare(File sourceFile, File targetFile) {
             if (!targetFile.exists()) {// 新增
                 return 1;
-            } else if (getFileMD5(sourceFile).equals(getFileMD5(targetFile))) {
+            }
+            else if (getFileMD5(sourceFile).equals(getFileMD5(targetFile))) {
                 // 没有变化
                 return 0;
-            } else {
+            }
+            else {
                 // 修改
                 return -1;
             }
@@ -169,7 +171,7 @@ public final class FileUtils {
 
     /**
      * 获取sourceDir中与targetDir中有差别的文件
-     * 
+     *
      * @param sourceDir
      * @param targetDir
      * @throws IOException
@@ -186,8 +188,11 @@ public final class FileUtils {
                 int compare = fileCompare.compare(file, targetFile);
                 if (compare == 0) {// 说明是新增或修改
                     file.delete();
-                } else {}
-            } else {
+                }
+                else {
+                }
+            }
+            else {
                 getDifferent(file.getPath(), targetFile.getPath());
             }
         }
@@ -198,7 +203,7 @@ public final class FileUtils {
 
     /**
      * 比对文件夹,如果有更新或新增操作，覆盖targetDir中的文件
-     * 
+     *
      * @param sourceDir 源目录
      * @param targetDir 目标目录
      * @return 返回需要更新或新增文件的集合
@@ -220,8 +225,11 @@ public final class FileUtils {
                     fileList.add(file);
                     // 把有修改的文件复制过去
                     copyFile(file, targetFile);
-                } else {}
-            } else {
+                }
+                else {
+                }
+            }
+            else {
                 fileList.addAll(compare4Update(file.getPath(), targetFile.getPath()));
             }
         }
@@ -234,7 +242,7 @@ public final class FileUtils {
 
     /**
      * 比较两个文件夹，如果sourceDir有新增的文件，移除
-     * 
+     *
      * @param sourceDir
      * @param targetDir
      * @return 移除的文件集合
@@ -258,7 +266,8 @@ public final class FileUtils {
                 }/*else if(compare==1){//说明这个文件是新增的
                     FileUtils.copyFile(file,targetFile);
                  }*/
-            } else {
+            }
+            else {
                 fileList.addAll(compare4Remove(file.getPath(), targetFile.getPath()));
             }
         }
@@ -271,7 +280,7 @@ public final class FileUtils {
 
     /**
      * 比对文件夹
-     * 
+     *
      * @param sourceDir 源目录
      * @param targetDir 目标目录
      */
@@ -285,7 +294,7 @@ public final class FileUtils {
 
     /**
      * 获取文件与所在最上层的相对路径
-     * 
+     *
      * @param sourceDirectory
      * @param file
      * @return 相对路径
@@ -298,7 +307,7 @@ public final class FileUtils {
 
     /**
      * 获取文件夹下相同的文件
-     * 
+     *
      * @param directory 目标文件夹
      * @return
      */
@@ -332,26 +341,25 @@ public final class FileUtils {
             iterator = cas.iterator();
         }
 
-
-//        for (E e : cas) {
-//            List<E> sameList = new ArrayList<>();
-//            for (E _e : cas) {
-//
-//                if (e.equals(_e)) {
-//                    continue;
-//                }
-//                if (comparator.compare(e, _e) == 0) {
-//                    sameList.add(_e);
-//                }
-//            }
-//            map.put(e, sameList);
-//        }
+        //        for (E e : cas) {
+        //            List<E> sameList = new ArrayList<>();
+        //            for (E _e : cas) {
+        //
+        //                if (e.equals(_e)) {
+        //                    continue;
+        //                }
+        //                if (comparator.compare(e, _e) == 0) {
+        //                    sameList.add(_e);
+        //                }
+        //            }
+        //            map.put(e, sameList);
+        //        }
         return map;
     }
 
     /**
      * 递归获取文件夹下所有的文件
-     * 
+     *
      * @param directory
      * @return
      */
@@ -361,7 +369,8 @@ public final class FileUtils {
         for (File file : listFiles) {
             if (file.isFile()) {
                 files.add(file);
-            } else {
+            }
+            else {
                 files.addAll(getAllFiles(file));
             }
         }
@@ -374,12 +383,12 @@ public final class FileUtils {
         // int result = fileCompare.compare(new File("D:\\area.json"), new
         // File("D:\\area2.json"));
         // System.out.println(result);
-//        Map<File, List<File>> theSame = getTheSame(new File("F:\\票通\\发票开具平台\\生产数据\\pdfs-09-22"));
-//        System.out.println(theSame.size());
-//        for (Map.Entry<File, List<File>> fileListEntry : theSame.entrySet()) {
-//            System.out.println(fileListEntry.getKey() + ":" + fileListEntry.getValue());
-//        }
-//        fileCompare.compare(new File("F:\\票通\\发票开具平台\\生产数据\\pdfs-09-22\\778865902434258944.pdf"),new File("F:\\票通\\发票开具平台\\生产数据\\pdfs-09-22\\778865904996978688.pdf"));
+        //        Map<File, List<File>> theSame = getTheSame(new File("F:\\票通\\发票开具平台\\生产数据\\pdfs-09-22"));
+        //        System.out.println(theSame.size());
+        //        for (Map.Entry<File, List<File>> fileListEntry : theSame.entrySet()) {
+        //            System.out.println(fileListEntry.getKey() + ":" + fileListEntry.getValue());
+        //        }
+        //        fileCompare.compare(new File("F:\\票通\\发票开具平台\\生产数据\\pdfs-09-22\\778865902434258944.pdf"),new File("F:\\票通\\发票开具平台\\生产数据\\pdfs-09-22\\778865904996978688.pdf"));
     }
 
 }

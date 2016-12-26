@@ -5,6 +5,7 @@ import java.util.PriorityQueue;
 import java.util.Random;
 
 public class Test28 {
+
     public static void main(String[] args) {
         PriorityQueue<Double> queue = new PriorityQueue<>();
         Random random = new Random();
@@ -23,7 +24,7 @@ public class Test28 {
             Double poll = queue.poll();
             System.out.println(poll);
         }*/
-        for(Double d = queue.poll();d!=null;d=queue.poll()){
+        for (Double d = queue.poll(); d != null; d = queue.poll()) {
             System.out.println(d);
         }
     }

@@ -4,7 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-class Meal{
+class Meal {
+
     private int orderNum;
 
     public Meal(int orderNum) {
@@ -13,7 +14,7 @@ class Meal{
 
     @Override
     public String toString() {
-        return "meal is "+orderNum;
+        return "meal is " + orderNum;
     }
 }
 
@@ -34,7 +35,7 @@ class Waiter implements Runnable {
                         wait();
                     }
                 }
-                System.out.println("waiter got the meal :"+restaurant.meal);
+                System.out.println("waiter got the meal :" + restaurant.meal);
                 // got the meal
                 synchronized (restaurant.chef) {
                     restaurant.meal = null;

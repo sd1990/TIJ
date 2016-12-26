@@ -12,13 +12,13 @@ public class ParallelWork implements IWork {
 
     private final ExecutorService executor = Executors.newFixedThreadPool(8);
 
-
     @Override
     public void work() {
         long start = System.currentTimeMillis();
         CompletionService<Boolean> completionService = new ExecutorCompletionService<Boolean>(executor);
         for (int i = 0; i < 5; i++) {
             completionService.submit(new Callable<Boolean>() {
+
                 @Override
                 public Boolean call() throws Exception {
                     new Worker().work();
@@ -33,12 +33,14 @@ public class ParallelWork implements IWork {
                 Future<Boolean> take = completionService.take();
                 System.out.println(take.get());
             }
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-        } catch (ExecutionException e) {
+        }
+        catch (ExecutionException e) {
             System.out.println(e.getCause().getMessage());
         }
-        System.out.println(System.currentTimeMillis()-start);
+        System.out.println(System.currentTimeMillis() - start);
         executor.shutdown();
     }
 }

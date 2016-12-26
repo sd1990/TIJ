@@ -10,14 +10,14 @@ public class Deadlock extends Object {
 
     public synchronized void checkOther(Deadlock other) {
         print("entering checkOther()");
-        print(""+Thread.currentThread().isInterrupted());
+        print("" + Thread.currentThread().isInterrupted());
         try {
             Thread.sleep(2000);
         }
         catch (InterruptedException x) {
             print("  interrupt while sleeping");
         }
-        print(""+Thread.currentThread().isInterrupted());
+        print("" + Thread.currentThread().isInterrupted());
         print("in checkOther() - about to " + "invoke 'other.action()'");
 
         // 调用other对象的action方法，由于该方法是同步方法，因此会试图获取other对象的对象锁

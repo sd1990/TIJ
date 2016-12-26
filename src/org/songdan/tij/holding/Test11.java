@@ -18,7 +18,8 @@ public class Test11 {
 }
 
 class IteratorDemo {
-    public void iterator(Iterator iterator){
+
+    public void iterator(Iterator iterator) {
         while (iterator.hasNext()) {
             /*
              * 即使向上转型了，多态依然有效

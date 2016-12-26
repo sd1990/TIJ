@@ -5,6 +5,7 @@ import java.util.EmptyStackException;
 
 /**
  * Stack With Generic
+ *
  * @author Songdan
  * @date 2016/4/26
  */
@@ -17,9 +18,8 @@ public class Stack<E> {
     private static final int DEFAULT_INITAL_CAPACITY = 16;
 
     public Stack() {
-        elements = (E[])new Object[DEFAULT_INITAL_CAPACITY];
+        elements = (E[]) new Object[DEFAULT_INITAL_CAPACITY];
     }
-
 
     public void push(E o) {
         /*
@@ -30,13 +30,13 @@ public class Stack<E> {
     }
 
     private void ensureCapacity() {
-        if (elements.length==size) {
+        if (elements.length == size) {
             Arrays.copyOf(elements, 2 * size + 1);
         }
     }
 
     public E pop() {
-        if (size==0) {
+        if (size == 0) {
             throw new EmptyStackException();
         }
         E o = elements[--size];

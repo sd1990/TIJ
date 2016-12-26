@@ -8,6 +8,7 @@ import java.io.IOException;
 
 /**
  * 绘制椭圆
+ *
  * @author Songdan
  * @date 2016/5/12
  */
@@ -17,66 +18,82 @@ public class StampDraw {
      * 印章名称距中心点偏移量,按照y轴方向
      */
     private int nameOffset = 50;
+
     /**
      * 印章宽度
      */
     private int width = 230;
+
     /**
      * 印章高度
      */
     private int height = 230;
+
     /**
      * 印章中心标志(默认为五角星)外接圆半径
      */
     private float radius = 30;
+
     /**
      * 印章所属单位的起始角度,以6点钟方向为中心,向两个方向平均扩展
      */
     private float firmAngle = 210;
+
     /**
      * 印章名称
      */
     private String name = "发票专用章";
+
     /**
      * 印章名称颜色
      */
     private Color nameColor = Color.RED;
+
     /**
      * 印章所属单位
      */
     private String firm = "中国人民银行";
+
     /**
      * 印章所属单位颜色
      */
     private Color firmColor = Color.RED;
+
     /**
      * 印章名称字体信息
      */
     private Font nameFont = new Font("仿宋体", Font.PLAIN, 16);
+
     /**
      * 印章所属单位字体信息
      */
     private Font firmFont = new Font("仿宋体", Font.PLAIN, 24);
+
     /**
      * 单位字体的宽度缩放比率(百分比).此参数可以使字体看起来瘦长
      */
     private float firmScale = 1.0F;
+
     /**
      * 边框线宽
      */
     private float borderWidth = 5F;
+
     /**
      * 边框颜色
      */
     private Color borderColor = Color.RED;
+
     /**
      * 印章标记(默认为五角星)线宽
      */
     private float signBorderWidth = 3F;
+
     /**
      * 印章标记颜色
      */
     private Color signBorderColor = Color.RED;
+
     /**
      * 印章标记填充颜色
      */
@@ -155,11 +172,11 @@ public class StampDraw {
             g2d.rotate(-radians);
         }
     }
+
     /**
      * 获取具有指定半径外接圆的五角星顶点
      *
-     * @param radius
-     *            圆半径
+     * @param radius 圆半径
      */
     private Polygon getPentaclePoints(float radius) {
         if (radius <= 0)
@@ -169,12 +186,10 @@ public class StampDraw {
         Point[] points = new Point[10];
         for (int i = 0; i < points.length; i++) {
             if (i % 2 == 1)
-                points[i] = new Point(
-                        (int) (Math.sin(halfpi * 36 * i) * radius),
+                points[i] = new Point((int) (Math.sin(halfpi * 36 * i) * radius),
                         (int) (Math.cos(halfpi * 36 * i) * radius));
             else
-                points[i] = new Point(
-                        (int) (Math.sin(halfpi * 36 * i) * lradius),
+                points[i] = new Point((int) (Math.sin(halfpi * 36 * i) * lradius),
                         (int) (Math.cos(halfpi * 36 * i) * lradius));
         }
         Polygon polygon = new Polygon();

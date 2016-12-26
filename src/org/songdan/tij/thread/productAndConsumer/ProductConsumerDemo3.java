@@ -5,6 +5,7 @@ import org.songdan.tij.random.RandomUtil;
 import java.util.concurrent.*;
 
 /**
+ * 生产者消费者Demo3
  * Created by PC on 2016/5/17.
  */
 public class ProductConsumerDemo3 {
@@ -31,6 +32,7 @@ public class ProductConsumerDemo3 {
 }
 
 class Consum implements Runnable {
+
     private BlockingQueue<String> queue;
 
     public Consum(BlockingQueue queue) {
@@ -39,18 +41,18 @@ class Consum implements Runnable {
 
     @Override
     public void run() {
-//        while (!Thread.currentThread().isInterrupted()) {
-            String t = null;
-            try {
-                while ((t = queue.take()) != null) {
-                    System.out.println("consumer" + t);
-                    TimeUnit.MILLISECONDS.sleep(200);
-                }
+        //        while (!Thread.currentThread().isInterrupted()) {
+        String t = null;
+        try {
+            while ((t = queue.take()) != null) {
+                System.out.println("consumer" + t);
+                TimeUnit.MILLISECONDS.sleep(200);
             }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-//        }
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //        }
     }
 }
 

@@ -1,10 +1,10 @@
 package org.songdan.tij.innerclass;
 
-
 public class Callbacks {
+
     public static void main(String[] args) {
-        Callee1 c1=new Callee1();
-        Callee2 c2=new Callee2();
+        Callee1 c1 = new Callee1();
+        Callee2 c2 = new Callee2();
         MyIncrement.f(c2);
         //外部类实现接口
         Caller caller1 = new Caller(c1);
@@ -17,67 +17,75 @@ public class Callbacks {
     }
 }
 
-interface Incrementable{
+interface Incrementable {
+
     void increment();
 }
 
-class Callee1 implements Incrementable{
-    
+class Callee1 implements Incrementable {
+
     private int value;
-    
+
     @Override
     public void increment() {
         value++;
         System.out.println(value);
     }
-    
+
 }
 
-class MyIncrement{
-    /**钩子函数，什么都没有做*/
-    public void increment(){
+class MyIncrement {
+
+    /**
+     * 钩子函数，什么都没有做
+     */
+    public void increment() {
         System.out.println("Other operation");
     }
-    
-    static void f(MyIncrement mi){
+
+    static void f(MyIncrement mi) {
         mi.increment();
     }
 }
 
-class Callee2 extends MyIncrement{
+class Callee2 extends MyIncrement {
+
     private int value = 0;
-    
-    public void increment(){
+
+    public void increment() {
         super.increment();
         value++;
         System.out.println(value);
     }
-    
+
     /**
      * 闭包调用外部类
-     * @author SONGDAN
      *
+     * @author SONGDAN
      */
-    private class Closure implements Incrementable{
+    private class Closure implements Incrementable {
 
         @Override
         public void increment() {
             Callee2.this.increment();
         }
-        
+
     }
-    
-    Incrementable getCallbackReference(){
+
+    Incrementable getCallbackReference() {
         return new Closure();
     }
 }
 
-class Caller{
+class Caller {
+
     private Incrementable callbackReference;
-    Caller(Incrementable cbh){
-        callbackReference=cbh;
+
+    Caller(Incrementable cbh) {
+        callbackReference = cbh;
     }
-    void go(){
+
+    void go() {
         callbackReference.increment();
     }
 }

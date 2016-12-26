@@ -5,6 +5,7 @@ import org.songdan.tij.random.RandomUtil;
 import java.util.concurrent.*;
 
 /**
+ * 生产者消费者Demo
  * @author Songdan
  * @date 2016/5/9
  */
@@ -80,7 +81,7 @@ class Consumor implements Runnable {
     public void run() {
         try {
             String o = "";
-            while ((o = repository.get())!=null) {
+            while ((o = repository.get()) != null) {
                 System.out.println(Thread.currentThread() + "consumer " + o);
                 Thread.sleep(1000);
             }

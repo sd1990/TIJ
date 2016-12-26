@@ -6,6 +6,7 @@ import java.util.concurrent.*;
 
 /**
  * 使用栅栏锁存器实现 计算运行时间的功能
+ *
  * @author Songdan
  * @date 2016/5/9
  */
@@ -32,7 +33,7 @@ public class CountDownTimeWithCyclic {
                     System.out.println(horse.tracks());
                 }
                 for (Horse horse : horses) {
-                    if (horse.getStrides()>=count) {
+                    if (horse.getStrides() >= count) {
                         endTime[0] = System.nanoTime();
                         end.countDown();
                         executor.shutdownNow();
@@ -50,7 +51,6 @@ public class CountDownTimeWithCyclic {
         end.await();
         return endTime[0] - startTime;
     }
-
 
     public static void main(String[] args) throws InterruptedException, BrokenBarrierException {
         long time = time(Executors.newFixedThreadPool(5), 5);
