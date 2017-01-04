@@ -24,9 +24,9 @@ public final class RandomUtil {
      *
      * @return 16位字符串
      */
-    public static String getRandom16String() {
+    public static String getRandomString(int length) {
         String md5Value = Security.MD5Encode(getUUIDString());
-        String shortMD5Value = md5Value.substring(8, 24).toUpperCase();
+        String shortMD5Value = md5Value.substring(0, length).toUpperCase();
         return shortMD5Value;
     }
 }

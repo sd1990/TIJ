@@ -56,7 +56,7 @@ class Producer implements Runnable {
     public void run() {
         try {
             while (true) {
-                String o = String.valueOf(RandomUtil.getRandom16String());
+                String o = String.valueOf(RandomUtil.getRandomString(6));
                 System.out.println(Thread.currentThread() + "producer " + o);
                 repository.store(o);
                 Thread.sleep(1000);

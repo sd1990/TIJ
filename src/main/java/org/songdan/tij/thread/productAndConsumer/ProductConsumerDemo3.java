@@ -67,7 +67,7 @@ class Product implements Runnable {
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
-            String t = RandomUtil.getRandom16String();
+            String t = RandomUtil.getRandomString(6);
             try {
                 System.out.println("product " + t);
                 queue.put(t);
