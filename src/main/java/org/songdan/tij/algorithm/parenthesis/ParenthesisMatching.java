@@ -91,9 +91,45 @@ public class ParenthesisMatching {
         return stack.isEmpty();
     }
 
+    public static boolean groupCheckByReplace(String s) {
+        int len;
+        do {
+            len = s.length();
+            s = s.replace("()", "");
+            s = s.replace("{}", "");
+            s = s.replace("[]", "");
+        } while (len != s.length());
+        return s.length() == 0;
+    }
+
+    public static boolean groupCheckOld(String s){
+        Stack<Character> stack = new Stack<Character>();
+        try {
+            for(char c:s.toCharArray()) {
+                if (c == '(')
+                    stack.push(')');
+                else if (c == '[')
+                    stack.push(']');
+                else if (c == '{')
+                    stack.push('}');
+                else if ( c == ')' || c == ']' || c == '}') {
+                    char top = stack.pop();
+                    if (top != c) return false;
+                }
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return stack.isEmpty();
+    }
+
     public static void main(String[] args) {
         System.out.println(check("{[(())()]}"));
+        System.out.println(check("(("));
         System.out.println(groupCheck("{[(())()]}"));
+        System.out.println(groupCheck("(("));
+        System.out.println(groupCheckByReplace("{[(())()]}"));
+        System.out.println(groupCheckByReplace("(("));
     }
 
 }
