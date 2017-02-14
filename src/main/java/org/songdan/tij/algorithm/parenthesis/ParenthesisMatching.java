@@ -34,27 +34,21 @@ public class ParenthesisMatching {
                     stack.push(parenthesise);
                     break;
                 case SMALL_RIGHT:
-                    String peek = stack.peek();
-                    if (SMALL_LEFT.equals(peek)) {
-                        stack.pop();
+                    if (SMALL_LEFT.equals(stack.pop())) {
                         break;
                     }
                     else {
                         return false;
                     }
                 case SQUARE_RIGHT:
-                    peek = stack.peek();
-                    if (SQUARE_LEFT.equals(peek)) {
-                        stack.pop();
+                    if (SQUARE_LEFT.equals(stack.pop())) {
                         break;
                     }
                     else {
                         return false;
                     }
                 case BRACE_RIGHT:
-                    peek = stack.peek();
-                    if (BRACE_LEFT.equals(peek)) {
-                        stack.pop();
+                    if (BRACE_LEFT.equals(stack.pop())) {
                         break;
                     }
                     else {
@@ -64,11 +58,42 @@ public class ParenthesisMatching {
                     break;
             }
         }
-        return true;
+        return stack.isEmpty();
+    }
+
+    public static boolean groupCheck(String parenthesisStr) {
+        if (parenthesisStr.length()%2!=0) {
+            return false;
+        }
+        Stack<String> stack = new Stack<>();
+        for (String parenthesis : parenthesisStr.split("")) {
+            switch (parenthesis) {
+                case SMALL_LEFT:
+                    stack.push(SMALL_RIGHT);
+                    break;
+                case SQUARE_LEFT:
+                    stack.push(SQUARE_RIGHT);
+                    break;
+                case BRACE_LEFT:
+                    stack.push(BRACE_RIGHT);
+                    break;
+                case SMALL_RIGHT:
+                case SQUARE_RIGHT:
+                case BRACE_RIGHT:
+                    if (!parenthesis.equals(stack.pop())) {
+                        return false;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return stack.isEmpty();
     }
 
     public static void main(String[] args) {
-        System.out.println(check("{[(()]}"));
+        System.out.println(check("{[(())()]}"));
+        System.out.println(groupCheck("{[(())()]}"));
     }
 
 }
