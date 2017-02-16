@@ -84,6 +84,26 @@ public class Algorithms {
             quickSortInner(arr, i + 1, right);
         }
 
+        /**
+         * 桶排序，需要确定数据的范围，浪费空间，数据要求必须为大于等于0的正整数
+         * @param arr
+         */
+        public static void bucketSort(int[] arr,int range) {
+            int[] book = new int[range];
+            for (int i : arr) {
+                book[i]++;
+            }
+            for (int i = 0,j=0; i < book.length; i++) {
+                int count = book[i];
+                if (count !=0) {
+                    for (int k = 0; k < count; k++) {
+                        arr[j] = i;
+                        j++;
+                    }
+                }
+            }
+        }
+
         private static void swap(int[] arr, int j, int i) {
             int temp = arr[j];
             arr[j] = arr[i];
@@ -91,13 +111,13 @@ public class Algorithms {
         }
 
         public static String toString(int[] arr) {
-            StringBuilder builder = new StringBuilder();
+            StringBuilder builder = new StringBuilder("[");
             for (int i = 0; i < arr.length; i++) {
 
                 if (i == arr.length - 1) {
-                    builder.append(arr[i]);
+                    builder.append(arr[i]).append("]");
                 } else {
-                    builder.append(arr[i]);
+                    builder.append(arr[i]).append(",");
             }
             }
             return builder.toString();
@@ -111,13 +131,27 @@ public class Algorithms {
         }
 
         public static void main(String[] args) {
-            int[] arr = new int[10];
+            int[] arr = new int[1000];
             fillArray(arr);
             System.out.println(toString(arr));
             long startTime = System.nanoTime();
             // bubbleSort(arr);
             // selectSort(arr);
             quickSort(arr);
+            System.out.println("time : " + (System.nanoTime() - startTime));
+            System.out.println(toString(arr));
+            fillArray(arr);
+            startTime = System.nanoTime();
+            // bubbleSort(arr);
+            // selectSort(arr);
+            bucketSort(arr,100);
+            System.out.println("time : " + (System.nanoTime() - startTime));
+            System.out.println(toString(arr));
+            fillArray(arr);
+            startTime = System.nanoTime();
+            bubbleSort(arr);
+            // selectSort(arr);
+//            bucketSort(arr,100);
             System.out.println("time : " + (System.nanoTime() - startTime));
             System.out.println(toString(arr));
         }
