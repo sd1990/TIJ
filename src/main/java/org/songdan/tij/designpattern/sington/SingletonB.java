@@ -1,7 +1,7 @@
 package org.songdan.tij.designpattern.sington;
 
 /**
- * 单例模式懒汉式
+ * 单例模式懒汉式,在1.5之前多线程使用，有风险，没有对实例进行volatile修饰
  * @author SONGDAN
  *
  */

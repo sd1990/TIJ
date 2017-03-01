@@ -1,5 +1,7 @@
 package org.songdan.tij.string;
 
+import java.text.MessageFormat;
+
 public class StringDemo {
 
     public static String unescapeBackslash(String oldStr) {
@@ -38,5 +40,16 @@ public class StringDemo {
 
         }
         return sb.toString();
+    }
+
+    public static void format() {
+        String template1 = "hello ,! My name is {1}";
+        System.out.println(String.format(template1,"宋丹","谢静"));
+        String template = "hello ,{0}! My name is {1}";
+        System.out.println(MessageFormat.format(template,"宋丹","谢静"));
+    }
+
+    public static void main(String[] args) {
+        format();
     }
 }

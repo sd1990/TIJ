@@ -1,36 +1,14 @@
 package org.songdan.tij.holding;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class ListDemo {
 
     /**
      * @param args
      */
-    public static void main(String[] args) {
-        /*Person p1 = new Person("zhangsan",10);
-        Person p2 = new Person("lisi",11);
-        List<Person> list = new ArrayList<Person>();
-        list.add(p1);
-        list.add(p2);
-        Person p3 = new Person("zhangsan2",10);
-        System.out.println(list.contains(p3));
-        System.out.println(list.remove(p3));
-        list.add(p3);
-        Collections.shuffle(list);
-        List<Person> subList = list.subList(0, 1);
-        System.out.println(subList.get(0));
-        System.out.println(list);
-        Person p = null;
-        for (int i = 0; i < 10; i++) {
-            p=new Person("songdan"+i, i+10);
-            list.add(p);
-        }
-        System.out.println(list);*/
-
+    public static void main(String[] args) throws InterruptedException {
         ArrayList<String> list = new ArrayList<>(Arrays.asList("aaa", "abc", "bbb", "aaa", "fds"));
         List<String> copyList = new ArrayList<>(list);
         for (String string : copyList) {
@@ -42,6 +20,9 @@ public class ListDemo {
 
         }
         System.out.println(list);
+        System.out.println(copyList);
+        testReference();
+        testQueueReference();
         //        System.out.println(remove(list));
     }
 
@@ -57,5 +38,25 @@ public class ListDemo {
             }
         }
         return list;
+    }
+
+    public static void testReference() {
+        List<Person> persons = new ArrayList<>();
+        Person person = new Person();
+        person.setName("songdan");
+        persons.add(person);
+        System.out.println(persons);
+        person.setName("liuyong");
+        System.out.println(persons);
+    }
+
+    public static void testQueueReference() throws InterruptedException {
+        LinkedBlockingQueue<Person> persons = new LinkedBlockingQueue<>();
+        Person person = new Person();
+        person.setName("songdan");
+        persons.put(person);
+        System.out.println(persons);
+        person.setName("liuyong");
+        System.out.println(persons);
     }
 }
