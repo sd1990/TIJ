@@ -1,5 +1,7 @@
 package org.songdan.tij.string;
 
+import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.text.MessageFormat;
 
 public class StringDemo {
@@ -50,6 +52,10 @@ public class StringDemo {
     }
 
     public static void main(String[] args) {
-        format();
+//        format();
+        System.out.println("我是一个中国人".split("")[0]);
+        System.out.println(String.format("%040x",new BigInteger(1,"12754".getBytes(Charset.forName("UTF-8")))));
+        System.out.println(String.format("%x",new BigInteger(1,"12754".getBytes(Charset.forName("UTF-8")))));
+
     }
 }

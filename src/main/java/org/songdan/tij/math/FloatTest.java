@@ -1,8 +1,6 @@
 package org.songdan.tij.math;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 /**
  * 字符串测试类
@@ -13,7 +11,7 @@ import java.text.NumberFormat;
 public class FloatTest {
 
     public static void main(String[] args) {
-        System.out.println(1.0 - 1);
+/*        System.out.println(1.0 - 1);
         float f1 = 1.235f;
         // method 1 
         System.out.println(((int) (f1 * 100)) / 100d);
@@ -26,6 +24,8 @@ public class FloatTest {
         System.out.println(decimal.setScale(2, BigDecimal.ROUND_HALF_UP).toString());
         //method 5 
         NumberFormat format = new DecimalFormat("#.##");
-        System.out.println(format.format(f1));
+        System.out.println(format.format(f1));*/
+        BigDecimal percentage = new BigDecimal("17%");
+        System.out.println(percentage);
     }
 }
