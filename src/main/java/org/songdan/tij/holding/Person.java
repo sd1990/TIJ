@@ -32,29 +32,27 @@ public class Person {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Person person = (Person) o;
+
+        if (age != person.age)
+            return false;
+        if (name != null ? !name.equals(person.name) : person.name != null)
+            return false;
+
+        return true;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (this == obj) {
-            return true;
-        }
-        if (!Person.class.isInstance(obj)) {
-            return false;
-        }
-        Person p = (Person) obj;
-        if (hashCode() == p.hashCode()) {
-            return true;
-        }
-        else {
-            return false;
-        }
-
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + age;
+        return result;
     }
 
     @Override

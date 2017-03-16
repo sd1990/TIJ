@@ -7,6 +7,12 @@ public class Person {
     public Person(String name) {
         super();
         System.out.println("name is : " + name);
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "person.name is "+name;
     }
 
     public static void main(String[] args) {
