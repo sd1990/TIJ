@@ -4,7 +4,16 @@
 	<groupId>org.songdan</groupId>
 	<artifactId>TIJ</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<modules>
+		<module>base</module>
+		<module>designpattern</module>
+		<module>algorithm</module>
+		<module>jvm</module>
+		<module>effective-java</module>
+		<module>interview</module>
+		<module>codewars</module>
+	</modules>
+	<packaging>pom</packaging>
 	<description />
 
 	<dependencies>
