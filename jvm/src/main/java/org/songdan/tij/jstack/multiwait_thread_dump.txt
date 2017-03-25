@@ -1,0 +1,24 @@
+"wait_thread_2" #13 prio=5 os_prio=0 tid=0x0000000019785000 nid=0x3658 waiting for monitor entry [0x000000001a3df000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.songdan.tij.jstack.MultiWaitThread.lambda$main$2(MultiWaitThread.java:36)
+        - waiting to lock <0x00000000d5cff800> (a java.lang.Object)
+        at org.songdan.tij.jstack.MultiWaitThread$$Lambda$3/1078694789.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:745)
+
+"notify_thread" #12 prio=5 os_prio=0 tid=0x0000000019771000 nid=0x2fec runnable [0x000000001a2df000]
+   java.lang.Thread.State: RUNNABLE
+        at org.songdan.tij.jstack.WorkTime.workTime(WorkTime.java:11)
+        at org.songdan.tij.jstack.MultiWaitThread.lambda$main$1(MultiWaitThread.java:27)
+        - locked <0x00000000d5cff800> (a java.lang.Object)
+        at org.songdan.tij.jstack.MultiWaitThread$$Lambda$2/1096979270.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:745)
+
+"wait_thread_1" #11 prio=5 os_prio=0 tid=0x0000000019770000 nid=0x1f20 in Object.wait() [0x000000001a1df000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        - waiting on <0x00000000d5cff800> (a java.lang.Object)
+        at org.songdan.tij.jstack.MultiWaitThread.lambda$main$0(MultiWaitThread.java:16)
+        - locked <0x00000000d5cff800> (a java.lang.Object)
+        at org.songdan.tij.jstack.MultiWaitThread$$Lambda$1/1324119927.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:745)
+
