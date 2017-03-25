@@ -1,0 +1,109 @@
+Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.91-b14 mixed mode):
+
+"DestroyJavaVM" #13 prio=5 os_prio=0 tid=0x000000000218e000 nid=0x2618 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"thread-b" #12 prio=5 os_prio=0 tid=0x00000000189f2800 nid=0x3530 waiting for monitor entry [0x000000001952f000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.songdan.tij.jstack.DeadLockThread.lambda$main$1(DeadLockThread.java:30)
+        - waiting to lock <0x00000000d5cff248> (a java.lang.Object)
+        - locked <0x00000000d5cff258> (a java.lang.Object)
+        at org.songdan.tij.jstack.DeadLockThread$$Lambda$2/1096979270.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:745)
+
+"thread-a" #11 prio=5 os_prio=0 tid=0x00000000189f1800 nid=0x3598 waiting for monitor entry [0x000000001942f000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.songdan.tij.jstack.DeadLockThread.lambda$main$0(DeadLockThread.java:19)
+        - waiting to lock <0x00000000d5cff258> (a java.lang.Object)
+        - locked <0x00000000d5cff248> (a java.lang.Object)
+        at org.songdan.tij.jstack.DeadLockThread$$Lambda$1/1324119927.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:745)
+
+"Monitor Ctrl-Break" #10 daemon prio=5 os_prio=0 tid=0x000000001876d800 nid=0x3558 runnable [0x000000001927e000]
+   java.lang.Thread.State: RUNNABLE
+        at java.net.DualStackPlainSocketImpl.accept0(Native Method)
+        at java.net.DualStackPlainSocketImpl.socketAccept(DualStackPlainSocketImpl.java:131)
+        at java.net.AbstractPlainSocketImpl.accept(AbstractPlainSocketImpl.java:409)
+        at java.net.PlainSocketImpl.accept(PlainSocketImpl.java:199)
+        - locked <0x00000000d5df56d8> (a java.net.SocksSocketImpl)
+        at java.net.ServerSocket.implAccept(ServerSocket.java:545)
+        at java.net.ServerSocket.accept(ServerSocket.java:513)
+        at com.intellij.rt.execution.application.AppMain$1.run(AppMain.java:85)
+        at java.lang.Thread.run(Thread.java:745)
+
+"Service Thread" #9 daemon prio=9 os_prio=0 tid=0x00000000186da800 nid=0x33a4 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C1 CompilerThread2" #8 daemon prio=9 os_prio=2 tid=0x0000000018669800 nid=0x2e64 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread1" #7 daemon prio=9 os_prio=2 tid=0x0000000018659000 nid=0x1a14 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread0" #6 daemon prio=9 os_prio=2 tid=0x00000000172ec000 nid=0x15bc waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Attach Listener" #5 daemon prio=5 os_prio=2 tid=0x0000000018658800 nid=0x290c waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Signal Dispatcher" #4 daemon prio=9 os_prio=2 tid=0x000000001729e800 nid=0x2a70 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Finalizer" #3 daemon prio=8 os_prio=1 tid=0x000000000271b800 nid=0x25ec in Object.wait() [0x00000000185df000]
+   java.lang.Thread.State: WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        - waiting on <0x00000000d5c08ee0> (a java.lang.ref.ReferenceQueue$Lock)
+        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:143)
+        - locked <0x00000000d5c08ee0> (a java.lang.ref.ReferenceQueue$Lock)
+        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:164)
+        at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)
+
+"Reference Handler" #2 daemon prio=10 os_prio=2 tid=0x0000000017259000 nid=0xdc0 in Object.wait() [0x00000000184df000]
+   java.lang.Thread.State: WAITING (on object monitor)
+        at java.lang.Object.wait(Native Method)
+        - waiting on <0x00000000d5c06b50> (a java.lang.ref.Reference$Lock)
+        at java.lang.Object.wait(Object.java:502)
+        at java.lang.ref.Reference.tryHandlePending(Reference.java:191)
+        - locked <0x00000000d5c06b50> (a java.lang.ref.Reference$Lock)
+        at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)
+
+"VM Thread" os_prio=2 tid=0x0000000017257000 nid=0x2dd8 runnable
+
+"GC task thread#0 (ParallelGC)" os_prio=0 tid=0x0000000002637800 nid=0x24d0 runnable
+
+"GC task thread#1 (ParallelGC)" os_prio=0 tid=0x0000000002639000 nid=0x1d88 runnable
+
+"GC task thread#2 (ParallelGC)" os_prio=0 tid=0x000000000263a800 nid=0x2c74 runnable
+
+"GC task thread#3 (ParallelGC)" os_prio=0 tid=0x000000000263c000 nid=0x29fc runnable
+
+"VM Periodic Task Thread" os_prio=2 tid=0x00000000186ff800 nid=0x35a4 waiting on condition
+
+JNI global references: 320
+
+
+Found one Java-level deadlock:
+=============================
+"thread-b":
+  waiting to lock monitor 0x0000000002716778 (object 0x00000000d5cff248, a java.lang.Object),
+  which is held by "thread-a"
+"thread-a":
+  waiting to lock monitor 0x00000000027190b8 (object 0x00000000d5cff258, a java.lang.Object),
+  which is held by "thread-b"
+
+Java stack information for the threads listed above:
+===================================================
+"thread-b":
+        at org.songdan.tij.jstack.DeadLockThread.lambda$main$1(DeadLockThread.java:30)
+        - waiting to lock <0x00000000d5cff248> (a java.lang.Object)
+        - locked <0x00000000d5cff258> (a java.lang.Object)
+        at org.songdan.tij.jstack.DeadLockThread$$Lambda$2/1096979270.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:745)
+"thread-a":
+        at org.songdan.tij.jstack.DeadLockThread.lambda$main$0(DeadLockThread.java:19)
+        - waiting to lock <0x00000000d5cff258> (a java.lang.Object)
+        - locked <0x00000000d5cff248> (a java.lang.Object)
+        at org.songdan.tij.jstack.DeadLockThread$$Lambda$1/1324119927.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:745)
+
+Found 1 deadlock.

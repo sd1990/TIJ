@@ -1,0 +1,31 @@
+"thread-b" #12 prio=5 os_prio=0 tid=0x0000000018ca2000 nid=0xc50 waiting for monitor entry [0x00000000197af000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+        at org.songdan.tij.jstack.SynchronizedThread.lambda$main$1(SynchronizedThread.java:20)
+        - waiting to lock <0x0000000081408d38> (a java.lang.Object)
+        at org.songdan.tij.jstack.SynchronizedThread$$Lambda$2/1096979270.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:745)
+
+"thread-a" #11 prio=5 os_prio=0 tid=0x0000000018ca1800 nid=0x1968 runnable [0x00000000196af000]
+   java.lang.Thread.State: RUNNABLE
+        at java.io.FileOutputStream.writeBytes(Native Method)
+        at java.io.FileOutputStream.write(FileOutputStream.java:326)
+        at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+        at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+        - locked <0x0000000081430e28> (a java.io.BufferedOutputStream)
+        at java.io.PrintStream.write(PrintStream.java:482)
+        - locked <0x00000000814161e8> (a java.io.PrintStream)
+        at sun.nio.cs.StreamEncoder.writeBytes(StreamEncoder.java:221)
+        at sun.nio.cs.StreamEncoder.implFlushBuffer(StreamEncoder.java:291)
+        at sun.nio.cs.StreamEncoder.flushBuffer(StreamEncoder.java:104)
+        - locked <0x00000000814161a0> (a java.io.OutputStreamWriter)
+        at java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:185)
+        at java.io.PrintStream.write(PrintStream.java:527)
+        - eliminated <0x00000000814161e8> (a java.io.PrintStream)
+        at java.io.PrintStream.print(PrintStream.java:669)
+        at java.io.PrintStream.println(PrintStream.java:806)
+        - locked <0x00000000814161e8> (a java.io.PrintStream)
+        at org.songdan.tij.jstack.SynchronizedThread.lambda$main$0(SynchronizedThread.java:14)
+        - locked <0x0000000081408d38> (a java.lang.Object)
+        at org.songdan.tij.jstack.SynchronizedThread$$Lambda$1/1324119927.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:745)
+
