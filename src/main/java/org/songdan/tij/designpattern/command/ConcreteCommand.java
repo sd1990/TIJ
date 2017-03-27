@@ -8,12 +8,5 @@ public class ConcreteCommand implements Command {
 
     @Override
     public void execute() {
-        new Receiver() {
-
-            @Override
-            public void action() {
-
-            }
-        }.action();
     }
 }
