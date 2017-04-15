@@ -16,13 +16,4 @@ public class Invoker {
         command.execute();
     }
 
-    public static void main(String[] args) {
-        /*
-        命令模式将命令的调用者和命令的接收者解耦，命令的调用者不需要知道命令的实际执行者
-         */
-        Command command = new LightOnCommand();
-        Invoker invoker = new Invoker();
-        invoker.setCommand(command);
-        invoker.invoke();
-    }
 }
