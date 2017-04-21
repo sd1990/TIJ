@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 对内存溢出
+ * vm args: -Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=E:\github\TIJ\jvm\src\main\java\org\songdan\tij\oom\heapOOM.hprof
+ * 堆内存溢出
  * Created by SongDan on 2016/10/11.
  */
 public class HeapOOM {

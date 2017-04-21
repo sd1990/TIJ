@@ -1,0 +1,5 @@
+"normal_thread" #11 prio=5 os_prio=0 tid=0x00000000198c9000 nid=0xef4 runnable [0x000000001a2fe000]
+   java.lang.Thread.State: RUNNABLE
+        at org.songdan.tij.jstack.NormalThread.lambda$main$0(NormalThread.java:13)
+        at org.songdan.tij.jstack.NormalThread$$Lambda$1/990368553.run(Unknown Source)
+        at java.lang.Thread.run(Thread.java:745)
