@@ -5,7 +5,7 @@ package org.songdan.tij.exception;
  */
 public class A {
 
-    static B b = new B();
+//    static B b = new B();
 
     public static void main(String[] args) {
         //删除B的class文件，会导致由于ClassNotFoundException导致的NoClassDefFoundException
