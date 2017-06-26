@@ -64,14 +64,3 @@ public class NodeList<T> {
 
 }
 
-class Node<T>{
-
-    T t;
-
-    Node<T> next;
-
-    public Node(Node<T> next, T t) {
-        this.next = next;
-        this.t = t;
-    }
-}
