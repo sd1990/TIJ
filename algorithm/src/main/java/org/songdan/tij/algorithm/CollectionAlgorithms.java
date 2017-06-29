@@ -89,4 +89,31 @@ public class CollectionAlgorithms {
         }
         return resultList;
     }
+
+    /**
+     * 去除交集
+     */
+    public static <T> void removeInterSection(Collection<T> firstList,Collection<T> secondList){
+        Collection<T> insertSection = getInsertSection(firstList,secondList);
+        firstList.removeAll(insertSection);
+        secondList.removeAll(insertSection);
+    }
+
+    /**
+     * 获取交集
+     * @param firstList
+     * @param secondList
+     * @param <T>
+     * @return
+     */
+    public static <T> Collection<T> getInsertSection(Collection<T> firstList, Collection<T> secondList) {
+        List<T> insertSection = new ArrayList<>();
+        for (T t : firstList) {
+            if (secondList.contains(t)) {
+                insertSection.add(t);
+            }
+        }
+        return insertSection;
+    }
+
 }
