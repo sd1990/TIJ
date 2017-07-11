@@ -40,9 +40,10 @@ public class DemoModel {
         demo.setSecondProp("Beijing");
         String xml = JaxbUtil.convertToXml(demo);
         System.out.println(xml);
-        String converXML = "<DEMO><SECOND>Beijing</SECOND></DEMO>";
+        String converXML = "<DEMO><SECOND>Beijing</SECOND><THIRD>Beijing</THIRD></DEMO>";
 //        String converXML = "<DEMO><FIRST>China</FIRST><SECOND>Beijing</SECOND></DEMO>";
         DemoModel demoModel = JaxbUtil.convertToJavaBean(converXML, DemoModel.class);
         System.out.println(demoModel.getFirstProp());
+        System.out.println(demoModel.getSecondProp());
     }
 }
