@@ -3,6 +3,7 @@ package org.songdan.tij.holding.streams;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * @author Songdan
@@ -12,38 +13,25 @@ public class ForEachDemo {
 
     public static void main(String[] args) {
         List<Integer> originList = buildOriginList();
-
-        List<Integer> resultList = new ArrayList<>();
-
-        int count = sequentialCount(originList);
-        int parallelCount = parallelCount(originList);
-        System.out.println(count == parallelCount);
+        long start = System.currentTimeMillis();
+        long count = sequentialCount(originList);
+        System.out.println("sequence cost "+(System.currentTimeMillis()-start)+",count :"+count);
+        long start2 = System.currentTimeMillis();
+        long parallelCount = parallelCount(originList);
+        System.out.println("parallel cost "+(System.currentTimeMillis()-start2)+",count :"+parallelCount);
     }
 
-    private static int parallelCount(List<Integer> originList) {
-        List<Integer> countList = new ArrayList<>();
-        originList.parallelStream().forEach((num)-> {
-            if (num>100) {
-                countList.add(num);
-            }
-        });
-        return countList.size();
+    private static long sequentialCount(List<Integer> originList) {
+        return originList.stream().filter(num-> num > 100).count();
     }
 
-    private static int sequentialCount(List<Integer> originList) {
-        int sum = 0;
-        for (Integer integer : originList) {
-            if (integer > 100) {
-                sum++;
-            }
-        }
-        return sum;
+    private static long parallelCount(List<Integer> originList) {
+        return originList.parallelStream().filter(num-> num > 100).count();
     }
 
     private static List<Integer> buildOriginList() {
-        Random random = new Random();
         List<Integer> result = new ArrayList<>();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 1000000; i++) {
             result.add(i);
         }
         return result;
