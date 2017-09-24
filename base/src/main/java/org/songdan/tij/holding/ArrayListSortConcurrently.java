@@ -25,7 +25,6 @@ public class ArrayListSortConcurrently {
 			executor.execute(()->{
 				try {
 					countDownLatch.await();
-					System.out.println(Thread.currentThread().getName());
 					Collections.sort(integers);
 				}
 				catch (InterruptedException e) {
