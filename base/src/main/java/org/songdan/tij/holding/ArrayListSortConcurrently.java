@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * TODO completion javadoc.
+ * ArrayList 并发排序
  *
  * @author song dan
  * @since 24 九月 2017
@@ -18,6 +18,10 @@ public class ArrayListSortConcurrently {
 
 	public static void main(String[] args) {
 		ArrayList<Integer> integers = buildList();
+		/*此处的排序：第一是了模拟线上问题的场景
+		* 第二 如果不排序就会在排序的过程中抛出java.lang.IllegalArgumentException: Comparison method violates its general contract!
+		* 这个问题也是由于并发导致的
+		*/
 		integers.sort(null);
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 		ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 2, 30, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(100));
