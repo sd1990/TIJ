@@ -2,6 +2,7 @@ package org.songdan.tij.holding;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.CountDownLatch;
@@ -26,15 +27,8 @@ public class ArrayListSortConcurrently {
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 		ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 2, 30, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(100));
 		for (int i = 0; i < 2; i++) {
-			executor.execute(()->{
-				try {
-					countDownLatch.await();
-					Collections.sort(integers);
-				}
-				catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			});
+//			executor.execute(new ExceptionCode(countDownLatch,integers));
+			executor.execute(new ImproveCode(countDownLatch,integers));
 		}
 		countDownLatch.countDown();
 		try {
@@ -43,6 +37,58 @@ public class ArrayListSortConcurrently {
 		}
 		catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 异常代码
+	 */
+	static class ExceptionCode implements Runnable{
+
+		private CountDownLatch latch;
+
+		private List<Integer> list;
+
+		public ExceptionCode(CountDownLatch latch, List<Integer> list) {
+			this.latch = latch;
+			this.list = list;
+		}
+
+		@Override
+		public void run() {
+			try {
+				latch.await();
+				Collections.sort(list);
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * 改进后的代码
+	 */
+	static class ImproveCode implements Runnable{
+
+		private CountDownLatch latch;
+
+		private List<Integer> list;
+
+		public ImproveCode(CountDownLatch latch, List<Integer> list) {
+			this.latch = latch;
+			this.list = new ArrayList<>(list);
+		}
+
+		@Override
+		public void run() {
+			try {
+				latch.await();
+				Collections.sort(list);
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
