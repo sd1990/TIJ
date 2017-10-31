@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.songdan</groupId>
 	<artifactId>TIJ</artifactId>
@@ -14,7 +14,24 @@
 		<module>codewars</module>
 	</modules>
 	<packaging>pom</packaging>
-	<description />
+	<description/>
+
+	<properties>
+
+		<maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
+		<maven.war.plugin.version>3.0.0</maven.war.plugin.version>
+		<maven.install.plugin.version>2.5.2</maven.install.plugin.version>
+		<maven.deploy.plugin.version>2.8.2</maven.deploy.plugin.version>
+		<maven.compiler.plugin.version>3.6.0</maven.compiler.plugin.version>
+		<maven.source.plugin.version>3.0.1</maven.source.plugin.version>
+		<maven.buildnumber.plugin.version>1.4</maven.buildnumber.plugin.version>
+		<maven.resources.plugin.version>3.0.1</maven.resources.plugin.version>
+
+		<java.source.version>1.8</java.source.version>
+		<java.target.version>1.8</java.target.version>
+
+		<file.encoding>UTF-8</file.encoding>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -24,4 +41,28 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<build>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>${java.source.version}</source>
+					<target>${java.target.version}</target>
+					<encoding>${file.encoding}</encoding>
+					<compilerArgs>
+						<arg>-J-Duser.country=US</arg>
+						<arg>-version</arg>
+					</compilerArgs>
+					<debug>true</debug>
+					<fork>true</fork>
+				</configuration>
+			</plugin>
+		</plugins>
+
+
+	</build>
 </project>
