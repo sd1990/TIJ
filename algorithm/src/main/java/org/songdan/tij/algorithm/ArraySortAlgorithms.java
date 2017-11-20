@@ -1,5 +1,7 @@
 package org.songdan.tij.algorithm;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * 数组算法
  *
@@ -10,7 +12,7 @@ public interface ArraySortAlgorithms {
 
 	void sort(int[] arr);
 
-	static class ArrayUtil{
+	class ArrayUtil{
 
 		static void swap(int[] arr, int i, int j) {
 			int temp = arr[i];
@@ -18,9 +20,21 @@ public interface ArraySortAlgorithms {
 			arr[j] = temp;
 		}
 
+		static String toString(int[] arr) {
+
+			StringBuilder builder = new StringBuilder();
+			for (int i : arr) {
+				builder.append(i).append(",");
+			}
+			String result = builder.toString();
+			return result.substring(0,result.length()-1);
+
+		}
+
+
 	}
 
-	public static class QuickSortAlgorithms implements ArraySortAlgorithms{
+	public static class WrongQuickSortAlgorithms implements ArraySortAlgorithms{
 
 		@Override
 		public void sort(int[] arr) {
@@ -28,22 +42,29 @@ public interface ArraySortAlgorithms {
 		}
 
 		private void quickSort(int[] arr, int left, int right) {
+			if (left >= right) {
+				return;
+			}
 			int contrast = arr[left];
 			int i = left;
 			int j = right;
 			while (i != j) {
-				for (;i<j && arr[i] < contrast; i++) {
+				//错误写法，从左边开始，会在即将进行外层交换的时候，遇到大于contrast的数字
+				for (;i<j && arr[i] <= contrast; i++) {
 
 				}
-				for (;i<j && arr[j] > contrast;j--) {
+				for (;i<j && arr[j] >= contrast;j--) {
 
 				}
 				if (i < j) {
 					ArrayUtil.swap(arr, i, j);
+					System.out.println(ArrayUtil.toString(arr));
 				}
 			}
 			//交换i和contrat
+			System.out.println("=======swap======");
 			ArrayUtil.swap(arr, left, i);
+			System.out.println(ArrayUtil.toString(arr));
 			//分治
 			quickSort(arr, 0, i - 1);
 			quickSort(arr, i+1, left);
@@ -53,14 +74,21 @@ public interface ArraySortAlgorithms {
 	}
 
 	public static void main(String[] args) {
-		ArraySortAlgorithms algorithms = new QuickSortAlgorithms();
+		ArraySortAlgorithms algorithms = new WrongQuickSortAlgorithms();
 		int[] arr = generate();
+		System.out.println(ArrayUtil.toString(arr));
 		algorithms.sort(arr);
-		
+		System.out.println(ArrayUtil.toString(arr));
+
 	}
 
-	private static int[] generate() {
-		return null;
+	static int[] generate() {
+		int[] arr = new int[10];
+		ThreadLocalRandom rand = ThreadLocalRandom.current();
+		for (int i = 0; i < 10; i++) {
+			arr[i] = rand.nextInt(10);
+		}
+		return arr;
 	}
 
 }
