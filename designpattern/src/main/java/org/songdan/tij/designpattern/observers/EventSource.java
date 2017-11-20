@@ -24,9 +24,9 @@ public class EventSource {
 	public static void main(String[] args) {
 		HelloWorldEventListener helloWorldEventListener = new HelloWorldEventListener();
 		DoActualEventListener doActualEventListener = new DoActualEventListener();
-		helloWorldEventListener.register(TaskEvent.CREATE);
-		helloWorldEventListener.register(TaskEvent.ACCEPT);
-		doActualEventListener.register(TaskEvent.ACCEPT);
+//		helloWorldEventListener.register(TaskEvent.CREATE);
+//		helloWorldEventListener.register(TaskEvent.ACCEPT);
+//		doActualEventListener.register(TaskEvent.ACCEPT);
 		EventContext<Task> eventContext = generateEvent(TaskEvent.CREATE);
 		consume(eventContext);
 		EventContext<Task> eventContext2 = generateEvent(TaskEvent.ACCEPT);

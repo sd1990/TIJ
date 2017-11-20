@@ -6,7 +6,7 @@ package org.songdan.tij.designpattern.observers;
  * @author song dan
  * @since 02 十一月 2017
  */
-public class DoActualEventListener implements EventListener<Task> {
+public class DoActualEventListener extends EventListenerHelper<Task> {
 
 	@Override
 	public void onEvent(EventContext<Task> eventContext) {
@@ -14,7 +14,8 @@ public class DoActualEventListener implements EventListener<Task> {
 	}
 
 	@Override
-	public boolean register(Event<Task> event) {
-		return event.register(this);
+	protected void initRegister() {
+		register(TaskEvent.CREATE);
+		register(TaskEvent.ACCEPT);
 	}
 }

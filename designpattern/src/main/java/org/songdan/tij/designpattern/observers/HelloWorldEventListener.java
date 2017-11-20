@@ -6,7 +6,7 @@ package org.songdan.tij.designpattern.observers;
  * @author song dan
  * @since 02 十一月 2017
  */
-public class HelloWorldEventListener implements EventListener<Task>{
+public class HelloWorldEventListener extends EventListenerHelper<Task>{
 
 	@Override
 	public void onEvent(EventContext<Task> eventContext) {
@@ -14,9 +14,9 @@ public class HelloWorldEventListener implements EventListener<Task>{
 		System.out.println(eventContext.getEvent()+">>>"+eventContext.getTask().getName()+":hello world !!!");
 	}
 
-	@Override
-	public boolean register(Event<Task> event) {
-		return event.register(this);
-	}
 
+	@Override
+	protected void initRegister() {
+		register(TaskEvent.CREATE);
+	}
 }
