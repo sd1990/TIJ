@@ -49,7 +49,7 @@ public interface ArraySortAlgorithms {
 			int i = left;
 			int j = right;
 			while (i != j) {
-				//错误写法，从左边开始，会在即将进行外层交换的时候，遇到大于contrast的数字
+				//错误写法，从左边开始，在即将进行外层交换的时候，会遇到大于contrast的数字，将这个数字和contrast交换，违背了排序的原则
 				for (;i<j && arr[i] <= contrast; i++) {
 
 				}
