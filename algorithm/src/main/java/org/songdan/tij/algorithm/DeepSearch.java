@@ -22,6 +22,7 @@ public class DeepSearch {
 	}
 
 	public void dfs(int step) {
+		//所有的位置都放置了数字，退出
 		if (step > n) {
 			StringBuilder builder = new StringBuilder();
 			for (int buck : bucks) {
@@ -42,7 +43,6 @@ public class DeepSearch {
 				book[i] = 0;
 			}
 		}
-		return;
 	}
 
 	public static void main(String[] args) {
