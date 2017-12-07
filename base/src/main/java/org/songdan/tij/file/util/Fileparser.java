@@ -8,8 +8,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.StringJoiner;
 
 /**
  * TODO completion javadoc.
@@ -20,22 +24,26 @@ import java.util.Map;
 public class Fileparser {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		File file = new File("/Users/songdan/order_id.txt");
+		File file = new File("/Users/songdan/Desktop/sku.txt");
 		BufferedReader reader = null;
 		try {
 			System.out.println("读一整行:");
 			// 读取非汉字可用
 			// reader = new BufferedReader(new FileReader(file));
 			// 读汉字可用
+			Set<String> set = new LinkedHashSet<>();
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 			String str;
 			int line = 0;
 			StringBuilder builder = new StringBuilder();
 			while ((str = reader.readLine()) != null) {
 				line++;
-				builder.append("'"+str.trim()+"'").append(",");
+				set.add(str);
 			}
-			System.out.println(line);
+			for (String s : set) {
+				builder.append("'"+s.trim()+"'").append(",");
+			}
+			System.out.println(set.size());
 			System.out.println(builder.substring(0,builder.length()-1));
 		} catch (IOException e) {
 			e.printStackTrace();

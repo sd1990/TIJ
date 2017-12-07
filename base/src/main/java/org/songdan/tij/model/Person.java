@@ -1,12 +1,18 @@
 package org.songdan.tij.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class Person extends Object {
 
     private String name;
 
     private Integer age;
+
+    private Person father;
+
+    private List<Person> friends = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -24,6 +30,22 @@ public class Person extends Object {
         this.age = age;
     }
 
+    public Person getFather() {
+        return father;
+    }
+
+    public void setFather(Person father) {
+        this.father = father;
+    }
+
+    public void addFriend(Person friend) {
+        if (this.friends.contains(friend)) {
+            return;
+        }
+        this.friends.add(friend);
+//        friend.addFriend(this);
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -33,7 +55,7 @@ public class Person extends Object {
         return result;
     }
 
-    /*@Override
+    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -55,7 +77,7 @@ public class Person extends Object {
         else if (!name.equals(other.name))
             return false;
         return true;
-    }*/
+    }
     public static void main(String[] args) {
         HashSet<Person> hashSet = new HashSet<>();
         Person p1 = new Person();
