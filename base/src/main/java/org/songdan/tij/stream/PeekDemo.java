@@ -18,11 +18,21 @@ public class PeekDemo {
 			System.out.println(person);
 		}).findFirst();
 		System.out.println("================");
-		create().stream().peek(person -> {
+		List<Person> personList1 = create();
+		personList1.stream().peek(person -> {
 			System.out.println(person);
 		}).filter(person -> {
 			return person.getAge()>20;
 		}).findFirst();
+		System.out.println(personList1.size());
+
+		List<Person> personList = create();
+		final int[] count = {0};
+		personList.parallelStream().forEach(person -> {
+			count[0]++;
+			System.out.println(person.getName());
+		});
+		System.out.println(count[0]);
 	}
 
 	static List<Person> create() {

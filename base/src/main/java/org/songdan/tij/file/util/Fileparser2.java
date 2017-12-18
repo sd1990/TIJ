@@ -15,36 +15,39 @@ import java.io.InputStreamReader;
  */
 public class Fileparser2 {
 
-	public static void main(String[] args) throws FileNotFoundException {
-		File file = new File("/Users/songdan/bind_id.txt");
-		BufferedReader reader = null;
-		try {
-			System.out.println("读一整行:");
-			// 读取非汉字可用
-			// reader = new BufferedReader(new FileReader(file));
-			// 读汉字可用
-			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-			String str;
-			int line = 0;
-			StringBuilder builder = new StringBuilder();
-			while ((str = reader.readLine()) != null) {
-				line++;
-				String s = str.replaceAll("\\s+", "");
-				String[] split = s.split("\\|");
-				System.out.println(split[1]);
-			}
-			System.out.println(line);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (null != reader) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+    public static void main(String[] args) throws FileNotFoundException {
+        File file = new File("/Users/songdan/Desktop/shelf.txt");
+        BufferedReader reader = null;
+        try {
+            System.out.println("读一整行:");
+            // 读取非汉字可用
+            // reader = new BufferedReader(new FileReader(file));
+            // 读汉字可用
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            String str;
+            int line = 0;
+            StringBuilder builder = new StringBuilder();
+            while ((str = reader.readLine()) != null) {
+                line++;
+                // String s = str.replaceAll("\\s+", "");
+                String[] split = str.split("\\s+");
+                builder.append(
+                        String.format("update shelf_info set bach_entrepot_code = '%s' where bach_shelf_code = '%s';",
+                                split[0], split[1]))
+                        .append(System.lineSeparator());
+            }
+            System.out.println(builder.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != reader) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
 }

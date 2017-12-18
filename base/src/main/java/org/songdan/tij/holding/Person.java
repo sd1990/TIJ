@@ -6,6 +6,8 @@ public class Person {
 
     private int age;
 
+    private int weight;
+
     public Person() {
     }
 
@@ -29,6 +31,14 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     @Override
@@ -57,7 +67,10 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person [name=" + name + ", age=" + age + "]";
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", weight=" + weight +
+                '}';
     }
-
 }

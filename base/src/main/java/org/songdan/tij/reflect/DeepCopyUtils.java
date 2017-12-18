@@ -1,5 +1,9 @@
 package org.songdan.tij.reflect;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,6 +20,11 @@ import org.songdan.tij.model.Person;
 /**
  * deep copy
  * 不支持深copy相互引用的对象
+ * <pre>{@code
+ * Class A { B child; }
+ * Class B{ A parent; }
+ * }
+ * </pre>
  * @author song dan
  * @since 06 十二月 2017
  */
@@ -37,6 +46,23 @@ public class DeepCopyUtils {
         else {
             return ReflectionUtils.deepCopy(t);
         }
+    }
+
+    public static Object deepCopyWithSerialize(Object object) {
+        try {
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(object);
+            oos.flush();
+            ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
+            Object copy = ois.readObject();
+            return copy;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -115,7 +141,6 @@ public class DeepCopyUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(List.class.getInterfaces()[0]);
         Person xiaonuan = new Person();
         xiaonuan.setName("xiaonuan");
         xiaonuan.setAge(1);
@@ -131,6 +156,10 @@ public class DeepCopyUtils {
         Person copy = (Person) deepCopy(xiaonuan);
         System.out.println(copy== xiaonuan);
         System.out.println(copy.equals(xiaonuan));
+        Person target = (Person) deepCopyWithSerialize(xiaonuan);
+        System.out.println(target == xiaonuan);
+        System.out.println(target == copy);
+        System.out.println(target.equals(copy));
         /*Person copy = DeepCopyUtils.deepCopy(xiaonuan);
         System.out.println(copy== xiaonuan);
         System.out.println(copy.equals(xiaonuan));*/

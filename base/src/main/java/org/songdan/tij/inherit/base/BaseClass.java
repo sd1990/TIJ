@@ -19,9 +19,10 @@ public class BaseClass {
     public BaseClass() {
         super();
         System.out.println("base class construct begin ...");
+        System.out.println("this 引用在父类中的指向 ："+BaseClass.this);
         System.out.println("this 引用在父类中的指向 ："+this);
         System.out.println("this.p 字段在父类中的值为:" + this.p);
-        //禁止在父类构造函数中调用子类重写的方法，因为此时子类还没有完成初始化，会出现不可预知的结果
+        //FIXME 禁止在父类构造函数中调用子类重写的方法，因为此时子类还没有完成初始化，会出现不可预知的结果
         fun("");
         System.out.println("base object construct end ....");
     }

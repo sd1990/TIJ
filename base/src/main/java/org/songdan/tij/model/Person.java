@@ -1,10 +1,11 @@
 package org.songdan.tij.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class Person extends Object {
+public class Person extends Object implements Serializable {
 
     private String name;
 
