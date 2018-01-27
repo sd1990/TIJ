@@ -1,6 +1,7 @@
 package org.songdan.tij.algorithm.combination;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,10 +23,10 @@ public class Combination {
      * @param arr
      * @return
      */
-    public static List<List<Integer>> allCombination(List<Integer> arr) {
+    public static <R extends Comparable<R>> List<List<R>> allCombination(List<R> arr) {
         int length = arr.size();
         // 组合由多少个元素组成的
-        List<List<Integer>> result = new ArrayList<>();
+        List<List<R>> result = new ArrayList<>();
         int i = 1;
         while (i <= length) {
             // 生成i个元素的组合
@@ -42,7 +43,7 @@ public class Combination {
      * @param i 组合的元素个数
      * @return 组合集合
      */
-    private static List<List<Integer>> combinationSelect(List<Integer> arr, int i) {
+    private static <R extends Comparable<R>> List<List<R>> combinationSelect(List<R> arr, int i) {
         return new DFSCombination<>(arr, i).select();
     }
 
@@ -53,8 +54,19 @@ public class Combination {
         integers.add(3);
         integers.add(4);
         System.out.println(allCombination(integers));
-        // Set<String> select = new DFSCombination<>(integers, 1).select();
-        // System.out.println(select);
+        List<Coupon> couponList = new ArrayList<>();
+        couponList.add(new Coupon(1, "减10", 10));
+        couponList.add(new Coupon(2, "减10", 20));
+        couponList.add(new Coupon(3, "减10", 30));
+        List<List<Coupon>> allCombination = allCombination(couponList);
+        HashMap<String, Integer> map = new HashMap<>();
+        for (List<Coupon> coupons : allCombination) {
+            List<String> collect = coupons.stream().map(coupon -> String.valueOf(coupon.getId())).collect(Collectors.toList());
+            Integer sum = coupons.stream().map(Coupon::getAmount).mapToInt(Integer::intValue).sum();
+            map.put(String.join("-", collect), sum);
+        }
+        System.out.println(map);
+        
     }
 
     /**
@@ -127,6 +139,15 @@ public class Combination {
 
         private int amount;
 
+        public Coupon() {
+        }
+
+        public Coupon(int id, String name, int amount) {
+            this.id = id;
+            this.name = name;
+            this.amount = amount;
+        }
+
         public int getId() {
             return id;
         }
@@ -154,6 +175,14 @@ public class Combination {
         @Override
         public int compareTo(Coupon o) {
             return id - o.id;
+        }
+
+        @Override
+        public String toString() {
+            return "[" +
+                    "id=" + id +
+                    ", amount=" + amount +
+                    ']';
         }
     }
 
