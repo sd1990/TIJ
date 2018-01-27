@@ -3,6 +3,10 @@ package org.songdan.tij.string;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.songdan.tij.generics.Sets;
 
 public class StringDemo {
 
@@ -53,9 +57,21 @@ public class StringDemo {
 
     public static void main(String[] args) {
 //        format();
-        System.out.println("我是一个中国人".split("")[0]);
-        System.out.println(String.format("%040x",new BigInteger(1,"12754".getBytes(Charset.forName("UTF-8")))));
-        System.out.println(String.format("%x",new BigInteger(1,"12754".getBytes(Charset.forName("UTF-8")))));
+//        System.out.println("我是一个中国人".split("")[0]);
+//        System.out.println(String.format("%040x",new BigInteger(1,"12754".getBytes(Charset.forName("UTF-8")))));
+//        System.out.println(String.format("%x",new BigInteger(1,"12754".getBytes(Charset.forName("UTF-8")))));
+        String[] str = {"76010002","37010131","76010003","34070162","76010001","76010006","76010007","36020049","36020005","76010004","76010005","34030100","76010008","36020002","76010009","35020114","34050032","35010026","76020001","76020002","76020003","34010058","76020004","35010021","76020005","76020006","76020007","37020015","76020008","76020009","76030002","76010010","36030001","76030001","34070031","34070030","34050009","37010063","37010140","37010102","37010103","36030074","35010018","37010032","34070141","34070020","34070021","37010035","36020021","34070104","34050011","35020059","34070022","36030027","34040008","35020060","36030066","36030064","41050015","34050024","35020101","35020020","76040002","76040001","35020109","34070137","36020013","76040003","34070057","34070178","37010047","34070179","34070011","76050004","37020001","34080014","37020004","36030051","37020003","76050003","76050002","36030053","76050001"};
+        Set<String> bachSet = new HashSet<>();
+        for (String s : str) {
+            bachSet.add(s);
+        }
+        String skus = "33050005,33060001,34040125,34050009,34070010,34070011,34070030,34070141,34070199,34080074,35020020,35020059,36020003,36020049,36030027,36030053,37010032,37010047,37010063,37010103,37020001,40020010,40020012,66020005,66020017";
+        String[] skuArr = skus.split(",");
+        Set<String> skuSet = new HashSet<>();
+        for (String s : skuArr) {
+            skuSet.add(s);
+        }
 
+        System.out.println(Sets.intersection(skuSet,bachSet));
     }
 }

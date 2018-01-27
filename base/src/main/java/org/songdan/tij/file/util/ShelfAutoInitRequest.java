@@ -67,4 +67,26 @@ public class ShelfAutoInitRequest implements Serializable {
     public void setOperatorId(String operatorId) {
         this.operatorId = operatorId;
     }
+
+    private static class ActualAndExpectNumber{
+        private String actualNumber;
+
+        private String expectNumber;
+
+        public String getActualNumber() {
+            return actualNumber;
+        }
+
+        public void setActualNumber(String actualNumber) {
+            this.actualNumber = actualNumber;
+        }
+
+        public String getExpectNumber() {
+            return expectNumber;
+        }
+
+        public void setExpectNumber(String expectNumber) {
+            this.expectNumber = expectNumber;
+        }
+    }
 }

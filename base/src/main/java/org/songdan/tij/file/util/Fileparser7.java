@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.songdan.tij.generics.Sets;
+
 /**
  * TODO completion javadoc.
  *
@@ -18,22 +20,28 @@ import java.util.Set;
 public class Fileparser7 {
 
 	public static void main(String[] args) throws IOException, URISyntaxException {
-		File file = new File("/Users/songdan/Documents/cancel-order-shop.csv");
+		File file = new File("/Users/songdan/Desktop/sd-shelf2.csv");
+		File file2 = new File("/Users/songdan/Desktop/dzm-shelf2.csv");
 //		File opcFile = new File("/Users/songdan/Desktop/opc-all-shelf-code.csv");
 		BufferedReader reader = null;
-		BufferedReader opcReader = null;
+		BufferedReader reader2 = null;
 		try {
 			System.out.println("读一整行:");
 			// 读取非汉字可用
 			// reader = new BufferedReader(new FileReader(file));
 			// 读汉字可用
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			reader2 = new BufferedReader(new InputStreamReader(new FileInputStream(file2)));
 //			opcReader = new BufferedReader(new InputStreamReader(new FileInputStream(opcFile)));
-			Set<String> set = extractSingleStr(reader);
+			Set<String> set1 = extractSingleStr(reader);
+			System.out.println(set1.size());
+			Set<String> set2 = extractSingleStr(reader2);
+			System.out.println(set2.size());
+			Set<String> intersection = Sets.intersection(set1, set2);
+			String join = String.join(",", intersection);
 //			Set<String> opcSet = extractSingleStr(opcReader);
 //			Set<String> noSellSet = Sets.difference(opcSet, set);
 //			System.out.println(noSellSet.size());
-			String join = String.join(",", set);
 			System.out.println(join);
 		} catch (IOException e) {
 			e.printStackTrace();

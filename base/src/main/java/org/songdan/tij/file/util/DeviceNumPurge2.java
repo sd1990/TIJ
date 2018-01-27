@@ -9,11 +9,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import org.songdan.tij.generics.Sets;
 
 /**
  * TODO completion javadoc.
@@ -25,138 +29,27 @@ public class DeviceNumPurge2 {
 
     public static void main(String[] args) throws FileNotFoundException {
         purgeDevice();
-//        purge();
-    }
-
-    private static void purge() {
-        File cancelFile = new File("/Users/songdan/Desktop/cancel-device-bach.csv");
-        //线上设备数量
-        File opcDeviceNum = new File("/Users/songdan/Desktop/opc-shelf-device.csv");
-        BufferedReader opcCancelOrderReader = null;
-        BufferedReader opcDeviceNumberReader = null;
-        try {
-            System.out.println("读一整行:");
-            // 读取非汉字可用
-            // reader = new BufferedReader(new FileReader(file));
-            // 读汉字可用
-            String str;
-            StringBuilder deviceBuilder = new StringBuilder();
-            HashSet<String> bachOrderSet = new HashSet<>();
-            ArrayList<ShelfDevice> cancelDeviecList = new ArrayList<>();
-            opcCancelOrderReader = new BufferedReader(new InputStreamReader(new FileInputStream(cancelFile)));
-            while ((str = opcCancelOrderReader.readLine()) != null) {
-                if ("".equals(str)) {
-                    continue;
-                }
-                String[] strs = str.trim().split(",");
-                String id = strs[0];
-                bachOrderSet.add(id);
-                String shelfCode = strs[1];
-                String deviceTypeStr = strs[2];
-                if ("".equals(deviceTypeStr)) {
-                    continue;
-                }
-                String deviceNum = strs[3];
-
-                int deviceType = Integer.parseInt(deviceTypeStr);
-                ShelfDevice shelfDevice = new ShelfDevice(shelfCode, deviceType == 38 ? 1 : (deviceType == 39 ? 2 : 3),
-                        Integer.parseInt(deviceNum));
-
-                cancelDeviecList.add(shelfDevice);
-
-            }
-            System.out.println("all bach device size is " + cancelDeviecList.size());
-            System.out.println("all bach order size is "+bachOrderSet.size());
-
-            // 读取数据库里面的旧的设备数量
-            opcDeviceNumberReader = new BufferedReader(new InputStreamReader(new FileInputStream(opcDeviceNum)));
-            ArrayList<ShelfDevice> opcDeviceList = new ArrayList<>();
-            while ((str = opcDeviceNumberReader.readLine()) != null) {
-                if ("".equals(str)) {
-                    continue;
-                }
-                String[] strs = str.trim().split(",");
-                String shelfCode = strs[0];
-                String deviceTypeStr = strs[1];
-                if ("".equals(deviceTypeStr)) {
-                    continue;
-                }
-                String deviceNum = strs[2];
-
-                int deviceType = Integer.parseInt(deviceTypeStr);
-                ShelfDevice shelfDevice = new ShelfDevice(shelfCode, deviceType ,
-                        Integer.parseInt(deviceNum));
-
-                opcDeviceList.add(shelfDevice);
-
-            }
-
-            System.out.println("opc device size is " + opcDeviceList.size());
-
-            Map<ShelfDevice, Integer> cancelDeviecMap = cancelDeviecList.stream().collect(Collectors.toMap(Function.identity(), ShelfDevice::getNumber, (x1, x2) ->
-                    x1 + x2));
-            Map<ShelfDevice, Integer> opcDeviceMap = opcDeviceList.stream().collect(Collectors.toMap(Function.identity(), ShelfDevice::getNumber, (x1, x2) ->
-                    x1 + x2));
-            //FIXME
-            StringBuilder displayBuilder = new StringBuilder();
-            cancelDeviecMap.forEach(((shelfDevice, integer) -> {
-                int oldValue = opcDeviceMap.get(shelfDevice);
-                String deviceSql = String.format("update shelf_device_relation set device_number = %d where shop_code = '%s' and device_type = %d;", oldValue - shelfDevice.getNumber(), shelfDevice.getShelfCode(), shelfDevice.getDeviceType());
-                deviceBuilder.append(deviceSql).append(System.lineSeparator());
-
-                String sql = String.format(
-                        "update shelf_goods_relation set amount = ceil((amount*%d)/%d)  where shelf_code = '%s' and equipment_type = %d ;",
-                        (oldValue-shelfDevice.getNumber()),oldValue, shelfDevice.getShelfCode(), shelfDevice.getDeviceType());
-                displayBuilder.append(sql).append(System.lineSeparator());
-            }));
-            BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/songdan/Desktop/cancel-device-purge.sql"));
-            writer.write(deviceBuilder.toString());
-            writer.flush();
-            writer = new BufferedWriter(new FileWriter("/Users/songdan/Desktop/cancel-display-purge.sql"));
-            writer.write(displayBuilder.toString());
-            writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            /*if (null != excludeReader) {
-                try {
-                    excludeReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }*/
-        }
-    }
-
-    private static String getKey(ShelfDevice shelfDevice) {
-        return shelfDevice.getShelfCode() + "_" + shelfDevice.getDeviceType();
     }
 
     private static void purgeDevice() {
-        File file = new File("/Users/songdan/Desktop/27-opc-device.csv");
-        File allFile = new File("/Users/songdan/Desktop/20161226-bach.csv");
-//        File opcOrder = new File("/Users/songdan/Desktop/opc-order.csv");
-        File opcCancelOrder = new File("/Users/songdan/Desktop/cancel-order.csv");
-//        File opcDevice = new File("/Users/songdan/Desktop/opc-device-effect.csv");
+        File opcDevice = new File("/Users/songdan/Desktop/20171227-opc-device.csv");
+        File allFile = new File("/Users/songdan/Desktop/20171227-bach-device.csv");
         BufferedReader reader = null;
         BufferedReader allReader = null;
-//        BufferedReader opcOrderReader = null;
-        BufferedReader opcCancelOrderReader = null;
-//        BufferedReader opcDeviceReader = null;
         try {
             System.out.println("读一整行:");
-            // 读取非汉字可用
-//             reader = new BufferedReader(new FileReader(file));
-            // 读汉字可用
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            String[] filterStr = {"377000728","377000777","377001714","100004710","106003796","122005712","108761776","100072703","111002752", "122005752", "385000742", "385000754", "113011780", "113012739", "108000793", "108001710", "222000741", "222000720", "222000726", "222000747", "222000738", "222000731", "117002773", "170000781", "523000760", "107000705", "602000700", "100005725", "116002731", "125560795", "125003723", "100761722", "122004797", "102638751", "113271786", "115095724", "115002787", "123539764", "123010777"};
+            HashSet<String> filters = new HashSet<>();
+            for (String s : filterStr) {
+                filters.add(s);
+            }
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(opcDevice)));
             allReader = new BufferedReader(new InputStreamReader(new FileInputStream(allFile)));
-//            opcOrderReader = new BufferedReader(new InputStreamReader(new FileInputStream(opcOrder)));
-            opcCancelOrderReader = new BufferedReader(new InputStreamReader(new FileInputStream(opcCancelOrder)));
-//            opcDeviceReader = new BufferedReader(new InputStreamReader(new FileInputStream(opcDevice)));
             String str;
             StringBuilder builder = new StringBuilder();
             List<ShelfDevice> deviceList = new ArrayList<>();
             List<ShelfDevice> allDeviceList = new ArrayList<>();
+            //现有设备数量
             while ((str = reader.readLine()) != null) {
                 if ("".equals(str)) {
                     continue;
@@ -179,24 +72,12 @@ public class DeviceNumPurge2 {
             Map<ShelfDevice, Integer> opcDeviceMap = deviceList.stream().collect(Collectors.toMap(Function.identity(), ShelfDevice::getNumber, (x1, x2) ->
                     x1 + x2));
             //opc已经取消的数据
-            HashSet<String> opcCancelOrderSet = new HashSet<>();
-            while ((str = opcCancelOrderReader.readLine()) != null) {
-                if ("".equals(str)) {
-                    continue;
-                }
-                String[] strs = str.trim().split(",");
-                String id = strs[0];
-                opcCancelOrderSet.add(id);
-            }
-            System.out.println("opc cancel order size is " + opcCancelOrderSet.size());
             //全量bach订单数据
             HashSet<String> bachOrderSet = new HashSet<>();
+            String cancelOrderStr = "1200003690856460, 1200003526189148, 1200003568042870, 1200003616333015, 1200003504849028, 1200003516313908, 1200003594217369, 1200003660854686, 1200003631100651, 1200003638924770, 1200003622047283, 1200003675519661, 1200003623237584, 1200003630704978, 1200003537801417, 1200003627992525, 1200003497609852, 1200003432256493, 1200003602449805, 1200003671399763, 1200003610962969, 1200003563453673, 1200003675076938, 1200003580687515, 1200003525899717, 1200003661972393, 1200003568108113, 1200003616093463, 1200003580722851, 1200003675943656, 1200003601396533, 1200003581243697, 1200003583123467, 1200003687344964, 1200003593776878, 1200003547564169, 1200003594503454, 1200003605784610, 1200003573518340, 1200003578767379, 1200003602345628, 1200003508111259, 1200003570561642, 1200003604249205, 1200003565898980, 1200003510815133, 1200003648922414, 1200003574366841, 1200003626152889, 1200003548730027, 1200003602248446, 1200003642857001, 1200003625824705, 1200003592313505, 1200003531083672, 1200003677528227, 1200003512176876, 1200003527835798, 1200003513517818, 1200003666882517, 1200003620222136, 1200003659581848, 1200003622588766, 1200003606740842, 1200003662565153, 1200003598892118, 1200003563123782, 1200003667589964, 1200003683453797, 1200003539246094, 1200003595660396, 1200003560129373, 1200003615689315, 1200003506086792, 1200003563831361, 1200003670949125, 1200003530629276, 1200003585592668, 1200003649421844, 1200003690141842, 1200003615565955, 1200003587211870, 1200003648171839, 1200003585987869, 1200003575384991, 1200003589139898, 1200003565538556, 1200003565726466, 1200003605656596, 1200003671134962, 1200003444743871, 1200003510932180, 1200003673415530, 1200003658226443, 1200003533395419, 1200003595234958, 1200003575372770, 1200003616026043, 1200003470202875, 1200003523329611, 1200003689474445, 1200003605390798, 1200003474870056, 1200003399981625, 1200003567528632, 1200003685689868, 1200003612577755, 1200003643279969, 1200003642883775, 1200003456654482, 1200003542239054, 1200003623280574, 1200003649010663, 1200003624272637, 1200003680758147, 1200003657691329, 1200003614812865, 1200003593136241, 1200003663355306, 1200003532361755, 1200003559049447, 1200003566058004, 1200003511212164, 1200003490756968, 1200003554906506, 1200003566536027, 1200003585329923, 1200003638200998, 1200003584186854, 1200003581972747, 1200003463214537, 1200003502696063, 1200003529716871, 1200003578295571, 1200003494312568, 1200003591506376, 1200003557648173, 1200003657115216, 1200003607798715, 1200003562183902, 1200003647418992, 1200003558963170, 1200003566221423, 1200003580104133, 1200003490171504, 1200003429252252, 1200003597902131, 1200003584923198, 1200003574986496, 1200003664765622, 1200003565501672, 1200003539814691, 1200003611446508, 1200003688716267, 1200003608212386, 1200003584040074, 1200003619410041, 1200003436928909, 1200003574893016, 1200003570704461, 1200003557376377, 1200003603928507, 1200003596955427, 1200003563973898, 1200003548801931, 1200003575088798, 1200003536746539, 1200003632680094, 1200003571528804, 1200003531827611, 1200003578259433, 1200003609954502, 1200003481333242, 1200003681067022, 1200003564001363, 1200003651275753, 1200003490686439, 1200003567896172, 1200003614441284, 1200003683330334, 1200003596477769, 1200003614390441, 1200003566417815, 1200003626335135, 1200003608211015, 1200003593735555, 1200003374292034, 1200003583626670, 1200003591405301, 1200003625192297, 1200003524230229, 1200003586434513, 1200003515020687, 1200003555218381, 1200003612127390, 1200003651569050, 1200003574643043, 1200003457367154, 1200003617626146, 1200003496200878, 1200003639886422, 1200003564796269, 1200003624286300, 1200003588049898, 1200003594458406, 1200003568122576, 1200003400344493, 1200003594852441, 1200003548351817, 1200003505176708, 1200003436199307, 1200003660203549, 1200003522691106, 1200003549420412, 1200003619520286, 1200003513862864, 1200003690404363, 1200003571906306, 1200003579341044, 1200003525750793, 1200003521797413, 1200003643119108, 1200003594992619, 1200003677449223, 1200003532706553, 1200003387197411, 1200003494245326, 1200003672944753, 1200003583401469, 1200003494429376, 1200003607326438, 1200003678418518, 1200003569242760, 1200003622445921, 1200003674581757, 1200003485525259, 1200003678814976, 1200003619718499, 1200003554852739, 1200003689991157, 1200003527280045, 1200003573682685, 1200003649397775, 1200003395462249, 1200003508839725, 1200003528241940, 1200003599447910, 1200003514741371, 1200003612500269, 1200003598569238, 1200003581648641, 1200003675637340, 1200003688760376, 1200003567497984, 1200003569315081, 1200003586543855, 1200003650273430, 1200003592185498, 1200003513160608, 1200003595658593, 1200003595396312, 1200003595603627, 1200003603681997, 1200003643425256, 1200003668888079, 1200003570388354, 1200003627081073, 1200003634152924, 1200003496134991, 1200003672005938, 1200003682456486, 1200003411638839, 1200003687516892, 1200003450251158, 1200003595244000, 1200003412102120, 1200003574892725, 1200003586256896, 1200003479839580, 1200003613467005, 1200003581116509, 1200003566272117, 1200003573459318, 1200003569958372, 1200003600020087, 1200003620326008, 1200003572067697, 1200003622508351, 1200003566504710, 1200003618248034, 1200003613585523, 1200003521238525, 1200003566400744, 1200003492001433, 1200003636054791, 1200003641004318, 1200003544707849, 1200003362293429, 1200003488076125, 1200003663999845, 1200003568714276, 1200003651594071, 1200003688703202, 1200003667234685, 1200003557621410, 1200003561706374, 1200003560290121, 1200003662395826, 1200003516764035, 1200003642894969, 1200003469569824, 1200003570667928, 1200003610602059, 1200003581995153, 1200003587157318, 1200003590340546, 1200003646040475, 1200003659354735, 1200003574202249, 1200003666069477, 1200003477977568, 1200003498691302, 1200003670474933, 1200003577148366, 1200003604150757, 1200003594010322, 1200003640790635, 1200003585369053, 1200003623573451, 1200003395071309, 1200003523195396, 1200003631654530, 1200003437820145, 1200003504866109, 1200003569770460, 1200003642839962, 1200003463965350, 1200003586558732, 1200003606732525, 1200003561897103, 1200003597404385, 1200003619778095, 1200003570994532, 1200003634491995, 1200003689309075, 1200003471896467, 1200003618008813, 1200003583044278, 1200003471649167, 1200003686931000, 1200003558597730, 1200003645171340, 1200003504330375, 1200003570634604, 1200003568537305, 1200003626724239, 1200003448283878, 1200003606523954, 1200003622489101, 1200003547494536, 1200003495554671, 1200003642360571, 1200003519103060, 1200003607673923, 1200003561854454, 1200003661253739, 1200003635098070, 1200003677701599, 1200003500831286, 1200003627864991, 1200003563934141, 1200003614949404, 1200003449249511, 1200003496448669, 1200003537787568, 1200003647619803, 1200003570361271, 1200003561425320, 1200003573676705, 1200003587979803, 1200003375406096, 1200003617265683, 1200003521835027, 1200003591632026, 1200003623905287, 1200003556995922, 1200003594797101, 1200003649295902, 1200003634219137, 1200003621807566, 1200003630743323, 1200003611634294, 1200003607615917, 1200003689725625, 1200003640955003, 1200003677600137, 1200003662454247, 1200003573675824, 1200003565412995, 1200003485540717, 1200003645540077, 1200003601871462, 1200003660537285, 1200003623541130, 1200003511861483, 1200003663739507, 1200003635435669, 1200003604549586, 1200003558119418, 1200003678054153, 1200003364669038, 1200003629597736, 1200003501818347, 1200003547745643, 1200003575271443, 1200003589895777, 1200003593898974, 1200003591247516, 1200003626270012, 1200003588659887, 1200003594925932, 1200003457916194, 1200003671991895, 1200003592535375, 1200003575061561, 1200003601743260, 1200003605281464, 1200003592071526, 1200003549671125, 1200003560136224, 1200003690049153, 1200003488614186, 1200003594622467, 1200003586968538, 1200003587101796, 1200003576604402, 1200003641026073, 1200003636514919, 1200003664384539, 1200003591181990, 1200003666593561, 1200003646363475, 1200003584766965, 1200003573776614, 1200003563303603, 1200003503893154, 1200003560230078, 1200003571891549, 1200003490516753, 1200003558512502, 1200003624451232, 1200003355767725, 1200003677032580, 1200003586317187, 1200003621456720, 1200003588073685, 1200003567641974, 1200003510338731, 1200003526897055, 1200003645528107, 1200003661894469, 1200003626860748, 1200003587946121, 1200003586924361, 1200003589538581, 1200003617984131, 1200003555698958, 1200003494126375, 1200003599804474, 1200003602291232, 1200003623210843, 1200003595106004, 1200003506938086, 1200003568511986, 1200003573932931, 1200003515603685, 1200003613034463, 1200003675310390, 1200003567471263, 1200003576029463, 1200003555987217, 1200003574866384, 1200003563430541, 1200003596224425, 1200003516277952, 1200003628715169, 1200003618022416, 1200003570426154, 1200003591972986".replace(" ","");
+            String[] orderArr = cancelOrderStr.split(",");
             HashSet<String> cancelOrderSet = new HashSet<>();
-            String[] filterStr = {"377000728","377000777","377001714","100004710","106003796","122005712","108761776","100072703","111002752", "122005752", "385000742", "385000754", "113011780", "113012739", "108000793", "108001710", "222000741", "222000720", "222000726", "222000747", "222000738", "222000731", "117002773", "170000781", "523000760", "107000705", "602000700", "100005725", "116002731", "125560795", "125003723", "100761722", "122004797", "102638751", "113271786", "115095724", "115002787", "123539764", "123010777"};
-            HashSet<String> filters = new HashSet<>();
-            for (String s : filterStr) {
-                filters.add(s);
-            }
+            cancelOrderSet.addAll(Arrays.asList(orderArr));
             while ((str = allReader.readLine()) != null) {
                 if ("".equals(str)) {
                     continue;
@@ -204,11 +85,6 @@ public class DeviceNumPurge2 {
                 String[] strs = str.trim().split(",");
                 String id = strs[0];
                 bachOrderSet.add(id);
-                if (!opcCancelOrderSet.contains(id)) {
-                    //fei已取消的数据
-                    continue;
-                }
-                cancelOrderSet.add(id);
                 String shelfCode = strs[1];
                 String deviceTypeStr = strs[2];
                 if ("".equals(deviceTypeStr)) {
@@ -228,25 +104,7 @@ public class DeviceNumPurge2 {
             }
             System.out.println("all bach device size is " + allDeviceList.size());
             System.out.println(bachOrderSet.size());
-            System.out.println(cancelOrderSet.size());
-
-//            Set<String> orderDiffSet = Sets.intersection(opcCancelOrderSet, bachOrderSet);
-//
-//            System.out.println("diff size is :"+orderDiffSet.size());
-
-/*            for (String orderId : orderDiffSet) {
-                System.out.println(orderId);
-            }*/
-//            long count = deviceList.stream().map(shelfDevice -> "'" + shelfDevice.getShelfCode() + "'").distinct().count();
-//            System.out.println(count);
-//            System.out.println(allDeviceList.stream().map(shelfDevice -> "'" + shelfDevice.getShelfCode() + "'").distinct().count());
-            System.out.println(allDeviceList.stream().map(shelfDevice-> "'"+shelfDevice.getShelfCode()+"'").distinct().collect(Collectors.joining(",")));
-//            System.out.println(shelfCodes);
-
-//            Map<ShelfDevice, Integer> shelfDeviceIntegerMap = deviceList.stream()
-//                    .collect(Collectors.toMap(Function.identity(), ShelfDevice::getNumber, (x1, x2) -> {
-//                        return x1 + x2;
-//                    }));
+            System.out.println(Sets.difference(cancelOrderSet, bachOrderSet));
 
             Map<ShelfDevice, Integer> allDeviceMap = allDeviceList.stream().collect(Collectors.toMap(shelfDevice -> {
 //                System.out.println(shelfDevice);
@@ -255,38 +113,30 @@ public class DeviceNumPurge2 {
                 return x1 + x2;
             }));
 
-//            Set<ShelfDevice> difference = Sets.difference(allDeviceMap.keySet(), shelfDeviceIntegerMap.keySet());
-//            Set<ShelfDevice> inner = Sets.intersection(allDeviceMap.keySet(), shelfDeviceIntegerMap.keySet());
-//            for (ShelfDevice shelfDevice : allDeviceList) {
-//                Integer cj = shelfDeviceIntegerMap.get(shelfDevice);
-//                Integer zz = allDeviceMap.get(shelfDevice);
-//                if (zz != cj) {
-//                    System.out.println(shelfDevice+":zz->"+ zz);
-//                    System.out.println(shelfDevice+":cj->"+ cj);
-//                    String sql = String.format(
-//                            "update shelf_device_relation set device_number = device_number - %d where shop_code = '%s' and device_type = %d;",
-//                            zz-cj, shelfDevice.getShelfCode(), shelfDevice.getDeviceType());
-//                    builder.append(sql).append(System.lineSeparator());
-//                }
-//            }
-//            System.out.println("innner work size is " + inner.size());
-//            System.out.println("real work size is " + difference.size());
             StringBuilder displayBuilder = new StringBuilder();
+            final int[] sum = {0};
             allDeviceMap.forEach(((shelfDevice, integer) -> {
-//                if (difference.contains(shelfDevice)) {
+                //已修改的不修改
+                if (filters.contains(shelfDevice.getShelfCode())) {
+                    return;
+                }
                 Integer oldValue = opcDeviceMap.get(shelfDevice);
+                if (oldValue == null) {
+                    sum[0]++;
+                    return;
+                }
                 String sql = String.format("update shelf_device_relation set device_number = %d where shop_code = '%s' and device_type = %d;", oldValue - shelfDevice.getNumber(), shelfDevice.getShelfCode(), shelfDevice.getDeviceType());
                 builder.append(sql).append(System.lineSeparator());
                 String displaySql = String.format(
                         "update shelf_goods_relation set amount = ceil((amount*%d)/%d)  where shelf_code = '%s' and equipment_type = %d ;",
-                        (oldValue-shelfDevice.getNumber()),oldValue, shelfDevice.getShelfCode(), shelfDevice.getDeviceType());
+                        (oldValue-allDeviceMap.get(shelfDevice)),oldValue, shelfDevice.getShelfCode(), shelfDevice.getDeviceType());
                 displayBuilder.append(displaySql).append(System.lineSeparator());
-//                }
             }));
-            BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/songdan/Desktop/cancel-device.sql"));
+            System.out.println(sum[0]);
+            BufferedWriter writer = new BufferedWriter(new FileWriter("/Users/songdan/Desktop/20172718-cancel-device.sql"));
             writer.write(builder.toString());
             writer.flush();
-            writer = new BufferedWriter(new FileWriter("/Users/songdan/Desktop/cancel-display-purge2.sql"));
+            writer = new BufferedWriter(new FileWriter("/Users/songdan/Desktop/20172718-cancel-display-purge.sql"));
             writer.write(displayBuilder.toString());
             writer.flush();
         } catch (IOException e) {

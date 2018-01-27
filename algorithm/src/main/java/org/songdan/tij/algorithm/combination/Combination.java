@@ -2,9 +2,11 @@ package org.songdan.tij.algorithm.combination;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * TODO completion javadoc.
@@ -20,13 +22,13 @@ public class Combination {
      * @param arr
      * @return
      */
-    public static List<String> allCombination(int[] arr) {
-        int length = arr.length;
+    public static List<List<Integer>> allCombination(List<Integer> arr) {
+        int length = arr.size();
         // 组合由多少个元素组成的
-        List<String> result = new ArrayList<>();
+        List<List<Integer>> result = new ArrayList<>();
         int i = 1;
         while (i <= length) {
-            // 生成i类组合
+            // 生成i个元素的组合
             result.addAll(combinationSelect(arr, i));
             i++;
         }
@@ -40,74 +42,119 @@ public class Combination {
      * @param i 组合的元素个数
      * @return 组合集合
      */
-    private static List<String> combinationSelect(int[] arr, int i) {
-        return new ArrayList<>(new DFSCombination(arr, i).select());
+    private static List<List<Integer>> combinationSelect(List<Integer> arr, int i) {
+        return new DFSCombination<>(arr, i).select();
     }
 
     public static void main(String[] args) {
-
-        System.out.println(allCombination(new int[] { 1, 2, 3, 4, 5 }));
+        ArrayList<Integer> integers = new ArrayList<>();
+        integers.add(1);
+        integers.add(2);
+        integers.add(3);
+        integers.add(4);
+        System.out.println(allCombination(integers));
+        // Set<String> select = new DFSCombination<>(integers, 1).select();
+        // System.out.println(select);
     }
 
     /**
      * DFS实现组合
      */
-    private static class DFSCombination {
+    private static class DFSCombination<R extends Comparable<R>> {
+        // 标记元素是否已被组合
+        private Set<R> bookSet = new HashSet<>();
 
-        private Set<Integer> bookSet = new HashSet<>();
-
-        private int[] arr;
+        private List<R> arr;
 
         private int n;
 
-        private int[] bucks;
+        private Map<Integer, R> bucks;
 
-        private Set<String> result = new LinkedHashSet<>();
+        private List<List<R>> result = new ArrayList<>();
 
-        public DFSCombination(int[] arr, int n) {
+        public DFSCombination(List<R> arr, int n) {
             this.arr = arr;
             this.n = n;
-            bucks = new int[n];
+            bucks = new LinkedHashMap<>();
         }
 
-        private void dfs(int step) {
-            if (step == n) {
+        private void dfs(int index) {
+            if (index == n) {
                 // 说明组合数满了
-                result.add(arr2Str());
+                result.add(composite());
                 return;
             }
 
-            for (int i = 0; i < arr.length; i++) {
-                int num = arr[i];
-                if (!bookSet.contains(num)) {
-                    if (step > 0) {
+            for (int i = 0; i < arr.size(); i++) {
+                R element = arr.get(i);
+                if (!bookSet.contains(element)) {
+                    if (index > 0) {
                         // 保证一个组合的顺序,从小到大的顺序
-                        if (bucks[step - 1] > num) {
+                        R lastElement = bucks.get(index - 1);
+                        if (lastElement.compareTo(element) > 0) {
                             continue;
                         }
                     }
-                    bucks[step] = num;
-                    bookSet.add(num);
-                    dfs(step + 1);
-                    bookSet.remove(num);
+                    // 第几个位置放置什么元素
+                    bucks.put(index, element);
+                    bookSet.add(element);
+                    dfs(index + 1);
+                    bookSet.remove(element);
                 }
             }
 
         }
 
-        public Set<String> select() {
+        public List<List<R>> select() {
             dfs(0);
             return result;
         }
 
-        private String arr2Str() {
-            StringBuilder builder = new StringBuilder();
-            for (Integer num : bucks) {
-                builder.append(num).append("-");
-            }
-            return builder.substring(0, builder.length() - 1);
+        private List<R> composite() {
+            return bucks.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList());
         }
 
+    }
+
+    /**
+     * 优惠券
+     */
+    private static class Coupon implements Comparable<Coupon> {
+
+        private int id;
+
+        private String name;
+
+        private int amount;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getAmount() {
+            return amount;
+        }
+
+        public void setAmount(int amount) {
+            this.amount = amount;
+        }
+
+        @Override
+        public int compareTo(Coupon o) {
+            return id - o.id;
+        }
     }
 
 }

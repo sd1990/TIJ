@@ -6,6 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * TODO completion javadoc.
@@ -16,7 +19,7 @@ import java.io.InputStreamReader;
 public class Fileparser2 {
 
     public static void main(String[] args) throws FileNotFoundException {
-        File file = new File("/Users/songdan/Desktop/shelf.txt");
+        File file = new File("/Users/songdan/shelf_code.txt");
         BufferedReader reader = null;
         try {
             System.out.println("读一整行:");
@@ -25,18 +28,14 @@ public class Fileparser2 {
             // 读汉字可用
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             String str;
-            int line = 0;
-            StringBuilder builder = new StringBuilder();
+            Set<String> codeSet = new LinkedHashSet<>();
             while ((str = reader.readLine()) != null) {
-                line++;
                 // String s = str.replaceAll("\\s+", "");
                 String[] split = str.split("\\s+");
-                builder.append(
-                        String.format("update shelf_info set bach_entrepot_code = '%s' where bach_shelf_code = '%s';",
-                                split[0], split[1]))
-                        .append(System.lineSeparator());
+                codeSet.add(split[0]);
             }
-            System.out.println(builder.toString());
+            String result = String.join(",", codeSet);
+            System.out.println(result);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

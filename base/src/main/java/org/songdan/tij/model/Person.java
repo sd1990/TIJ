@@ -79,6 +79,15 @@ public class Person extends Object implements Serializable {
             return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
     public static void main(String[] args) {
         HashSet<Person> hashSet = new HashSet<>();
         Person p1 = new Person();
