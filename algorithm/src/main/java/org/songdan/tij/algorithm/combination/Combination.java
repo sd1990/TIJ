@@ -1,6 +1,8 @@
 package org.songdan.tij.algorithm.combination;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -59,14 +61,17 @@ public class Combination {
         couponList.add(new Coupon(2, "减10", 20));
         couponList.add(new Coupon(3, "减10", 30));
         List<List<Coupon>> allCombination = allCombination(couponList);
-        HashMap<String, Integer> map = new HashMap<>();
+        List<CompositeCoupon> list = new ArrayList<>();
         for (List<Coupon> coupons : allCombination) {
             List<String> collect = coupons.stream().map(coupon -> String.valueOf(coupon.getId())).collect(Collectors.toList());
             Integer sum = coupons.stream().map(Coupon::getAmount).mapToInt(Integer::intValue).sum();
-            map.put(String.join("-", collect), sum);
+            list.add(new CompositeCoupon(String.join("-", collect),sum));
         }
-        System.out.println(map);
+        list.sort((Comparator.comparingInt(CompositeCoupon::getCount)));
         
+        System.out.println(list);
+
+
     }
 
     /**
@@ -185,5 +190,33 @@ public class Combination {
                     ']';
         }
     }
+
+    private static class CompositeCoupon{
+        private String compositeId;
+
+        private Integer count;
+
+        public String getCompositeId() {
+            return compositeId;
+        }
+
+        public void setCompositeId(String compositeId) {
+            this.compositeId = compositeId;
+        }
+
+        public Integer getCount() {
+            return count;
+        }
+
+        public void setCount(Integer count) {
+            this.count = count;
+        }
+
+        public CompositeCoupon(String compositeId, Integer count) {
+            this.compositeId = compositeId;
+            this.count = count;
+        }
+    }
+
 
 }
