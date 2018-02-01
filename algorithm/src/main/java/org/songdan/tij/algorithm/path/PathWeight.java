@@ -83,27 +83,15 @@ public class PathWeight {
             return name;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getWeight() {
+		public int getWeight() {
             return weight;
         }
 
-        public void setWeight(int weight) {
-            this.weight = weight;
-        }
-
-        public List<Point> getReachablePoints() {
+		public List<Point> getReachablePoints() {
             return reachablePoints;
         }
 
-        public void setReachablePoints(List<Point> reachablePoints) {
-            this.reachablePoints = reachablePoints;
-        }
-
-        @Override
+		@Override
         public boolean equals(Object o) {
             if (this == o)
                 return true;
