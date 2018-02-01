@@ -66,7 +66,10 @@ public class PathWeight {
         return paths;
     }
 
-    public static class Point {
+	/**
+	 * 点类
+	 */
+	public static class Point {
 
         private String name;
 
@@ -118,7 +121,10 @@ public class PathWeight {
         }
     }
 
-    public static class Path {
+	/**
+	 * 路线类
+	 */
+	public static class Path {
 
         private LinkedList<Point> points = new LinkedList<>();
 
