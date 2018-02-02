@@ -1,5 +1,6 @@
 package org.songdan.tij.algorithm.path;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,18 +22,19 @@ import com.google.common.collect.Sets;
  */
 public class PathWeight {
 
-    private List<Path> paths = Lists.newArrayList();
-
     public static void main(String[] args) {
         Set<Point> pointSet = Sets.newLinkedHashSet();
         Point a = new Point("A", 1);
         Point b = new Point("B", 2);
         Point c = new Point("C", 2);
+        Point d = new Point("D", 1);
         a.getReachablePoints().add(b);
         a.getReachablePoints().add(c);
         b.getReachablePoints().add(c);
+        b.getReachablePoints().add(d);
         //回路
 //        c.getReachablePoints().add(a);
+        c.getReachablePoints().add(d);
         pointSet.add(a);
         pointSet.add(b);
         pointSet.add(c);
@@ -46,24 +48,14 @@ public class PathWeight {
 
     }
 
-    public void join(Path path, Point point) {
-        if (point.getReachablePoints().isEmpty()) {
-            // 到达终点，添加path
-            paths.add(new Path(path.getPoints()));
-            return;
-        }
-        for (Point reachablePoint : point.getReachablePoints()) {
-            path.forward(reachablePoint);
-            join(path, reachablePoint);
-            path.back();
-        }
-    }
+
 
     public List<Path> generatePath(Set<Point> points) {
-        for (Point point : points) {
-            join(new Path(point), point);
+		List<Path> list = Lists.newArrayList();
+		for (Point point : points) {
+            list.addAll(new Walker(point).walk());
         }
-        return paths;
+        return list;
     }
 
 	/**
@@ -121,18 +113,19 @@ public class PathWeight {
         }
     }
 
+    interface Drawable{
+
+		String draw();
+	}
+
 	/**
 	 * 路线类
 	 */
-	public static class Path {
+	private static class Path implements Drawable{
 
         private LinkedList<Point> points = new LinkedList<>();
 
-        public Path(Point start) {
-            points.add(start);
-        }
-
-        public Path(LinkedList<Point> points) {
+        public Path(List<Point> points) {
             this.points.addAll(points);
         }
 
@@ -140,29 +133,62 @@ public class PathWeight {
             return points.stream().map(Point::getWeight).reduce(0, (sum, item) -> sum + item);
         }
 
-        public boolean isLoop(Point point) {
-            return points.contains(point);
-        }
-
-        public boolean forward(Point point) {
-            if (this.isLoop(point)) {
-                throw new RuntimeException(draw() + "存在回路:" + point.getName());
-            }
-            return points.add(point);
-        }
-
-        public Point back() {
-            return points.removeLast();
-        }
-
-        public LinkedList<Point> getPoints() {
-            return points;
-        }
-
         public String draw() {
             return Joiner.on("->").join(points.stream().map(Point::getName).collect(Collectors.toList()));
         }
 
     }
+
+	/**
+	 * 路线的探索者
+	 */
+	private static class Walker implements Drawable{
+
+		private LinkedList<Point> points = new LinkedList<>();
+
+		public Walker(Point point) {
+			points.add(point);
+		}
+
+		public boolean forward(Point point) {
+			if (points.contains(point)) {
+				throw new RuntimeException(draw() + "包含了节点:" + point.getName());
+			}
+			return points.add(point);
+		}
+
+		public Point back() {
+			return points.removeLast();
+		}
+
+		public String draw() {
+			return Joiner.on("->").join(points.stream().map(Point::getName).collect(Collectors.toList()));
+		}
+
+		public List<Point> nextFowards() {
+			return points.peekLast().getReachablePoints();
+		}
+
+		public List<Point> getPoints() {
+			return this.points;
+		}
+
+
+
+		public List<Path> walk() {
+			List<Path> list = Lists.newArrayList();
+			if (nextFowards().isEmpty()) {
+				// 到达终点，添加path
+				list.add(new Path(getPoints()));
+				return list;
+			}
+			for (Point reachablePoint : nextFowards()) {
+				forward(reachablePoint);
+				list.addAll(walk());
+				back();
+			}
+			return list;
+		}
+	}
 
 }
