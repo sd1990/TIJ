@@ -1,7 +1,10 @@
 package org.songdan.tij.string;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * TODO completion javadoc.
@@ -17,6 +20,32 @@ public class RegexpDemo {
 		while (matcher.find()) {
 			System.out.println(matcher.group());
 		}
+	}
+
+	public static String extractWildCardStr(String targe, Pattern pattern) {
+		Matcher matcher = pattern.matcher(targe);
+		System.out.println(matcher.groupCount());
+		int i = 0;
+		while (matcher.find()) {
+			System.out.println(matcher.group(i++));
+		}
+		return "";
+	}
+
+
+	public static List<String> extractWildCardStr(String targe, String regex) {
+		String[] split = regex.split("\\*");
+		for (String replace : split) {
+			targe = targe.replace(replace, "|");
+		}
+		return Arrays.stream(targe.split("\\|")).filter(s-> !"".equals(s)).collect(Collectors.toList());
+	}
+
+	public static List<String> extractWildCardStrV2(String targe, String regex) {
+		String[] split = regex.split("\\*");
+		List<String> collect = Arrays.stream(split).filter(s -> !"".equals(s)).collect(Collectors.toList());
+		String replace = String.join("|", collect);
+		return Arrays.asList(targe.replaceAll(replace, " ").trim().split(" "));
 	}
 
 	public static void main(String[] args) {
@@ -36,10 +65,15 @@ public class RegexpDemo {
 		boolean b = main.matcher("main.status").find();
 		System.out.println(b);
 		String watchPath = "biz.*.status";
+		Matcher matcher = Pattern.compile("subTaskList\\.(\\d+)\\.status").matcher("subTaskList.12.status");
+		if(matcher.matches()) {
+			System.out.println(matcher.group(1));
+		}
 		Pattern bizStatus = Pattern.compile(watchPath.substring(0,watchPath.lastIndexOf(".")));
-		System.out.println(bizStatus.matcher("biz.1.status").find());
-
-
+//		System.out.println(bizStatus.matcher("biz.1.status").find());
+//		System.out.println(extractWildCardStr("biz.1.status",Pattern.compile("(biz(.*)status)")));
+//		System.out.println(extractWildCardStr("biz.1.status.2","biz.*.status.*"));
+//		System.out.println(extractWildCardStrV2("biz.1.status.2","biz.*.status.*"));
 	}
 
 }

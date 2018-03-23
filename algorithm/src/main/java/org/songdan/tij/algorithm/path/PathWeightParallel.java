@@ -1,11 +1,14 @@
 package org.songdan.tij.algorithm.path;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Joiner;
@@ -20,7 +23,7 @@ import com.google.common.collect.Sets;
  * @author song dan
  * @since 31 一月 2018
  */
-public class PathWeight {
+public class PathWeightParallel {
 
     public static void main(String[] args) {
         Set<Point> pointSet = Sets.newLinkedHashSet();
@@ -38,35 +41,23 @@ public class PathWeight {
         pointSet.add(a);
         pointSet.add(b);
         pointSet.add(c);
-
-        List<Path> paths = new PathWeight().generatePath(pointSet);
+        Node nodeA = new Node(a);
+        Node nodeB = new Node(nodeA, b);
+//        System.out.println(nodeA.path().draw());
+//        System.out.println(nodeB.path().draw());
+        List<Path> paths = new PathWeightParallel().generatePath(pointSet);
         for (Path path : paths) {
             System.out.println(path.draw() + ":" + path.calculateWeight());
         }
         Optional<Path> first = paths.stream().peek(Path::draw).max(Comparator.comparingInt(Path::calculateWeight));
         System.out.println(first.get().draw());
 
-        List<Path> pathV2 = new PathWeight().generatePathV2(pointSet);
-        for (Path path : pathV2) {
-            System.out.println(path.draw() + ":" + path.calculateWeight());
-        }
-        Optional<Path> firstV2 = pathV2.stream().peek(Path::draw).max(Comparator.comparingInt(Path::calculateWeight));
-        System.out.println(firstV2.get().draw());
-
     }
 
     public List<Path> generatePath(Set<Point> points) {
         List<Path> list = Lists.newArrayList();
         for (Point point : points) {
-            list.addAll(new Walker(point).walk());
-        }
-        return list;
-    }
-
-    public List<Path> generatePathV2(Set<Point> points) {
-        List<Path> list = Lists.newArrayList();
-        for (Point point : points) {
-            list.add(new Walker(point).walkMax());
+            list.addAll(new Walker(point).walkParallel());
         }
         return list;
     }
@@ -150,6 +141,44 @@ public class PathWeight {
             return Joiner.on("->").join(points.stream().map(Point::getName).collect(Collectors.toList()));
         }
 
+        public void add(Point point) {
+            points.add(point);
+        }
+
+    }
+
+    private static class Node {
+
+        private Node prev;
+
+        private Point current;
+
+        public Node(Node prev, Point current) {
+            this.prev = prev;
+            this.current = current;
+
+        }
+
+        public Node(Point start) {
+            this(null, start);
+        }
+
+        public Node getPrev() {
+            return prev;
+        }
+
+        public Point getCurrent() {
+            return current;
+        }
+
+        public Path path() {
+            if (prev == null) {
+                return new Path(Lists.newArrayList(current));
+            }
+            Path path = prev.path();
+            path.add(current);
+            return path;
+        }
     }
 
     /**
@@ -159,10 +188,11 @@ public class PathWeight {
 
         private LinkedList<Point> points = new LinkedList<>();
 
-        private Path maxWeight;
+        private Point start;
 
         public Walker(Point point) {
             points.add(point);
+            start = point;
         }
 
         public boolean forward(Point point) {
@@ -192,13 +222,7 @@ public class PathWeight {
             List<Path> list = Lists.newArrayList();
             if (nextFowards().isEmpty()) {
                 // 到达终点，添加path
-                Path path = new Path(getPoints());
-                if (Objects.isNull(maxWeight)) {
-                    maxWeight = path;
-                }else{
-                    maxWeight = path.calculateWeight() > maxWeight.calculateWeight() ? path : maxWeight;
-                }
-                list.add(path);
+                list.add(new Path(getPoints()));
                 return list;
             }
             for (Point reachablePoint : nextFowards()) {
@@ -209,23 +233,32 @@ public class PathWeight {
             return list;
         }
 
-        public Path walkMax() {
-            List<Path> list = Lists.newArrayList();
-            if (nextFowards().isEmpty()) {
-                // 到达终点，添加path
-                Path path = new Path(getPoints());
-                if (Objects.isNull(maxWeight)) {
-                    maxWeight = path;
-                }else{
-                    maxWeight = path.calculateWeight() > maxWeight.calculateWeight() ? path : maxWeight;
-                }
+        public void walk(ExecutorService executorService, List<Node> nodes, List<Path> result) {
+            for (Node node : nodes) {
+                executorService.execute(() -> {
+                    if (node.getCurrent().getReachablePoints().isEmpty()) {
+                        result.add(node.path());
+                        return;
+                    }
+                });
+                walk(executorService, node.getCurrent().getReachablePoints().stream()
+                        .map(point -> new Node(node, point)).collect(Collectors.toList()), result);
             }
-            for (Point reachablePoint : nextFowards()) {
-                forward(reachablePoint);
-                walk();
-                back();
+        }
+
+        public List<Path> walkParallel() {
+            List<Path> result = Lists.newArrayList();
+            ExecutorService executorService = Executors.newCachedThreadPool();
+            walk(executorService, start.getReachablePoints().stream()
+                    .map(point -> new Node(new Node(start), point)).collect(Collectors.toList()), result);
+            executorService.shutdown();
+            try {
+                executorService.awaitTermination(1, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            return maxWeight;
+            return result;
+
         }
     }
 

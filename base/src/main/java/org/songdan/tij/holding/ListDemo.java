@@ -10,16 +10,23 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ListDemo {
 
     public static void main(String[] args) throws InterruptedException {
-        System.out.println("==================================");
-        remove();
-        System.out.println("==================================");
-        removeByInverseOrder();
-        System.out.println("==================================");
-        removeByDoubleList();
-        System.out.println("==================================");
-        removeByCopyOnWriteArrayList();
-        System.out.println("==================================");
-        errorRemove();
+//        System.out.println("==================================");
+//        remove();
+//        System.out.println("==================================");
+//        removeByInverseOrder();
+//        System.out.println("==================================");
+//        removeByDoubleList();
+//        System.out.println("==================================");
+//        removeByCopyOnWriteArrayList();
+//        System.out.println("==================================");
+//        errorRemove();
+
+        Person songdan = new Person("songdan", 21);
+        ArrayList<Person> personList = new ArrayList<>();
+        personList.add(songdan);
+        songdan = new Person("dengke", 23);
+        System.out.println(personList);
+
     }
 
     public static void errorRemove(){

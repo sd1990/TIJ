@@ -12,7 +12,11 @@ import java.util.Map;
 public class MapDemo {
 
     public static void main(String[] args) {
-        testOrder();
+//        testOrder();
+        HashMap<Object, Object> map = new HashMap<>(2);
+        map.put(1, 1);
+        map.put(2, 2);
+
     }
 
     /**

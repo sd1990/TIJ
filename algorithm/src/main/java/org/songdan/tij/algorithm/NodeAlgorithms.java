@@ -39,5 +39,29 @@ public class NodeAlgorithms {
         return reHead;
     }
 
+    public static <T> void move(Node<T> source) {
+        Node<T> head,tail = null;
+        Node<T> next;
+        Node<T> e = source;
+        do {
+            next = e.next;
+            if (tail == null) {
+                head = e;
+            }else{
+                tail.next = e;
+            }
+            tail = e;
+        } while ((e = next) != null);
+        tail.next = null;
+        System.out.println(tail);
+    }
+
+    public static void main(String[] args) {
+        Node<Integer> one = new Node<Integer>(null, 1);
+        Node<Integer> two = new Node<Integer>(one, 1);
+        Node<Integer> three = new Node<Integer>(two, 1);
+        move(three);
+    }
+
 
 }
