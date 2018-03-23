@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * TODO completion javadoc.
+ * 取n个数字中最小的m个数
  *
  * @author song dan
  * @since 22 三月 2018
