@@ -1,0 +1,25 @@
+{
+  "rules": [
+    {
+      "field": "position_code",
+      "op": "equal",
+      "value": "北京市"
+    },
+    {
+      "rules": [
+        {
+          "field": "type",
+          "op": "equal",
+          "value": "门店"
+        },
+        {
+          "field": "type",
+          "op": "equal",
+          "value": "无人货架"
+        }
+      ],
+      "op": "or"
+    }
+  ],
+  "op": "and"
+}

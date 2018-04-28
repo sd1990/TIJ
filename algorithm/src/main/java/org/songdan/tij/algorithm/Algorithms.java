@@ -2,6 +2,9 @@ package org.songdan.tij.algorithm;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -62,6 +65,22 @@ public class Algorithms {
             quickSortInner(arr, left, right);
         }
 
+        /**
+         * 快速排序，分治算法
+         *
+         * @param arr
+         */
+        public static void quickSortV2(int[] arr) {
+            ForkJoinPool forkJoinPool = new ForkJoinPool();
+            int left = 0;
+            int right = arr.length - 1;
+            QuickSortAction quickSortAction = new QuickSortAction(arr, left, right);
+            forkJoinPool.execute(quickSortAction);
+            while (!quickSortAction.isDone()) {
+
+            }
+        }
+
         private static void quickSortInner(int[] arr, int left, int right) {
             if (left >= right) {
                 return;
@@ -69,10 +88,10 @@ public class Algorithms {
             int i = left;
             int j = right;
             while (i != j) {
-                for (; i < j && arr[j] >= arr[left]; j--) {
+                for (; i < j && arr[i] <= arr[left]; i++) {
 
                 }
-                for (; i < j && arr[i] <= arr[left]; i++) {
+                for (; i < j && arr[j] > arr[left]; j--) {
 
                 }
                 if (i < j) {
@@ -82,6 +101,46 @@ public class Algorithms {
             swap(arr, left, i);
             quickSortInner(arr, left, i - 1);
             quickSortInner(arr, i + 1, right);
+        }
+
+        static class QuickSortAction extends RecursiveAction{
+
+            private int[] arr;
+
+            private int left;
+
+            private int right;
+
+            public QuickSortAction(int[] arr, int left, int right) {
+                this.arr = arr;
+                this.left = left;
+                this.right = right;
+            }
+
+            @Override
+            protected void compute() {
+                if (left >= right) {
+                    return;
+                }
+                int i = left;
+                int j = right;
+                while (i != j) {
+                    for (; i < j && arr[i] < arr[left]; i++) {
+
+                    }
+                    for (; i < j && arr[j] > arr[left]; j--) {
+
+                    }
+                    if (i < j) {
+                        swap(arr, j, i);
+                    }
+                }
+                System.out.println(i);
+                swap(arr, left, i);
+                QuickSortAction leftSort = new QuickSortAction(arr, left, i - 1);
+                QuickSortAction rightSort = new QuickSortAction(arr, i + 1, right);
+                invokeAll(leftSort,rightSort);
+            }
         }
 
         /**
@@ -126,34 +185,26 @@ public class Algorithms {
         private static void fillArray(int[] arr) {
             Random random = new Random();
             for (int i = 0; i < arr.length; i++) {
-                arr[i] = random.nextInt(100);
+                arr[i] = random.nextInt(arr.length*2);
             }
         }
 
-        public static void main(String[] args) {
-            int[] arr = new int[1000];
+        public static void main(String[] args) throws InterruptedException {
+            int length = 100;
+            int[] arr = new int[length];
             fillArray(arr);
+//            arr = new int[]{4,4,4,4};
             System.out.println(toString(arr));
-            long startTime = System.nanoTime();
-            // bubbleSort(arr);
-            // selectSort(arr);
+            int[] copy = new int[arr.length];
+            System.arraycopy(arr,0,copy,0, arr.length);
+            long startTime = System.currentTimeMillis();
             quickSort(arr);
-            System.out.println("time : " + (System.nanoTime() - startTime));
+            System.out.println("v1 : "+(System.currentTimeMillis()-startTime));
             System.out.println(toString(arr));
-            fillArray(arr);
-            startTime = System.nanoTime();
-            // bubbleSort(arr);
-            // selectSort(arr);
-            bucketSort(arr,100);
-            System.out.println("time : " + (System.nanoTime() - startTime));
-            System.out.println(toString(arr));
-            fillArray(arr);
-            startTime = System.nanoTime();
-            bubbleSort(arr);
-            // selectSort(arr);
-//            bucketSort(arr,100);
-            System.out.println("time : " + (System.nanoTime() - startTime));
-            System.out.println(toString(arr));
+//            startTime = System.currentTimeMillis();
+//            quickSortV2(copy);
+//            System.out.println("v2 : " + (System.currentTimeMillis() - startTime));
+//            System.out.println(toString(copy));
         }
     }
 

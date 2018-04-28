@@ -22,8 +22,8 @@ public class TailInvoke {
 
 	/**
 	 * 获取最后一个递归元素
-	 * @param value
 	 * @param <T>
+	 * @param value
 	 * @return
 	 */
 	public static <T> TailRecursion<T> done(final T value) {
