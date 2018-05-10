@@ -12,9 +12,9 @@ public class Equal implements Expression {
 
 	private String field;
 
-	private String value;
+	private Object value;
 
-	public Equal(String field, String value) {
+	public Equal(String field, Object value) {
 		this.field = field;
 		this.value = value;
 	}

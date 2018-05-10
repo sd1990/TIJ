@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  */
 public class ExpressionBuilder {
 
-	public static Expression equal(String field, String value) {
+	public static Expression equal(String field, Object value) {
 		return new Equal(field,value);
 	}
 

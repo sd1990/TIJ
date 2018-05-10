@@ -14,7 +14,7 @@ import org.songdan.tij.designpattern.composite.JsonUtil;
  * @author song dan
  * @since 13 四月 2018
  */
-public class Main {
+public class MainDemo {
 
     public static void main(String[] args) throws IOException {
 		String json = stringFromFile(new File("/Users/songdan/IdeaProjects/github/TIJ/designpattern/src/main/java/org/songdan/tij/translate/rule.json"));
