@@ -12,24 +12,21 @@ import org.songdan.tij.query.adapter.QueryExpressionAdapter;
  * @since 10 五月 2018
  */
 @Getter
-public class Equal implements QueryExpression {
+public class Missing implements QueryExpression {
 
     private String field;
 
-    private Object value;
-
-    public Equal(String field, Object value) {
+    public Missing(String field) {
         this.field = field;
-        this.value = value;
     }
 
     @Override
     public String toString() {
-        return field + "=" + value;
+        return field + " is null ";
     }
 
     @Override
     public QueryExpressionAdapter adapter() {
-        return QueryAdapterFactory.find().equal(this);
+        return QueryAdapterFactory.find().missing(this);
     }
 }

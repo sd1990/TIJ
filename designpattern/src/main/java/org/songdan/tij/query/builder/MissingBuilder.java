@@ -1,7 +1,7 @@
 package org.songdan.tij.query.builder;
 
 
-import org.songdan.tij.query.expression.Equal;
+import org.songdan.tij.query.expression.Missing;
 import org.songdan.tij.query.expression.QueryExpression;
 
 /**
@@ -10,19 +10,16 @@ import org.songdan.tij.query.expression.QueryExpression;
  * @author song dan
  * @since 10 五月 2018
  */
-public class EqBuilder implements QueryExpressionBuilder {
+public class MissingBuilder implements QueryExpressionBuilder {
 
 	private String field;
 
-	private Object value;
-
-	public EqBuilder(String field, Object value) {
+	public MissingBuilder(String field) {
 		this.field = field;
-		this.value = value;
 	}
 
 	@Override
 	public QueryExpression build() {
-		return new Equal(field,value);
+		return new Missing(field);
 	}
 }

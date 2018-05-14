@@ -12,24 +12,24 @@ import org.songdan.tij.query.adapter.QueryExpressionAdapter;
  * @since 10 五月 2018
  */
 @Getter
-public class Equal implements QueryExpression {
+public class Like implements QueryExpression {
 
     private String field;
 
-    private Object value;
+    private String value;
 
-    public Equal(String field, Object value) {
+    public Like(String field, String value) {
         this.field = field;
         this.value = value;
     }
 
     @Override
     public String toString() {
-        return field + "=" + value;
+        return field + " like " + value;
     }
 
     @Override
     public QueryExpressionAdapter adapter() {
-        return QueryAdapterFactory.find().equal(this);
+        return QueryAdapterFactory.find().like(this);
     }
 }

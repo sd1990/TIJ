@@ -1,6 +1,7 @@
 package org.songdan.tij.query.builder;
 
-import org.songdan.tij.query.QueryExpression;
+
+import org.songdan.tij.query.expression.QueryExpression;
 
 /**
  * 查询表达式Builder

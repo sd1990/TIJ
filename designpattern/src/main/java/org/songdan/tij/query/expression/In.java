@@ -1,7 +1,6 @@
 package org.songdan.tij.query.expression;
 
-
-import lombok.Getter;
+import com.google.common.base.Joiner;
 import org.songdan.tij.query.adapter.QueryAdapterFactory;
 import org.songdan.tij.query.adapter.QueryExpressionAdapter;
 
@@ -11,25 +10,25 @@ import org.songdan.tij.query.adapter.QueryExpressionAdapter;
  * @author song dan
  * @since 10 五月 2018
  */
-@Getter
-public class Equal implements QueryExpression {
+public class In implements QueryExpression {
 
     private String field;
 
-    private Object value;
+    private Object[] value;
 
-    public Equal(String field, Object value) {
+    public In(String field, Object... value) {
         this.field = field;
         this.value = value;
     }
 
     @Override
     public String toString() {
-        return field + "=" + value;
+        return field + " in (" + Joiner.on(",").join(value) + ")";
     }
 
     @Override
     public QueryExpressionAdapter adapter() {
-        return QueryAdapterFactory.find().equal(this);
+        return QueryAdapterFactory.find().in(this);
     }
+
 }

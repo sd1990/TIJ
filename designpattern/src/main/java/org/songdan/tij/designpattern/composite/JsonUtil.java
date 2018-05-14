@@ -93,4 +93,8 @@ public class JsonUtil {
         }
         return jsonMapper.writeValueAsString(obj);
     }
+
+    public static void main(String[] args) {
+
+    }
 }
