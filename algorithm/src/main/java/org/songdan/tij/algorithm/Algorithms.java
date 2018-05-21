@@ -1,10 +1,13 @@
 package org.songdan.tij.algorithm;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -15,6 +18,26 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Algorithms {
 
+    public static void main(String[] args) {
+        String reverse = StringAlgorithms.reverse("i   am  songdan");
+        System.out.println(reverse);
+        String reverse2 = StringAlgorithms.reverse2("i   am  songdan");
+        System.out.println(reverse2);
+        CacheAlgorithms.LFUCache<String, Integer> cache = new CacheAlgorithms.LFUCache<>(3);
+        cache.put("2", 1);
+        cache.put("1", 1);
+        // cache.put("2", 1);
+        cache.put("1", 1);
+        cache.put("4", 1);
+        // cache.put("3", 1);
+        // cache.put("2", 2);
+        // cache.put("2", 2);
+        cache.put("4", 2);
+        cache.put("3", 2);
+        // cache.put("3", 2);
+        System.out.println(cache);
+    }
+
     /**
      * 数组算法
      */
@@ -22,7 +45,7 @@ public class Algorithms {
 
         /**
          * 冒泡排序
-         * 
+         *
          * @param arr
          */
         public static void bubbleSort(int[] arr) {
@@ -39,7 +62,7 @@ public class Algorithms {
 
         /**
          * 选择算法
-         * 
+         *
          * @param arr
          */
         public static void selectSort(int[] arr) {
@@ -56,7 +79,7 @@ public class Algorithms {
 
         /**
          * 快速排序，分治算法
-         * 
+         *
          * @param arr
          */
         public static void quickSort(int[] arr) {
@@ -103,7 +126,123 @@ public class Algorithms {
             quickSortInner(arr, i + 1, right);
         }
 
-        static class QuickSortAction extends RecursiveAction{
+        /**
+         * 桶排序，需要确定数据的范围，浪费空间，数据要求必须为大于等于0的正整数
+         *
+         * @param arr
+         */
+        public static void bucketSort(int[] arr, int range) {
+            int[] book = new int[range];
+            for (int i : arr) {
+                book[i]++;
+            }
+            for (int i = 0, j = 0; i < book.length; i++) {
+                int count = book[i];
+                if (count != 0) {
+                    for (int k = 0; k < count; k++) {
+                        arr[j] = i;
+                        j++;
+                    }
+                }
+            }
+        }
+
+        private static void swap(int[] arr, int j, int i) {
+            int temp = arr[j];
+            arr[j] = arr[i];
+            arr[i] = temp;
+        }
+
+        public static String toString(int[] arr) {
+            StringBuilder builder = new StringBuilder("[");
+            for (int i = 0; i < arr.length; i++) {
+
+                if (i == arr.length - 1) {
+                    builder.append(arr[i]).append("]");
+                } else {
+                    builder.append(arr[i]).append(",");
+                }
+            }
+            return builder.toString();
+        }
+
+        private static void fillArray(int[] arr) {
+            Random random = new Random();
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = random.nextInt(arr.length * 2);
+            }
+        }
+
+        public static void main(String[] args) throws InterruptedException {
+            int length = 100;
+            int[] arr = new int[length];
+            fillArray(arr);
+//            // arr = new int[]{4,4,4,4};
+//            System.out.println(toString(arr));
+//            int[] copy = new int[arr.length];
+//            System.arraycopy(arr, 0, copy, 0, arr.length);
+//            long startTime = System.currentTimeMillis();
+//            quickSort(arr);
+//            System.out.println("v1 : " + (System.currentTimeMillis() - startTime));
+//            System.out.println(toString(arr));
+//            fillArray(arr);
+//            arr = new int[]{3,2};
+            mergeSort(arr,0,arr.length-1,new int[arr.length]);
+            System.out.println(toString(arr));
+            System.out.println(binarySearch(arr,0,arr.length-1,50));
+            // startTime = System.currentTimeMillis();
+            // quickSortV2(copy);
+            // System.out.println("v2 : " + (System.currentTimeMillis() - startTime));
+            // System.out.println(toString(copy));
+        }
+
+        public static void mergeSort(int[] arr, int left, int right, int[] temp) {
+            if (left < right) {
+                int mid = (left + right) / 2;
+                mergeSort(arr, left, mid, temp);
+                mergeSort(arr, mid + 1, right, temp);
+                merge(arr, left, mid, right, temp);
+            }
+        }
+
+        private static void merge(int[] arr, int left, int mid, int right, int[] temp) {
+            int i = left;
+            int j = mid + 1;
+            int k = 0;
+            while (i <= mid && j <= right) {
+                if (arr[i] < arr[j]) {
+                    temp[k++] = arr[i++];
+                } else {
+                    temp[k++] = arr[j++];
+                }
+            }
+            while (i <= mid) {
+                temp[k++] = arr[i++];
+            }
+            while (j <= right) {
+                temp[k++] = arr[j++];
+            }
+            int m = 0;
+            while (left <= right) {
+                arr[left++] = temp[m++];
+            }
+        }
+
+        public static int binarySearch(int[] arr, int left, int right, int target) {
+            while (left < right) {
+                int mid = (left + right) / 2;
+                if (arr[mid] == target) {
+                    return mid;
+                } else if (arr[mid] > target) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            }
+            return -1;
+        }
+
+        static class QuickSortAction extends RecursiveAction {
 
             private int[] arr;
 
@@ -139,72 +278,8 @@ public class Algorithms {
                 swap(arr, left, i);
                 QuickSortAction leftSort = new QuickSortAction(arr, left, i - 1);
                 QuickSortAction rightSort = new QuickSortAction(arr, i + 1, right);
-                invokeAll(leftSort,rightSort);
+                invokeAll(leftSort, rightSort);
             }
-        }
-
-        /**
-         * 桶排序，需要确定数据的范围，浪费空间，数据要求必须为大于等于0的正整数
-         * @param arr
-         */
-        public static void bucketSort(int[] arr,int range) {
-            int[] book = new int[range];
-            for (int i : arr) {
-                book[i]++;
-            }
-            for (int i = 0,j=0; i < book.length; i++) {
-                int count = book[i];
-                if (count !=0) {
-                    for (int k = 0; k < count; k++) {
-                        arr[j] = i;
-                        j++;
-                    }
-                }
-            }
-        }
-
-        private static void swap(int[] arr, int j, int i) {
-            int temp = arr[j];
-            arr[j] = arr[i];
-            arr[i] = temp;
-        }
-
-        public static String toString(int[] arr) {
-            StringBuilder builder = new StringBuilder("[");
-            for (int i = 0; i < arr.length; i++) {
-
-                if (i == arr.length - 1) {
-                    builder.append(arr[i]).append("]");
-                } else {
-                    builder.append(arr[i]).append(",");
-            }
-            }
-            return builder.toString();
-        }
-
-        private static void fillArray(int[] arr) {
-            Random random = new Random();
-            for (int i = 0; i < arr.length; i++) {
-                arr[i] = random.nextInt(arr.length*2);
-            }
-        }
-
-        public static void main(String[] args) throws InterruptedException {
-            int length = 100;
-            int[] arr = new int[length];
-            fillArray(arr);
-//            arr = new int[]{4,4,4,4};
-            System.out.println(toString(arr));
-            int[] copy = new int[arr.length];
-            System.arraycopy(arr,0,copy,0, arr.length);
-            long startTime = System.currentTimeMillis();
-            quickSort(arr);
-            System.out.println("v1 : "+(System.currentTimeMillis()-startTime));
-            System.out.println(toString(arr));
-//            startTime = System.currentTimeMillis();
-//            quickSortV2(copy);
-//            System.out.println("v2 : " + (System.currentTimeMillis() - startTime));
-//            System.out.println(toString(copy));
         }
     }
 
@@ -228,7 +303,7 @@ public class Algorithms {
 
         /**
          * 字符串反转，完整的反转，利用栈结构
-         * 
+         *
          * @param target
          * @return
          */
@@ -317,7 +392,7 @@ public class Algorithms {
 
             /**
              * 使用LRUkey
-             * 
+             *
              * @param key
              */
             private synchronized void useLRUKey(K key) {
@@ -339,61 +414,6 @@ public class Algorithms {
         static class LFUCache<K, V> {
 
             private ConcurrentHashMap<K, V> cache = new ConcurrentHashMap<>();
-
-            private class CountEntity implements Comparable<CountEntity> {
-
-                private K key;
-
-                private AtomicInteger count;
-
-                public AtomicInteger getCount() {
-                    return count;
-                }
-
-                public K getKey() {
-                    return key;
-                }
-
-                public CountEntity(K key) {
-                    this.count = new AtomicInteger(1);
-                    this.key = key;
-                }
-
-                @Override
-                public boolean equals(Object o) {
-                    if (this == o) return true;
-                    if (o == null || getClass() != o.getClass()) return false;
-
-                    CountEntity that = (CountEntity) o;
-
-                    if (key != null ? !key.equals(that.key) : that.key != null) return false;
-
-                    return true;
-                }
-
-                @Override
-                public int hashCode() {
-                    int result = key != null ? key.hashCode() : 0;
-                    result = 31 * result;
-                    return result;
-                }
-
-                @Override
-                public String toString() {
-                    return "CountEntity{" +
-                            "key=" + key +
-                            ",count=" + count +
-                            '}';
-                }
-
-                @Override
-                public int compareTo(CountEntity other) {
-                    if (other==null) {
-                        return -1;
-                    }
-                    return count.get() >= other.count.get() ? -1 : 1;
-                }
-            }
 
             private Object[] count;
 
@@ -426,20 +446,20 @@ public class Algorithms {
             }
 
             private void useLFUKey(K key) {
-                Object[] countEntities=  getNotNullArray();
+                Object[] countEntities = getNotNullArray();
                 CountEntity countEntity = new CountEntity(key);
                 int index = 0;
-                if ((index = indexOf(countEntities,countEntity))!=-1) {
-                    ((CountEntity)countEntities[index]).getCount().incrementAndGet();
-                }else {
+                if ((index = indexOf(countEntities, countEntity)) != -1) {
+                    ((CountEntity) countEntities[index]).getCount().incrementAndGet();
+                } else {
                     Object[] newCountEntities = new Object[countEntities.length + 1];
-                    System.arraycopy(countEntities,0,newCountEntities,0,countEntities.length);
+                    System.arraycopy(countEntities, 0, newCountEntities, 0, countEntities.length);
                     newCountEntities[countEntities.length] = countEntity;
                     countEntities = newCountEntities;
                 }
                 Arrays.sort(countEntities);
                 count = new Object[size];
-                System.arraycopy(countEntities,0,count,0,countEntities.length);
+                System.arraycopy(countEntities, 0, count, 0, countEntities.length);
             }
 
             private int indexOf(Object[] countEntities, CountEntity countEntity) {
@@ -464,7 +484,7 @@ public class Algorithms {
 
             private K getLFUKey() {
                 CountEntity countEntity = (CountEntity) count[size - 1];
-                count[size-1] = null;
+                count[size - 1] = null;
                 return countEntity.getKey();
             }
 
@@ -484,34 +504,65 @@ public class Algorithms {
 
             @Override
             public String toString() {
-                return "LFUCache{" +
-                        "cache=" + cache +
-                        ", count=" + Arrays.toString(count) +
-                        ", size=" + size +
-                        '}';
+                return "LFUCache{" + "cache=" + cache + ", count=" + Arrays.toString(count) + ", size=" + size + '}';
+            }
+
+            private class CountEntity implements Comparable<CountEntity> {
+
+                private K key;
+
+                private AtomicInteger count;
+
+                public CountEntity(K key) {
+                    this.count = new AtomicInteger(1);
+                    this.key = key;
+                }
+
+                public AtomicInteger getCount() {
+                    return count;
+                }
+
+                public K getKey() {
+                    return key;
+                }
+
+                @Override
+                public boolean equals(Object o) {
+                    if (this == o)
+                        return true;
+                    if (o == null || getClass() != o.getClass())
+                        return false;
+
+                    CountEntity that = (CountEntity) o;
+
+                    if (key != null ? !key.equals(that.key) : that.key != null)
+                        return false;
+
+                    return true;
+                }
+
+                @Override
+                public int hashCode() {
+                    int result = key != null ? key.hashCode() : 0;
+                    result = 31 * result;
+                    return result;
+                }
+
+                @Override
+                public String toString() {
+                    return "CountEntity{" + "key=" + key + ",count=" + count + '}';
+                }
+
+                @Override
+                public int compareTo(CountEntity other) {
+                    if (other == null) {
+                        return -1;
+                    }
+                    return count.get() >= other.count.get() ? -1 : 1;
+                }
             }
         }
 
-    }
-
-    public static void main(String[] args) {
-        String reverse = StringAlgorithms.reverse("i   am  songdan");
-        System.out.println(reverse);
-        String reverse2 = StringAlgorithms.reverse2("i   am  songdan");
-        System.out.println(reverse2);
-        CacheAlgorithms.LFUCache<String, Integer> cache = new CacheAlgorithms.LFUCache<>(3);
-        cache.put("2", 1);
-        cache.put("1", 1);
-//        cache.put("2", 1);
-        cache.put("1", 1);
-        cache.put("4", 1);
-//        cache.put("3", 1);
-//        cache.put("2", 2);
-//        cache.put("2", 2);
-        cache.put("4", 2);
-        cache.put("3", 2);
-//        cache.put("3", 2);
-        System.out.println(cache);
     }
 
 }
