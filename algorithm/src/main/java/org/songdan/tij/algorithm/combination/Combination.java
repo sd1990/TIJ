@@ -70,8 +70,6 @@ public class Combination {
         list.sort((Comparator.comparingInt(CompositeCoupon::getCount)));
         
         System.out.println(list);
-
-
     }
 
     /**
