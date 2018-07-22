@@ -40,16 +40,19 @@ public class Philosopher implements Runnable {
      */ public void run() {
         try {
             while (!Thread.interrupted()) {
-                System.out.println(this + "要思考了。。。");
-                //                thinking();
                 System.out.println(this + "要开始拿筷子。。。");
-                left.take();
-                right.take();
-                System.out.println(this + "又要思考了。。。");
-                //                thinking();
+                synchronized (left) {
+                    left.take(this);
+                    thinking();
+                    synchronized (right) {
+                        right.take(this);
+                    }
+                }
+                thinking();
                 System.out.println(this + "释放筷子了。。。");
-                left.drop();
-                right.drop();
+                left.drop(this);
+                right.drop(this);
+                thinking();
             }
         }
         catch (InterruptedException e) {

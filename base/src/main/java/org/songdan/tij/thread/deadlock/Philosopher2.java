@@ -8,6 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 另外一种方式实现哲学家进餐问题
+ * 锁只有一个就是餐桌,当需要对哲学家进餐状态进行修改的时候加锁，并发度更高了，可以同时支持多个哲学家进餐
  * Created by PC on 2016/6/14.
  */
 public class Philosopher2 implements Runnable {
@@ -95,14 +96,23 @@ public class Philosopher2 implements Runnable {
         }
         for (int i = 0; i < philosopher2s.length; i++) {
             Philosopher2 philosopher = philosopher2s[i];
-            philosopher.setLeft(philosopher2s[(i + 4) % philosopher2s.length]);
-            philosopher.setRight(philosopher2s[(i + 1) % philosopher2s.length]);
+            philosopher.setLeft(philosopher2s[leftIndex(philosopher2s, i)]);
+            philosopher.setRight(philosopher2s[rightIndex(philosopher2s, i)]);
         }
         ExecutorService executorService = Executors.newFixedThreadPool(5);
         for (int i = 0; i < philosopher2s.length; i++) {
             executorService.execute(philosopher2s[i]);
         }
-        TimeUnit.SECONDS.sleep(20);
+        TimeUnit.SECONDS.sleep(10);
         executorService.shutdownNow();
+    }
+
+    private static int leftIndex(Philosopher2[] philosopher2s, int i) {
+        return (i + 1) % philosopher2s.length;
+    }
+
+    private static int rightIndex(Philosopher2[] philosopher2s, int i) {
+
+        return (i + 4) % philosopher2s.length;
     }
 }

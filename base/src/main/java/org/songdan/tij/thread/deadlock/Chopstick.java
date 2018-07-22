@@ -12,18 +12,18 @@ public class Chopstick {
 
     private boolean token = false;
 
-    public synchronized void take() throws InterruptedException {
-        if (token) {
-            wait();
-        }
-        System.out.println(this + "被占有");
-        token = true;
+    public synchronized void take(Philosopher philosopher) throws InterruptedException {
+//        if (token) {
+//            wait();
+//        }
+        System.out.println(this + "被"+philosopher+"占有");
+//        token = true;
     }
 
-    public synchronized void drop() {
-        System.out.println(this + "被释放");
-        token = false;
-        notifyAll();
+    public synchronized void drop(Philosopher philosopher) {
+        System.out.println(this + "被"+philosopher+"释放");
+//        token = false;
+//        notifyAll();
     }
 
     @Override
