@@ -1,6 +1,10 @@
 package org.songdan.tij.string;
 
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.function.Supplier;
 
 /**
  * 测试StringBuilder在append的时候引用统一实例
@@ -14,10 +18,12 @@ public class StringBuilderDemo {
         System.out.println(sb == sb2);
         String str = "0000";
         String str2 = "0000";
-        System.out.println(str == str2);
-        Scanner scanner = new Scanner(System.in);
-        String consoleStr = scanner.nextLine();
-        System.out.println(consoleStr);
-        System.out.println(str==consoleStr);
+//        System.out.println(str == str2);
+//        Scanner scanner = new Scanner(System.in);
+//        String consoleStr = scanner.nextLine();
+//        System.out.println(consoleStr);
+//        System.out.println(str==consoleStr);
+        HashSet<Object> set = new HashSet<>();
+        System.out.println(set.equals(null));
     }
 }
