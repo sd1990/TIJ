@@ -43,7 +43,8 @@ public class Reactor implements Runnable {
             }
         }
         catch (IOException e) {
-            // TODO dosomething
+            e.printStackTrace();
+//            throw new RuntimeException(e);
         }
     }
 
@@ -65,7 +66,7 @@ public class Reactor implements Runnable {
                 }
             }
             catch (IOException e) {
-                // TODO dosomething
+                e.printStackTrace();
             }
         }
     }
@@ -93,6 +94,7 @@ public class Reactor implements Runnable {
             socketChannel.configureBlocking(false);
             sk = socket.register(selector, 0);
             sk.attach(this);
+            //SD:注册感兴趣的事件
             sk.interestOps(SelectionKey.OP_READ);
             selector.wakeup();
         }
@@ -125,10 +127,13 @@ public class Reactor implements Runnable {
         }
 
         private void read() throws IOException {
+            //read from io
             socket.read(input);
             if (inputIsComplete()) {
+                //process business
                 process();
                 state = SENDING;
+                //SD:注册对写操作感兴趣
                 sk.interestOps(SelectionKey.OP_WRITE);
             }
         }
