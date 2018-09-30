@@ -49,14 +49,16 @@ public class StringDemo {
     }
 
     public static void format() {
-        String template1 = "hello ,! My name is {1}";
+        String template1 = "hello %s! My name is %s";
         System.out.println(String.format(template1,"宋丹","谢静"));
+        System.out.println(String.format(template1));
         String template = "hello ,{0}! My name is {1}";
-        System.out.println(MessageFormat.format(template,"宋丹","谢静"));
+        System.out.println(MessageFormat.format(template));
+        System.out.println(MessageFormat.format(template));
     }
 
     public static void main(String[] args) {
-//        format();
+        format();
 //        System.out.println("我是一个中国人".split("")[0]);
 //        System.out.println(String.format("%040x",new BigInteger(1,"12754".getBytes(Charset.forName("UTF-8")))));
 //        System.out.println(String.format("%x",new BigInteger(1,"12754".getBytes(Charset.forName("UTF-8")))));
