@@ -1,4 +1,4 @@
-package org.songdan.tij.algorithm;
+package org.songdan.tij.algorithm.counter;
 
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicLong;

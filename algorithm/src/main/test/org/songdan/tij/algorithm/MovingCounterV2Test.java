@@ -1,10 +1,7 @@
 package org.songdan.tij.algorithm;
 
 import org.junit.Test;
-
-import java.util.concurrent.ThreadLocalRandom;
-
-import static org.junit.Assert.*;
+import org.songdan.tij.algorithm.counter.MovingCounterV2;
 
 public class MovingCounterV2Test {
 
