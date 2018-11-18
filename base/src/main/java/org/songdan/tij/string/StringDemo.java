@@ -53,8 +53,8 @@ public class StringDemo {
         System.out.println(String.format(template1,"宋丹","谢静"));
         System.out.println(String.format(template1));
         String template = "hello ,{0}! My name is {1}";
-        System.out.println(MessageFormat.format(template));
-        System.out.println(MessageFormat.format(template));
+//        System.out.println(MessageFormat.format(template));
+//        System.out.println(MessageFormat.format(template));
     }
 
     public static void main(String[] args) {

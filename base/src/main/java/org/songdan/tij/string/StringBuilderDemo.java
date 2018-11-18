@@ -25,5 +25,10 @@ public class StringBuilderDemo {
 //        System.out.println(str==consoleStr);
         HashSet<Object> set = new HashSet<>();
         System.out.println(set.equals(null));
+
+
+        String format = String.format("金额:%.2f,百分比:%.2f%%", 3.14456789, 0.14);
+        System.out.println(format);
+
     }
 }
