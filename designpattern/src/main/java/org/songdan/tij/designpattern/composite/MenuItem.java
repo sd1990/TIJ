@@ -12,6 +12,19 @@ public class MenuItem implements MenuComponent {
 
     private String price;
 
+    public MenuItem(String name, String price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "MenuItem{" +
+                "name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                '}';
+    }
+
     @Override
     public boolean add(MenuComponent component) {
         throw new UnsupportedOperationException();
@@ -26,6 +39,7 @@ public class MenuItem implements MenuComponent {
         System.out.println(builder.append(":").append(name).append("->").append(price).toString());
     }
 
+    @Override
     public Iterator<MenuComponent> iterator() {
         return new NullIterator();
     }

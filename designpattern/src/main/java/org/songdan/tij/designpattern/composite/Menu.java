@@ -15,6 +15,14 @@ public class Menu implements MenuComponent{
 
     private String description;
 
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     public Menu(String name, String description) {
         this.name = name;
         this.description = description;
@@ -67,7 +75,7 @@ public class Menu implements MenuComponent{
                 Iterator<MenuComponent> peek = stack.peek();
                 if (!peek.hasNext()) {
                     stack.pop();
-                    //继续递归，防止下一个菜单是一个空菜单
+                    //继续递归
                     return hasNext();
                 }
                 return true;
@@ -79,11 +87,13 @@ public class Menu implements MenuComponent{
             if (hasNext()) {
                 Iterator<MenuComponent> componentIterator = stack.peek();
                 MenuComponent next = componentIterator.next();
-                if (componentIterator instanceof Menu) {
-                    stack.push(next.iterator());
+                if (next instanceof Menu) {
+                    //这个地方使用list.iterator是为了防止下次调用componentIterator.next()产生递归调用，导致同一个Menu出现在多个stack中，重复
+                    Iterator<MenuComponent> iterator = ((Menu)next).list.iterator();
+                    stack.push(iterator);
                 }
                 return next;
-            }else {
+            } else {
                 return null;
             }
         }
