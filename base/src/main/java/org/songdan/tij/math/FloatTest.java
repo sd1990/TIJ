@@ -1,6 +1,7 @@
 package org.songdan.tij.math;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * 字符串测试类
@@ -25,7 +26,12 @@ public class FloatTest {
         //method 5 
         NumberFormat format = new DecimalFormat("#.##");
         System.out.println(format.format(f1));*/
-        BigDecimal percentage = new BigDecimal("17%");
-        System.out.println(percentage);
+        System.out.println(new BigDecimal(1).setScale(2,RoundingMode.HALF_UP).doubleValue());
+        System.out.println(new BigDecimal(1000).setScale(2,RoundingMode.HALF_UP).doubleValue());
+        System.out.println(new BigDecimal(0.1).setScale(2,RoundingMode.HALF_UP).doubleValue());
+        System.out.println(new BigDecimal(0.11).setScale(2,RoundingMode.HALF_UP).doubleValue());
+        System.out.println(new BigDecimal(0.17).setScale(2,RoundingMode.HALF_UP).doubleValue());
+        System.out.println(new BigDecimal(0.171).setScale(2,RoundingMode.HALF_UP).doubleValue());
+        System.out.println(new BigDecimal(0.178).setScale(2,RoundingMode.HALF_UP).doubleValue());
     }
 }

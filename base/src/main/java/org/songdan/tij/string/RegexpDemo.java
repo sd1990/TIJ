@@ -82,6 +82,7 @@ public class RegexpDemo {
 //		System.out.println(extractWildCardStr("biz.1.status.2","biz.*.status.*"));
 //		System.out.println(extractWildCardStrV2("biz.1.status.2","biz.*.status.*"));
 		test();
+		System.out.println("[1,2,3]".replaceAll("[\\[\\]]", ""));
 	}
 
 }

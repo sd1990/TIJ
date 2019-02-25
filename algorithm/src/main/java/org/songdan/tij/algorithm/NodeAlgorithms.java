@@ -18,6 +18,7 @@ public class NodeAlgorithms {
         while (current!=null) {
             Node next = current.next;
             current.next = prev;
+            prev = current;
             current = next;
         }
         head = prev;
