@@ -14,6 +14,15 @@ public class ThreadDemo implements Runnable {
         }
         System.out.println("thread begin interrupt .. ");
         t1.interrupt();
+        final StackTraceElement[] stackTrace = new Throwable().getStackTrace();
+        StackTraceElement last = null;
+        for (int i = stackTrace.length - 1; i > 0; i--) {
+            final String className = stackTrace[i].getClassName();
+            if ("org.songdan.tij.thread.ThreadDemo".equals(className)) {
+                System.out.println(last);
+            }
+            last = stackTrace[i];
+        }
     }
 
     @Override

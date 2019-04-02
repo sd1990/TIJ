@@ -3,6 +3,7 @@ package org.songdan.tij.number;
 import javafx.util.converter.BigIntegerStringConverter;
 
 import java.math.BigInteger;
+import java.text.NumberFormat;
 
 /**
  * @author: Songdan
@@ -32,6 +33,15 @@ public class Num2Binary {
         Num2Binary num2Binary = new Num2Binary();
         System.out.println(num2Binary.toBinary(53));
         System.out.println(num2Binary.toBinaryCustom(53));
+
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        numberFormat.setGroupingUsed(false);
+        numberFormat.setMinimumFractionDigits(0);
+        numberFormat.setMaximumFractionDigits(2);
+
+        System.out.println(numberFormat.format(100001.010001));
+        numberFormat.setGroupingUsed(true);
+        System.out.println(numberFormat.format(100001.010001));
     }
 
 }

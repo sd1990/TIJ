@@ -53,7 +53,7 @@ public class PathParser {
 			Object value = entry.getValue();
 			if (value instanceof Map) {
 				list.addAll(parse(valueNode,(Map<String, Object>) entry.getValue()));
-			}else{
+			} else {
 				list.add(valueNode);
 			}
 		}

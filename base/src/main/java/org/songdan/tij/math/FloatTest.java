@@ -33,5 +33,14 @@ public class FloatTest {
         System.out.println(new BigDecimal(0.17).setScale(2,RoundingMode.HALF_UP).doubleValue());
         System.out.println(new BigDecimal(0.171).setScale(2,RoundingMode.HALF_UP).doubleValue());
         System.out.println(new BigDecimal(0.178).setScale(2,RoundingMode.HALF_UP).doubleValue());
+        System.out.println(System.currentTimeMillis());
+        System.out.println(1552311214L * 1000);
+        long days = (System.currentTimeMillis() - (1552311214L * 1000)) / (24 * 60 * 60 * 1000);
+        System.out.println(days);
+        System.out.println(1552311214 * 1000);
+        System.out.println(1552311214 * 1000L);
+        long i = 1552311214L * 1000;
+        System.out.println(i);
+        System.out.println(String.valueOf((System.currentTimeMillis() - i) / (24 * 60 * 60 * 1000)));
     }
 }

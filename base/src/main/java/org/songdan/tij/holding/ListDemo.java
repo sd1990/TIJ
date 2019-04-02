@@ -24,8 +24,9 @@ public class ListDemo {
         Person songdan = new Person("songdan", 21);
         ArrayList<Person> personList = new ArrayList<>();
         personList.add(songdan);
-        songdan = new Person("dengke", 23);
-        System.out.println(personList);
+        personList.add(new Person("dengke", 23));
+        testReverse(personList);
+//        System.out.println(personList);
 
     }
 
@@ -142,5 +143,13 @@ public class ListDemo {
         System.out.println(persons);
         person.setName("liuyong");
         System.out.println(persons);
+    }
+
+    public static <T> void testReverse(List<T> list) {
+        ListIterator<T> listIterator = list.listIterator(list.size());
+        while (listIterator.hasPrevious()) {
+            T previous = listIterator.previous();
+            System.out.println(previous);
+        }
     }
 }

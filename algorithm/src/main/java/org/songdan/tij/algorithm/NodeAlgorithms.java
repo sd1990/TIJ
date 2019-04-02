@@ -1,7 +1,7 @@
 package org.songdan.tij.algorithm;
 
 /**
- * 链表算法
+ * 链表算法,反转、
  * @author Songdan
  * @date 2017/6/26 11:34
  */
@@ -40,6 +40,35 @@ public class NodeAlgorithms {
         return reHead;
     }
 
+    /**
+     * 去重
+     * @param head
+     * @return
+     */
+    public static Node distinct(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        Node cur = head;
+        while (cur != null) {
+            Object t = cur.t;
+            Node prev = cur;
+            Node target = cur.next;
+            while (target != null) {
+                Node next = target.next;
+                if (t.equals(target.t)) {
+                    //删除target
+                    prev.next = next;
+                } else {
+                    prev = target;
+                }
+                target = next;
+            }
+            cur = cur.next;
+        }
+        return head;
+    }
+
     public static <T> void move(Node<T> source) {
         Node<T> head,tail = null;
         Node<T> next;
@@ -62,6 +91,11 @@ public class NodeAlgorithms {
         Node<Integer> two = new Node<Integer>(one, 1);
         Node<Integer> three = new Node<Integer>(two, 1);
         move(three);
+
+        Node<Integer> head = new Node<>(null, 1).next(2).next(1).next(1).next(3).next(3);
+        System.out.println(head);
+        distinct(head);
+        System.out.println(head);
     }
 
 

@@ -15,10 +15,21 @@ class Node<T>{
         this.t = t;
     }
 
+    public Node<T> next(T t) {
+        if (next == null) {
+            next = new Node<>(null, t);
+        } else {
+            next.next(t);
+        }
+        return this;
+    }
+
     @Override
     public String toString() {
-        return "Node{" +
-                "t=" + t +
-                '}';
+        if (next == null) {
+            return String.valueOf(t);
+        } else {
+            return String.valueOf(t) + "-->" + next.toString();
+        }
     }
 }

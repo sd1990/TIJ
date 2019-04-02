@@ -2,6 +2,7 @@ package org.songdan.tij.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
 
 /**
@@ -28,8 +29,10 @@ public class CustomInvocationHandler implements InvocationHandler {
 
 	public static void main(String[] args) {
 		Subject proxyInstance = (Subject) Proxy.newProxyInstance(Subject.class.getClassLoader(), new Class[] {Subject.class}, new CustomInvocationHandler(new RealSubject()));
-		System.out.println(proxyInstance.getClass().getName());
-		proxyInstance.name();
+		Class<? extends Subject> proxyInstanceClass = proxyInstance.getClass();
+		System.out.println(proxyInstanceClass.getName());
+		int modifiers = proxyInstanceClass.getModifiers();
+		System.out.println(Modifier.isFinal(modifiers));
 	}
 
 	static class RealSubject implements Subject{

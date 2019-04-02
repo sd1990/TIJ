@@ -1,7 +1,7 @@
 package org.songdan.tij.algorithm;
 
 import org.junit.Test;
-import org.songdan.tij.algorithm.counter.MovingCounterV2;
+import org.songdan.tij.algorithm.limiter.MovingCounterV2;
 
 public class MovingCounterV2Test {
 

@@ -1,5 +1,6 @@
 package org.songdan.tij.string;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -83,6 +84,7 @@ public class RegexpDemo {
 //		System.out.println(extractWildCardStrV2("biz.1.status.2","biz.*.status.*"));
 		test();
 		System.out.println("[1,2,3]".replaceAll("[\\[\\]]", ""));
+		System.out.println(BigDecimal.valueOf(2147483647d).intValue());
 	}
 
 }
