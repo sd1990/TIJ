@@ -1,14 +1,12 @@
 package org.songdan.tij.algorithm.node;
 
 import com.google.common.base.Splitter;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -20,7 +18,6 @@ public abstract class AbstractNode implements ValueNode {
     private static final long serialVersionUID = -5030207966278794611L;
     private static final PathFormat parser = new PathFormat();
     private static final Pattern numberPattern = Pattern.compile("^[0-9]+$");
-    private final static Logger LOGGER = LoggerFactory.getLogger(AbstractNode.class);
 
     private Splitter splitter = Splitter.on(".").trimResults().omitEmptyStrings();
 
@@ -54,8 +51,10 @@ public abstract class AbstractNode implements ValueNode {
 
     @Override
     public List<ValueNode> operate(OpType opType, int count, ValueNodeWrapper value, String... paths) {
-        if (paths.length == 0)
+        if (paths.length == 0) {
+
             throw new IllegalArgumentException("paths must defined ");
+        }
 
         if (paths.length == 1 && paths[0].indexOf('.') != -1) {
 
@@ -71,13 +70,16 @@ public abstract class AbstractNode implements ValueNode {
 
     private void operate(OpType opType, int count, ValueNode node, List<ValueNode> list, String[] paths, int depth,
                          ValueNodeWrapper value) {
-        if (list.size() >= count || node.getType() == Type.NULL)
+        if (list.size() >= count || node.getType() == Type.NULL) {
+
             return;
+        }
         Type type = node.getType();
 
-        if (type == Type.map)
+        if (type == Type.map) {
+
             opMap(opType, count, (MapNode) node, list, paths, depth, value);
-        else if (type == Type.list) {
+        } else if (type == Type.list) {
             opList(opType, count, (ListNode) node, list, paths, depth, value);
         }
     }
@@ -90,9 +92,9 @@ public abstract class AbstractNode implements ValueNode {
         String key = paths[depth];
         List<ValueNode> selected;
         //既不为* 也不是数字则设置为*
-        if (!StringUtils.equals(key, "*") && !numberPattern.matcher(key).matches()){
+        if (!"*".equals(key) && !numberPattern.matcher(key).matches()) {
             key = "*";
-            nextDepth = nextDepth -1;
+            nextDepth = nextDepth - 1;
             end = false;
         }
 
@@ -106,8 +108,10 @@ public abstract class AbstractNode implements ValueNode {
                 return;
             }
 
-            if (index >= node.size() || index < 0)
+            if (index >= node.size() || index < 0) {
+
                 return;
+            }
             selected = Arrays.asList(node.get(index));
         }
 
@@ -122,15 +126,18 @@ public abstract class AbstractNode implements ValueNode {
                         break;
                     case replace:
                         List<ValueNode> original = node.update(value.getList());
-                        LOGGER.debug("original: {}, replace: {}, paths: {}", original, value, paths);
                         break;
                 }
                 list.add(vn);
 
-                if (list.size() >= count)
+                if (list.size() >= count) {
+
                     return;
-            } else
+                }
+            } else {
+
                 operate(opType, count, vn, list, paths, nextDepth, value);
+            }
         }
 
     }
@@ -146,13 +153,15 @@ public abstract class AbstractNode implements ValueNode {
 
         if (key == null || key.equals("") || key.equals("*")) {
             keys = node.keySet();
-        } else
+        } else {
             keys = Arrays.asList(key);
+        }
 
         for (String k : keys) {
             ValueNode vn = node.get(k);
-            if (vn == null)
+            if (vn == null) {
                 continue;
+            }
 
             if (end) {
                 switch (opType) {
@@ -160,15 +169,18 @@ public abstract class AbstractNode implements ValueNode {
                         break;
                     case replace:
                         ValueNode original = node.set(k, value.getSingle());
-                        LOGGER.debug("original: {}, replace: {}, paths: {}", original, value, paths);
                         break;
                 }
                 list.add(vn);
 
-                if (list.size() >= count)
+                if (list.size() >= count) {
+
                     return;
-            } else
+                }
+            } else {
+
                 operate(opType, count, vn, list, paths, nextDepth, value);
+            }
         }
 
     }
@@ -194,6 +206,7 @@ public abstract class AbstractNode implements ValueNode {
         }
     }
 
+    @Override
     public Map<Path, ValueNode> flatten() {
         Map<Path, ValueNode> map = Maps.newConcurrentMap();
         walk(this, map, Path.GOD);
@@ -215,10 +228,12 @@ public abstract class AbstractNode implements ValueNode {
         diffs.add(new DiffValue(diffType, path.getPath(), oNode, tNode));
     }
 
+    @Override
     public List<DiffValue> diff(ValueNode other) {
         return diff(other, null, Maps.newHashMap());
     }
 
+    @Override
     public List<DiffValue> diff(ValueNode other, Set<String> watchPathSet, Map<String, Set<DiffValue>> watchDiffValue) {
         Map<Path, ValueNode> t = this.flatten();
         Map<Path, ValueNode> o = other.flatten();
@@ -226,7 +241,7 @@ public abstract class AbstractNode implements ValueNode {
         List<DiffValue> diffs = Lists.newLinkedList();
 
         Map<String, Pattern> watchPathPatternMap = Maps.newHashMap();
-        if (CollectionUtils.isNotEmpty(watchPathSet)) {
+        if (watchPathSet != null && watchPathSet.size() > 0) {
             for (String path : watchPathSet) {
                 //获取regex path
                 String patternPath = path.substring(0, path.lastIndexOf("."));
@@ -268,7 +283,7 @@ public abstract class AbstractNode implements ValueNode {
         //判断是否存在watch的PathString
         List<String> watchPathList = getWatchPath(path, watchPathPatternMap);
         //获取old 和 new的 watch
-        if (CollectionUtils.isNotEmpty(watchPathList)) {
+        if (watchPathList != null && watchPathList.size() > 0) {
             for (String watchPath : watchPathList) {
                 //构造具体path
                 String realPath = genRealPath(path, watchPath);
@@ -287,7 +302,7 @@ public abstract class AbstractNode implements ValueNode {
                 //判断是否已经存在该realPath
                 Set<String> realPathSets = watchDiffValues.stream().map(DiffValue::getPath).collect(Collectors.toSet());
                 //如果两个都为空则直接返回,不谢watchDiffValueMap
-                if (CollectionUtils.isEmpty(oldValueNodes) && CollectionUtils.isEmpty(newValueNodes)){
+                if (CollectionUtils.isEmpty(oldValueNodes) && CollectionUtils.isEmpty(newValueNodes)) {
                     continue;
                 }
                 if (!realPathSets.contains(realPath)) {
@@ -295,7 +310,7 @@ public abstract class AbstractNode implements ValueNode {
                         watchDiffValues.add(new DiffValue(DiffValue.DiffType.ADD, realPath, null, newValueNodes.get(0)));
                     } else if (CollectionUtils.isNotEmpty(oldValueNodes) && CollectionUtils.isEmpty(newValueNodes)) {
                         watchDiffValues.add(new DiffValue(DiffValue.DiffType.DELETE, realPath, oldValueNodes.get(0), null));
-                    } else if (StringUtils.equals(oldValueNodes.get(0).toString(), newValueNodes.get(0).toString())) {
+                    } else if (Objects.equals(oldValueNodes.get(0).toString(), newValueNodes.get(0).toString())) {
                         watchDiffValues.add(new DiffValue(DiffValue.DiffType.CHANGE, realPath, oldValueNodes.get(0), newValueNodes.get(0)));
                     } else {
                         watchDiffValues.add(new DiffValue(DiffValue.DiffType.UNCHANGED, realPath, oldValueNodes.get(0), newValueNodes.get(0)));
@@ -379,6 +394,7 @@ public abstract class AbstractNode implements ValueNode {
         return "@" + getType() + "<" + toString() + ">";
     }
 
+    @Override
     public String toString() {
         return toJson();
     }
