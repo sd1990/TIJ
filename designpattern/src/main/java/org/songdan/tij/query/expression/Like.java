@@ -28,8 +28,4 @@ public class Like implements QueryExpression {
         return field + " like " + value;
     }
 
-    @Override
-    public QueryExpressionAdapter adapter() {
-        return QueryAdapterFactory.find().like(this);
-    }
 }

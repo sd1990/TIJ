@@ -28,8 +28,4 @@ public class Equal implements QueryExpression {
         return field + "=" + value;
     }
 
-    @Override
-    public QueryExpressionAdapter adapter() {
-        return QueryAdapterFactory.find().equal(this);
-    }
 }

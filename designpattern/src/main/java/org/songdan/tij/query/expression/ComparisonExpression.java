@@ -40,8 +40,4 @@ public class ComparisonExpression implements QueryExpression {
         return Joiner.on(" ").join(field, comparisons.getSignature(), value);
     }
 
-    @Override
-    public QueryExpressionAdapter adapter() {
-        return QueryAdapterFactory.find().comparision(this);
-    }
 }

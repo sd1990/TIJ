@@ -21,12 +21,13 @@ public class Missing implements QueryExpression {
     }
 
     @Override
+    public Object getValue() {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return field + " is null ";
     }
 
-    @Override
-    public QueryExpressionAdapter adapter() {
-        return QueryAdapterFactory.find().missing(this);
-    }
 }

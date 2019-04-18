@@ -25,18 +25,22 @@ public class ExpressionFactory {
 
     public static void main(String[] args) {
         QueryExpression eqExpression = create().and().eq("name", "foo").build();
-        System.out.println(eqExpression);
+//        System.out.println(eqExpression.adapter().dialect());
         QueryExpression andExpression = create().and().eq("name", "foo").eq("name", "foo").build();
-        System.out.println(andExpression);
+//        System.out.println(andExpression);
+//        System.out.println(andExpression.adapter().dialect());
         QueryExpression complexExpression = create().and().eq("name", "foo").eq("name", "foo").orThen()
                 .eq("data.color", "red").eq("data.size", 12).end().build();
-        System.out.println(complexExpression);
+//        System.out.println(complexExpression);
+//        System.out.println(complexExpression.adapter().dialect());
         QueryExpression complexExpression2 = create().or().eq("name", "foo").eq("name", "foo").andThen()
                 .eq("data.color", "red").eq("data.size", 12).end().build();
-        System.out.println(complexExpression2);
+//        System.out.println(complexExpression2);
+//        System.out.println(complexExpression2.adapter().dialect());
         QueryExpression complexExpression3 = create().or().andThen().eq("data.color", "red").eq("data.size", 12).end()
                 .andThen().eq("data.color", "red").eq("data.size", 12).end().build();
-        System.out.println(complexExpression3);
+//        System.out.println(complexExpression3);
+//        System.out.println(complexExpression3.adapter().dialect());
 
         QueryExpression complexExpression4 = create().and()
                 .eq("name", "foo")
@@ -46,21 +50,23 @@ public class ExpressionFactory {
                     .end()
 
                 .build();
-        System.out.println(complexExpression4);
+//        System.out.println(complexExpression4);
+//        System.out.println(complexExpression4.adapter().dialect());
 
         QueryExpression complexExpression5 = create().and().eq("name", "foo").end().build();
-        System.out.println(complexExpression5);
+//        System.out.println(complexExpression5);
         QueryExpression variousExpression = create().and().eq("name", "foo").notEq("name", "foo").like("name", "foo")
                 .missing("name").in("name", Lists.newArrayList("foo")).ge("age", 10).le("age", 5)
                 .build();
         System.out.println(variousExpression);
+        System.out.println(variousExpression.adapter().dialect());
 
-        Demo demo = new Demo();
-        // demo.setAge(10);
-        System.out.println(create().and().ge("name", demo.getName(), false).eq("age", demo.getAge())
-                .in("name", null, false).build());
-        // error demo
-        System.out.println(create().and().eq("name", "foo").orThen().eq("name", "abc").build());
+//        Demo demo = new Demo();
+//        // demo.setAge(10);
+//        System.out.println(create().and().ge("name", demo.getName(), false).eq("age", demo.getAge())
+//                .in("name", null, true).build());
+//        // error demo
+//        System.out.println(create().and().eq("name", "foo").orThen().eq("name", "abc").build());
     }
 
     public CombinationBuilder and() {

@@ -22,13 +22,18 @@ public class In implements QueryExpression {
     }
 
     @Override
-    public String toString() {
-        return field + " in (" + Joiner.on(",").join(value) + ")";
+    public String getField() {
+        return field;
     }
 
     @Override
-    public QueryExpressionAdapter adapter() {
-        return QueryAdapterFactory.find().in(this);
+    public Object[] getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return field + " in (" + Joiner.on(",").join(value) + ")";
     }
 
 }

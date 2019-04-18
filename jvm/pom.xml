@@ -18,6 +18,12 @@
 			<artifactId>tij.base</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+
+        <dependency>
+            <groupId>com.googlecode.aviator</groupId>
+            <artifactId>aviator</artifactId>
+            <version>3.2.0</version>
+        </dependency>
 	</dependencies>
 
 

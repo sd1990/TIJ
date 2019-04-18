@@ -1,12 +1,10 @@
 package org.songdan.tij.query.adapter;
 
-import org.songdan.tij.query.expression.CombinationExpression;
-import org.songdan.tij.query.expression.ComparisonExpression;
-import org.songdan.tij.query.expression.Equal;
-import org.songdan.tij.query.expression.In;
-import org.songdan.tij.query.expression.Like;
-import org.songdan.tij.query.expression.Missing;
-import org.songdan.tij.query.expression.NotEqual;
+import org.songdan.tij.query.adapter.mysql.MysqlQueryAdapterFactory;
+import org.songdan.tij.query.expression.*;
+
+import java.util.Iterator;
+import java.util.ServiceLoader;
 
 /**
  * 查询AdapterFactory
@@ -14,24 +12,8 @@ import org.songdan.tij.query.expression.NotEqual;
  * @author song dan
  * @since 14 五月 2018
  */
-public interface QueryAdapterFactory {
+public interface QueryAdapterFactory<T> {
 
-    static QueryAdapterFactory find() {
-        throw new RuntimeException("通过反射获取");
-    }
-
-    QueryExpressionAdapter equal(Equal equal);
-
-    QueryExpressionAdapter notEqual(NotEqual notEqual);
-
-    QueryExpressionAdapter like(Like like);
-
-    QueryExpressionAdapter in(In in);
-
-    QueryExpressionAdapter missing(Missing missing);
-
-    QueryExpressionAdapter comparision(ComparisonExpression comparisonExpression);
-
-    QueryExpressionAdapter combination(CombinationExpression combinationExpression);
+    QueryExpressionAdapter<T> adapter(QueryExpression queryExpression);
 
 }

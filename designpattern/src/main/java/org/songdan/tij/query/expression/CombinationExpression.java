@@ -32,8 +32,13 @@ public class CombinationExpression implements QueryExpression {
     }
 
     @Override
-    public QueryExpressionAdapter adapter() {
-        return QueryAdapterFactory.find().combination(this);
+    public String getField() {
+        return null;
+    }
+
+    @Override
+    public Object getValue() {
+        return null;
     }
 
 }
