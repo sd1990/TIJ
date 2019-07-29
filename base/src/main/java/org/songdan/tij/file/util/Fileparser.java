@@ -1,27 +1,11 @@
 package org.songdan.tij.file.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FilePermission;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URISyntaxException;
-import java.nio.charset.Charset;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
-import java.util.StringJoiner;
-
-import org.songdan.tij.generics.Sets;
 
 /**
  * TODO completion javadoc.
@@ -31,48 +15,56 @@ import org.songdan.tij.generics.Sets;
  */
 public class Fileparser {
 
-	public static void main(String[] args) throws IOException, URISyntaxException {
-		File file = new File("/Users/songdan/Documents/cancel-order-shop.csv");
-//		File opcFile = new File("/Users/songdan/Desktop/opc-all-shelf-code.csv");
-		BufferedReader reader = null;
-		BufferedReader opcReader = null;
-		try {
-			System.out.println("读一整行:");
-			// 读取非汉字可用
-			// reader = new BufferedReader(new FileReader(file));
-			// 读汉字可用
-			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-//			opcReader = new BufferedReader(new InputStreamReader(new FileInputStream(opcFile)));
-			Set<String> set = extractSingleStr(reader);
-//			Set<String> opcSet = extractSingleStr(opcReader);
-//			Set<String> noSellSet = Sets.difference(opcSet, set);
-//			System.out.println(noSellSet.size());
-			String join = String.join(",", set);
-			System.out.println(join);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (null != reader) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        File file = new File("TIJ/base/target/classes/org/songdan/tij/file/util/123.txt");
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            List<String> set = extractSingleStr(reader);
+            file = new File("TIJ/base/target/classes/org/songdan/tij/file/util/456.txt");
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            List<String> set2 = extractSingleStr(reader);
 
-	private static Set<String> extractSingleStr(BufferedReader reader) throws IOException {
-		Set<String> set = new LinkedHashSet<>();
-		String str;
-		while ((str = reader.readLine()) != null) {
-			String[] split = str.split(",");
-			if (split[0].equals("")) {
-				continue;
-			}
-			set.add("'" + str + "'");
-		}
-		return set;
-	}
+            System.out.println(set.size());
+            System.out.println(set2.size());
+            set.removeAll(set2);
+            List<List<String>> partition = partition(set, 100);
+            System.out.println(partition.size());
+            for (List<String> list : partition) {
+                String join = String.join(",", list);
+                System.out.println("["+join+"]");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != reader) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static <T> List<List<T>> partition(List<T> source, int partition) {
+        List<List<T>> list = new ArrayList<>(source.size() / partition + 1);
+        for (int i = 0; i < source.size(); ) {
+            int toIndex = i + partition;
+            toIndex = source.size() > toIndex ? toIndex : source.size();
+            list.add(source.subList(i, toIndex));
+            i = i + partition;
+        }
+        return list;
+    }
+
+    private static List<String> extractSingleStr(BufferedReader reader) throws IOException {
+        Set<String> set = new LinkedHashSet<>();
+        String str;
+        while ((str = reader.readLine()) != null) {
+            set.add(str);
+        }
+        return new ArrayList<>(set);
+    }
 
 }

@@ -11,8 +11,12 @@ public class Resturant {
     public static void main(String[] args) {
         Menu menu = new Menu("河南菜", "xxx");
         Menu inner0 = new Menu("郑州菜", "ZZZ");
-//        inner0.add(new MenuItem("胡辣汤", "10"));
-//        inner0.add(new MenuItem("大盘鸡", "70"));
+        inner0.add(new MenuItem("胡辣汤", "10"));
+        inner0.add(new MenuItem("大盘鸡", "70"));
+        Menu inner01 = new Menu("郑州高新区菜", "ZZZ");
+        inner01.add(new MenuItem("高新胡辣汤", "10"));
+        inner01.add(new MenuItem("高新大盘鸡", "70"));
+        inner0.add(inner01);
         menu.add(inner0);
         menu.add(new MenuItem("红烧肉", "20"));
         menu.add(new MenuItem("蚂蚁上树", "15"));

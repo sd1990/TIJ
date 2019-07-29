@@ -85,6 +85,15 @@ public class RegexpDemo {
 		test();
 		System.out.println("[1,2,3]".replaceAll("[\\[\\]]", ""));
 		System.out.println(BigDecimal.valueOf(2147483647d).intValue());
+
+		Pattern doublePattern = Pattern.compile("^-?\\d+(\\.\\d{1,2})?$");
+		System.out.println(doublePattern.matcher("0.123").matches());
+		System.out.println(doublePattern.matcher("0.12").matches());
+		System.out.println(doublePattern.matcher("0.1").matches());
+		System.out.println(doublePattern.matcher("0.0").matches());
+		System.out.println(doublePattern.matcher("-0.0").matches());
+		System.out.println(doublePattern.matcher("-12.0").matches());
+
 	}
 
 }

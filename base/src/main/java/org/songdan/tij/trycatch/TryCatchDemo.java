@@ -7,15 +7,20 @@ package org.songdan.tij.trycatch;
 public class TryCatchDemo {
 
     public static void main(String[] args) {
-        testThrowException();
+        try {
+
+            testThrowException();
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void testThrowException() {
         try{
-            int i = 1 / 0;
+            System.out.println("hello world!!!");
         }finally {
             //异常信息不会抛出
-            return;
+            throw new RuntimeException("aaa");
         }
     }
 

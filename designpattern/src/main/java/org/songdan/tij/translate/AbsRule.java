@@ -31,6 +31,7 @@ public abstract class AbsRule {
 		public AbsRule deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
 			ObjectMapper objectMapper = (ObjectMapper) jsonParser.getCodec();
 			ObjectNode root = objectMapper.readTree(jsonParser);
+			System.out.println(root);
 			Class<? extends AbsRule> instanceClass;
 			if (containField(root,"rules")) {
 				instanceClass = CombinationRule.class;

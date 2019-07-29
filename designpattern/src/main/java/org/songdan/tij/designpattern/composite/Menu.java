@@ -1,9 +1,6 @@
 package org.songdan.tij.designpattern.composite;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 组合模式的父节点
@@ -51,7 +48,7 @@ public class Menu implements MenuComponent{
 
     @Override
     public Iterator<MenuComponent> iterator() {
-        return new CompositeIterator(list.iterator());
+        return new LeafIterator(list.listIterator());
     }
 
 
@@ -61,9 +58,9 @@ public class Menu implements MenuComponent{
 
     class CompositeIterator implements Iterator<MenuComponent>{
 
-        private Stack<Iterator<MenuComponent>> stack = new Stack<>();
+        private Stack<ListIterator<MenuComponent>> stack = new Stack<>();
 
-        public CompositeIterator(Iterator<MenuComponent> iterator) {
+        public CompositeIterator(ListIterator<MenuComponent> iterator) {
             stack.push(iterator);
         }
 
@@ -72,7 +69,7 @@ public class Menu implements MenuComponent{
             if (stack.isEmpty()) {
                 return false;
             }else{
-                Iterator<MenuComponent> peek = stack.peek();
+                ListIterator<MenuComponent> peek = stack.peek();
                 if (!peek.hasNext()) {
                     stack.pop();
                     //继续递归
@@ -89,13 +86,53 @@ public class Menu implements MenuComponent{
                 MenuComponent next = componentIterator.next();
                 if (next instanceof Menu) {
                     //这个地方使用list.iterator是为了防止下次调用componentIterator.next()产生递归调用，导致同一个Menu出现在多个stack中，重复
-                    Iterator<MenuComponent> iterator = ((Menu)next).list.iterator();
+                    ListIterator<MenuComponent> iterator = ((Menu)next).list.listIterator();
                     stack.push(iterator);
                 }
                 return next;
             } else {
                 return null;
             }
+        }
+    }
+
+    class LeafIterator implements Iterator<MenuComponent>{
+
+        private Stack<ListIterator<MenuComponent>> stack = new Stack<>();
+
+        public LeafIterator(ListIterator<MenuComponent> iterator) {
+            stack.push(iterator);
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (stack.isEmpty()) {
+                return false;
+            }else{
+                ListIterator<MenuComponent> peek = stack.peek();
+                if (!peek.hasNext()) {
+                    stack.pop();
+                    //继续递归
+                    return hasNext();
+                }
+                MenuComponent next = peek.next();
+                if (!Menu.class.isInstance(next)) {
+                    //回退
+                    peek.previous();
+                    return true;
+                } else {
+                    Menu nextMenu = (Menu) next;
+                    stack.push(nextMenu.list.listIterator());
+                    return hasNext();
+                }
+            }
+        }
+
+        @Override
+        public MenuComponent next() {
+            Iterator<MenuComponent> componentIterator = stack.peek();
+            MenuComponent next = componentIterator.next();
+            return next;
         }
     }
 }

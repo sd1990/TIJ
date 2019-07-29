@@ -1,4 +1,4 @@
-package org.songdan.tij.thread.lockdemo;
+package org.songdan.tij.thread.lock;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

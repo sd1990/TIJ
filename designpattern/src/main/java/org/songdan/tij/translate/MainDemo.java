@@ -18,7 +18,7 @@ import org.songdan.tij.designpattern.composite.JsonUtil;
 public class MainDemo {
 
     public static void main(String[] args) throws IOException {
-		String json = stringFromFile(new File("/Users/songdan/IdeaProjects/github/TIJ/designpattern/src/main/java/org/songdan/tij/translate/rule.json"));
+		String json = stringFromFile(new File("/Users/songdan/github/TIJ/designpattern/src/main/java/org/songdan/tij/translate/rule.json"));
 //		String json = "{\"rules\":[{\"field\":\"position_code\",\"op\":\"equal\",\"value\":\"北京市\"},{\"rules\":[{\"field\":\"type\",\"op\":\"equal\",\"value\":\"门店\"},{\"field\":\"type\",\"op\":\"equal\",\"value\":\"无人货架\"}],\"op\":\"or\"}],\"op\":\"and\"}";
 		AbsRule absRule = JsonUtil.of(json, AbsRule.class);
         System.out.println(

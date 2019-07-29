@@ -1,0 +1,17 @@
+{
+  "checkConfigList": [
+    {
+      "name": "rpcCheck1",
+      "order": 1,
+      "open": true
+    },
+    {
+      "name": "rpcCheck2",
+      "order": 2,
+      "open": true
+    }
+  ],
+  "async": true,
+  "failFast": true,
+  "order": 1
+}

@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class ExecutorErroDemo {
 
     public static void queueSize() {
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 5, 30, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(0, 5, 30, TimeUnit.SECONDS, new LinkedBlockingDeque<>(10));
         for (int i = 0; i < 20; i++) {
             int finalI = i+1;
             executor.submit(() -> {
