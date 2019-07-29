@@ -5,12 +5,15 @@ import lombok.Data;
 import org.songdan.tij.check.checker.Checker;
 import org.songdan.tij.check.config.CheckConfig;
 import org.songdan.tij.check.config.CheckConfigItem;
+import org.songdan.tij.check.result.CheckResult;
+import org.songdan.tij.check.result.CheckResultItem;
 import org.songdan.tij.designpattern.composite.JsonUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * @author: Songdan
@@ -20,9 +23,20 @@ import java.io.IOException;
 public class MissionConfig {
     private CheckConfig buildCheckConfig;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         String json = stringFromFile(new File("/Users/songdan/github/TIJ/designpattern/src/main/java/org/songdan/tij/check/checkConfig.json"));
-        System.out.println(JsonUtil.of(json,MissionConfig.class));
+        MissionConfig missionConfig = JsonUtil.of(json, MissionConfig.class);
+        Checker checker = missionConfig.getBuildCheckConfig().getChecker();
+        for (int i = 0; i < 10; i++) {
+            System.out.println("====================");
+            CheckResult checkResult = checker.check(new CheckContext());
+            Iterator<CheckResultItem> iterator = checkResult.iterator();
+            while (iterator.hasNext()) {
+                System.out.println(iterator.next());
+            }
+            System.out.println("====================");
+            Thread.sleep(500);
+        }
     }
 
 

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.songdan.tij.check.checker.Checker;
 import org.songdan.tij.check.checker.GroupChecker;
+import org.songdan.tij.check.checker.TimeChecker;
 
 import java.util.Comparator;
 import java.util.List;
@@ -27,6 +28,8 @@ public class CheckConfigGroup extends CheckConfig {
 
     private int order;
 
+    private String name;
+
 
     public boolean addCheckConfig(CheckConfigItem checkConfig) {
         return checkConfigList.add(checkConfig);
@@ -37,10 +40,11 @@ public class CheckConfigGroup extends CheckConfig {
         GroupChecker groupChecker = new GroupChecker();
         groupChecker.setFailfast(failFast);
         groupChecker.setAsync(async);
+        groupChecker.setName(name);
         checkConfigList.sort(Comparator.comparingInt(Ordered::getOrder));
         for (CheckConfig checkConfig : checkConfigList) {
             groupChecker.addChecker(checkConfig.getChecker());
         }
-        return groupChecker;
+        return new TimeChecker(groupChecker);
     }
 }

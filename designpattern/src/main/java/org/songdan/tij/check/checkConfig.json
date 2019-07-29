@@ -2,16 +2,6 @@
   "buildCheckConfig": {
     "checkConfigList": [
       {
-        "name": "rpcCheck1",
-        "order": 1,
-        "open": true
-      },
-      {
-        "name": "rpcCheck2",
-        "order": 2,
-        "open": true
-      },
-      {
         "checkConfigList": [
           {
             "name": "logisticCheck1",
@@ -22,14 +12,37 @@
             "name": "logisticCheck2",
             "order": 2,
             "open": true
+          },
+          {
+            "name": "logisticCheck3",
+            "order": 3,
+            "open": true
           }
         ],
         "async": false,
-        "failFast": false,
-        "order": 3
+        "failFast": true,
+        "order": 3,
+        "name":"logisticCheck"
+      },
+      {
+        "name": "rpcCheck1",
+        "order": 1,
+        "open": true
+      },
+      {
+        "name": "rpcCheck2",
+        "order": 2,
+        "open": true
+      },
+      {
+        "name": "rpcCheck3",
+        "order": 3,
+        "open": true
       }
+
     ],
     "async": true,
-    "failFast": true
+    "failFast": true,
+    "name":"buildCheck"
   }
 }

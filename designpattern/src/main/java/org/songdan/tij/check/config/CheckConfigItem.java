@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.songdan.tij.check.CheckerRegistry;
 import org.songdan.tij.check.checker.Checker;
+import org.songdan.tij.check.checker.TimeChecker;
 
 /**
  * 校验配置
@@ -56,6 +57,6 @@ public class CheckConfigItem extends CheckConfig {
 
     @Override
     public Checker getChecker() {
-        return CheckerRegistry.getByName(getName());
+        return new TimeChecker(CheckerRegistry.getByName(getName()));
     }
 }

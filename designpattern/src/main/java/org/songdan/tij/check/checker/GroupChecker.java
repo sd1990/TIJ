@@ -3,6 +3,7 @@ package org.songdan.tij.check.checker;
 import com.google.common.collect.Lists;
 import lombok.Data;
 import org.songdan.tij.check.CheckContext;
+import org.songdan.tij.check.checker.support.CheckHandler;
 import org.songdan.tij.check.checker.support.CheckHandlerBuilder;
 import org.songdan.tij.check.result.CheckResult;
 
@@ -19,6 +20,8 @@ public class GroupChecker implements Checker {
 
     private boolean async;
 
+    private String name;
+
     private List<Checker> checkerList = Lists.newArrayList();
 
     public boolean addChecker(Checker checker) {
@@ -27,14 +30,17 @@ public class GroupChecker implements Checker {
 
     @Override
     public CheckResult check(CheckContext checkContext) {
+        CheckHandler checkHandler;
         if (async) {
-            return CheckHandlerBuilder.buildAsync(checkerList, failfast).check(checkContext);
+            checkHandler = CheckHandlerBuilder.buildAsync(checkerList, failfast);
+        } else {
+            checkHandler = CheckHandlerBuilder.buildSync(checkerList, failfast);
         }
-        return CheckHandlerBuilder.buildSync(checkerList, failfast).check(checkContext);
+        return checkHandler.check(checkContext);
     }
 
     @Override
     public String getName() {
-        throw new UnsupportedOperationException("group checker has no name !!!");
+        return name;
     }
 }
