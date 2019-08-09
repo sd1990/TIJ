@@ -4,10 +4,6 @@ import com.google.common.collect.Lists;
 
 import java.util.*;
 
-/**
- * Created by yangzhenxi on 14-11-28.
- * ac自动机，用于字符串多模式匹配
- */
 public class ACAutoMachine{
     private TrieNode root;
 

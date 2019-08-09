@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by yangzhenxi on 14-11-28.
  */
 public class TrieNode {
     private Map<Character, TrieNode> next;

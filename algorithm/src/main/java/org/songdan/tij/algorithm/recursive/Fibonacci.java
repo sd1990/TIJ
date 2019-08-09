@@ -30,13 +30,13 @@ public class Fibonacci {
 
     public static void main(String[] args) {
         Fibonacci f = new Fibonacci();
-        int num = 100000;
+        int num = 50;
         long start = System.currentTimeMillis();
-//        System.out.println(f.recursive(num));
+        System.out.println(f.recursive(num));
         System.out.println(System.currentTimeMillis()-start);
-        start = System.nanoTime();
+        start = System.currentTimeMillis();
         System.out.println(f.noRecursive(num));
-        System.out.println(System.nanoTime()-start);
+        System.out.println(System.currentTimeMillis()-start);
     }
 
 }

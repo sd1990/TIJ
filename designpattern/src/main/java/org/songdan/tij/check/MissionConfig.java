@@ -27,7 +27,7 @@ public class MissionConfig {
         String json = stringFromFile(new File("/Users/songdan/github/TIJ/designpattern/src/main/java/org/songdan/tij/check/checkConfig.json"));
         MissionConfig missionConfig = JsonUtil.of(json, MissionConfig.class);
         Checker checker = missionConfig.getBuildCheckConfig().getChecker();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 2; i++) {
             System.out.println("====================");
             CheckResult checkResult = checker.check(new CheckContext());
             Iterator<CheckResultItem> iterator = checkResult.iterator();

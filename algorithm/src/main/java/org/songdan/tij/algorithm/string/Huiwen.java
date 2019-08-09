@@ -1,4 +1,4 @@
-package org.songdan.tij.algorithm;
+package org.songdan.tij.algorithm.string;
 
 /**
  * 回文
@@ -33,7 +33,7 @@ public class Huiwen {
 
     public static boolean isHuiwenByNode(Node head) {
 		/*
-		快慢指针，慢指针前进一步，快指针前进两步
+		快慢指针，慢指针前进一步，快指针前进两步`
 			1. 当快指针到达尾部的时候，慢指针到达中间点
 			2. 慢指针在移动的过程中反转节点
 			3. 慢指针到达中间点，产生一个新的反向指针，反向遍历，慢指针继续向前，比较内容
@@ -67,10 +67,10 @@ public class Huiwen {
         }
         //很关键
         head.next = null;
-        if (cur==null) {
+        if (cur == null) {
             return true;
         }
-        Node reverse = i % 2 == 0 ? prev:prev.next;
+        Node reverse = i % 2 == 0 ? prev : prev.next;
         while (reverse != null && cur != null) {
             if (reverse.c != cur.c) {
                 return false;
@@ -80,7 +80,6 @@ public class Huiwen {
         }
         return true;
     }
-
 
 
     private static Node quickPoint(Node quick) {
@@ -105,6 +104,7 @@ public class Huiwen {
 
     /**
      * 提取字符串中最长回文
+     *
      * @param s
      * @return
      */
@@ -157,6 +157,39 @@ public class Huiwen {
             next = new Node(c);
             return next;
         }
+    }
+
+
+    public static String longest(String str) {
+        if (str == null) {
+            return null;
+        }
+        if (str.length() == 1) {
+            return str;
+        }
+
+        String longest = str.substring(0, 1);
+        char[] chars = str.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            String temp = extract(str, i, i);
+            if (temp.length() > longest.length()) {
+                longest = temp;
+            }
+            temp = extract(str, i, i+1);
+            if (temp.length() > longest.length()) {
+                longest = temp;
+            }
+
+        }
+        return longest;
+    }
+
+    public static String extract(String str, int begin,int end) {
+        while (begin>=0 && end < str.length() && str.charAt(begin)== str.charAt(end)) {
+            begin--;
+            end++;
+        }
+        return str.substring(begin + 1, end);
     }
 
 }
