@@ -10,18 +10,20 @@ class Node<T>{
 
     Node<T> next;
 
-    public Node(Node<T> next, T t) {
-        this.next = next;
+    public Node() {
+    }
+
+    public Node(T t) {
         this.t = t;
     }
 
     public Node<T> next(T t) {
         if (next == null) {
-            next = new Node<>(null, t);
+            next = new Node<>(t);
         } else {
             next.next(t);
         }
-        return this;
+        return next;
     }
 
     @Override

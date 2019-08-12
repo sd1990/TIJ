@@ -7,7 +7,7 @@ package org.songdan.tij.algorithm;
  */
 public class NodeList<T> {
 
-    private Node<T> head = new Node<>(null,null);
+    private Node<T> head = new Node<>();
 
     public int size() {
         int i = 0;
@@ -32,7 +32,7 @@ public class NodeList<T> {
             j++;
             node = node.next;
         }
-        node.next = new Node<>(node.next, e);
+        node.next(e);
     }
 
     /**
