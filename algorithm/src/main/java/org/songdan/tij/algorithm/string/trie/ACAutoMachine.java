@@ -1,4 +1,4 @@
-package org.songdan.tij.algorithm.trie;
+package org.songdan.tij.algorithm.string.trie;
 
 import com.google.common.collect.Lists;
 
