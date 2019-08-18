@@ -37,6 +37,11 @@ public class Reactor implements Runnable {
                 selector.select();
                 Set<SelectionKey> selectionKeys = selector.selectedKeys();
                 for (SelectionKey selectionKey : selectionKeys) {
+                    System.out.println("selectionKey:" + selectionKey);
+                    System.out.println("selection key is isAcceptable: "+selectionKey.isAcceptable());
+                    System.out.println("selection key is isReadable: "+selectionKey.isReadable());
+                    System.out.println("selection key is isWritable: "+selectionKey.isWritable());
+                    System.out.println("selection key is isConnectable: "+selectionKey.isConnectable());
                     dispatch(selectionKey);
                 }
                 selectionKeys.clear();
@@ -60,8 +65,10 @@ public class Reactor implements Runnable {
         @Override
         public void run() {
             try {
+                //接收到的client channel
                 SocketChannel socketChannel = serverSocket.accept();
                 if (socketChannel != null) {
+                    System.out.println("accept channel from :"+socketChannel.getRemoteAddress());
                     new Handler(selector, socketChannel);
                 }
             }
@@ -92,11 +99,12 @@ public class Reactor implements Runnable {
         public Handler(Selector selector, SocketChannel socketChannel) throws IOException {
             socket = socketChannel;
             socketChannel.configureBlocking(false);
+            //TODO
             sk = socket.register(selector, 0);
             sk.attach(this);
             //SD:注册感兴趣的事件
             sk.interestOps(SelectionKey.OP_READ);
-            selector.wakeup();
+//            selector.wakeup();
         }
 
         boolean inputIsComplete() {
@@ -111,6 +119,7 @@ public class Reactor implements Runnable {
 
         void process() {
             /* ... */
+            System.out.println("business handle");
         }
 
         @Override
@@ -128,7 +137,15 @@ public class Reactor implements Runnable {
 
         private void read() throws IOException {
             //read from io
-            socket.read(input);
+            int read = socket.read(input);
+            while (read != -1) {
+                input.flip();
+                while (input.hasRemaining()) {
+                    System.out.println((char) input.get());
+                }
+                input.clear();
+                read = socket.read(input);
+            }
             if (inputIsComplete()) {
                 //process business
                 process();
@@ -145,6 +162,10 @@ public class Reactor implements Runnable {
             }
         }
 
+    }
+
+    public static void main(String[] args) throws IOException {
+        new Reactor(8080).run();
     }
 
 }

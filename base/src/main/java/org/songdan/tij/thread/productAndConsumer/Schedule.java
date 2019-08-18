@@ -22,8 +22,10 @@ public class Schedule {
         ConsumeProgressRate consumeProgressRate = new ConsumeProgressRate();
         boolean hasInterrupt = false;
         int consumerNum = Runtime.getRuntime().availableProcessors();
+        System.out.println("thread num:" + consumerNum);
         ThreadPoolExecutor executorService = (ThreadPoolExecutor) Executors.newFixedThreadPool(consumerNum);
         while (startId < maxId) {
+            consumeProgressRate.showRate();
             List<Long> idList = getPagedWmPoiIdList(startId);
             consumeProgressRate.append(idList);
             List<List<Long>> partition = new ArrayList<>();
