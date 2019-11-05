@@ -9,7 +9,7 @@ public class ExecutorsDemo {
 
     public static void main(String[] args) {
         System.out.println("hello world");
-        ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();
+        ExecutorService newCachedThreadPool = Executors.newSingleThreadExecutor();
         ExecutorCompletionService<Integer> completionService = new ExecutorCompletionService<>(newCachedThreadPool);
         for (int i = 0; i < 10; i++) {
             completionService.submit(new MyTask(),i);

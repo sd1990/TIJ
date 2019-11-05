@@ -26,6 +26,8 @@ public class Client {
 
     public void connect() throws IOException {
         socketChannel.connect(new InetSocketAddress(remoteAddress, remotePort));
+        while (!socketChannel.finishConnect()) {
+        }
     }
 
     public void close() throws IOException {

@@ -7,12 +7,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-/**
- * 门店线下表数据迁移
- *
- * @author: Songdan
- * @create: 2019-08-15 16:03
- **/
 public class Schedule {
 
     public void execute() throws InterruptedException {

@@ -99,12 +99,13 @@ public class Reactor implements Runnable {
         public Handler(Selector selector, SocketChannel socketChannel) throws IOException {
             socket = socketChannel;
             socketChannel.configureBlocking(false);
-            //TODO
+            //SD:0 代表对任何时间都不感兴趣
             sk = socket.register(selector, 0);
             sk.attach(this);
             //SD:注册感兴趣的事件
             sk.interestOps(SelectionKey.OP_READ);
-//            selector.wakeup();
+            //TODO 这个地方为什么要做一次wake up
+            selector.wakeup();
         }
 
         boolean inputIsComplete() {
@@ -146,6 +147,7 @@ public class Reactor implements Runnable {
                 input.clear();
                 read = socket.read(input);
             }
+            //TODO 在读取未结束前数据缓存下来
             if (inputIsComplete()) {
                 //process business
                 process();

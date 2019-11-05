@@ -110,13 +110,15 @@ public class Algorithms {
             }
             int i = left;
             int j = right;
+            int v = arr[left];
             while (i != j) {
-                for (; i < j && arr[i] <= arr[left]; i++) {
+                for (; i < j && arr[j] >= v; j--) {
 
                 }
-                for (; i < j && arr[j] > arr[left]; j--) {
+                for (; i < j && arr[i] <= v; i++) {
 
                 }
+                System.out.println("i = " + i + ",j = " + j);
                 if (i < j) {
                     swap(arr, j, i);
                 }
@@ -173,23 +175,33 @@ public class Algorithms {
             }
         }
 
+        private static boolean assertSort(int[] arr) {
+            for (int i = 1; i < arr.length; i++) {
+                if (arr[i - 1] > arr[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public static void main(String[] args) throws InterruptedException {
             int length = 100;
             int[] arr = new int[length];
-            fillArray(arr);
-//            // arr = new int[]{4,4,4,4};
+//            fillArray(arr);
+             arr = new int[]{9,8,7,6,5,4,3,2,1,0};
 //            System.out.println(toString(arr));
 //            int[] copy = new int[arr.length];
 //            System.arraycopy(arr, 0, copy, 0, arr.length);
 //            long startTime = System.currentTimeMillis();
-//            quickSort(arr);
+            quickSort(arr);
+            System.out.println("sort assert result is : "+assertSort(arr));
 //            System.out.println("v1 : " + (System.currentTimeMillis() - startTime));
 //            System.out.println(toString(arr));
 //            fillArray(arr);
 //            arr = new int[]{3,2};
-            mergeSort(arr,0,arr.length-1,new int[arr.length]);
+//            mergeSort(arr,0,arr.length-1,new int[arr.length]);
             System.out.println(toString(arr));
-            System.out.println(binarySearch(arr,0,arr.length-1,50));
+//            System.out.println(binarySearch(arr,0,arr.length-1,50));
             // startTime = System.currentTimeMillis();
             // quickSortV2(copy);
             // System.out.println("v2 : " + (System.currentTimeMillis() - startTime));
