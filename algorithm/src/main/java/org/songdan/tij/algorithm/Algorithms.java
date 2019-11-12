@@ -112,6 +112,7 @@ public class Algorithms {
             int j = right;
             int v = arr[left];
             while (i != j) {
+
                 for (; i < j && arr[j] >= v; j--) {
 
                 }
