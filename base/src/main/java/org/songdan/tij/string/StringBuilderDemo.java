@@ -1,5 +1,7 @@
 package org.songdan.tij.string;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Optional;
@@ -30,5 +32,13 @@ public class StringBuilderDemo {
         String format = String.format("金额:%.2f,百分比:%.2f%%", 3.14456789, 0.14);
         System.out.println(format);
 
+        String s = "/";
+
+        System.out.println("a"+s+"b");
+
+        System.out.println(true ^ true);
+        System.out.println(false ^ false);
+        System.out.println(true ^ false);
+        System.out.println(false ^ true);
     }
 }

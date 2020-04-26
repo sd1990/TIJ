@@ -1,5 +1,6 @@
 package org.songdan.tij.inherit.son;
 
+import org.apache.commons.lang3.Range;
 import org.songdan.tij.inherit.Person;
 import org.songdan.tij.inherit.base.BaseClass;
 
@@ -10,6 +11,8 @@ public class SubClass extends BaseClass {
 
     private static Person staticP = new Person("static son");
     private Person p = new Person("son");
+
+    private Range<Integer> range;
 
     static{
         System.out.println("sub class static code");
@@ -24,6 +27,7 @@ public class SubClass extends BaseClass {
         System.out.println("this 引用在子类中的引用指向："+this);
         System.out.println("this.p 字段在子类中的值为:" + this.p);
         System.out.println("subclass construct end ...");
+        range = Range.between(100, 10000000);
     }
 
     @Override
@@ -33,6 +37,8 @@ public class SubClass extends BaseClass {
 
     public static void main(String[] args) {
         SubClass sb = new SubClass("songdan");
+        sb.getName();
+        System.out.println(sb.contains(90));
     }
 
     @Override

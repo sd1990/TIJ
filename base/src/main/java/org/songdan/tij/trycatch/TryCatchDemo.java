@@ -11,7 +11,7 @@ public class TryCatchDemo {
 
             testThrowException();
         } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 

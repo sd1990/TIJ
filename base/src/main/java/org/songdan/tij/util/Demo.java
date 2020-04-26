@@ -12,5 +12,7 @@ public class Demo {
     public static void main(String[] args) {
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'", Locale.US);
         System.out.println(sdf.format(new Date()));
+
+        System.out.println(false ^ true);
     }
 }

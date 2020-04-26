@@ -9,28 +9,90 @@ import java.sql.*;
 public class JdbcDemo {
 
     public static void main(String[] args) {
-        Connection connection;
-        PreparedStatement statement;
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/employees","root","123456");
-            statement = connection.prepareStatement("select * from salaries where 1!=1");
-            System.out.println(statement.execute());
-            ResultSet resultSet = statement.getResultSet();
-            skipRows(resultSet,RowBounds.DEFAULT);
-            while (resultSet.next()) {
-                System.out.println(resultSet.getMetaData());
+        new Thread(() -> {
+            while (true) {
+
+                try {
+                    executeOne();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    break;
+                }
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }).start();
+        new Thread(() -> {
+            while (true) {
 
+                try {
+                    executeTwo();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    break;
+                }
+            }
+
+        }).start();
+    }
+
+    private static Connection getConnection(String db) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/" + db, "root", "123456");
+    }
+
+    private static void executeOne() throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = getConnection("test");
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement("update t_index set utime = UNIX_TIMESTAMP() where confirm_id = 1002;");
+            statement.executeUpdate();
+            connection.rollback();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e1) {
+                throw e1;
+            }
+
+        }
+    }
+
+    private static void executeTwo() throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = getConnection("test");
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement("update t_index set confirm_id = 1003,status = 2 where poi_id in (130)");
+            statement.executeUpdate();
+            connection.rollback();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e1) {
+                throw e1;
+            }
+
         }
     }
 

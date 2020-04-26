@@ -42,11 +42,11 @@ public class ScrewCapMatch {
             return;
         }
         Screw screw = screws[left];
-        int m = choice(left, right, screw,caps);
+        int m = choiceV2(left, right, screw,caps);
         Cap cap = caps[m];
-        int n = choice(left, right, cap,screws);
+        int n = choiceV2(left, right, cap,screws);
         System.out.println("m = " + m + ", n = " + n);
-        print();
+//        print();
 
         matchInner(left, m - 1);
         matchInner(m + 1, right);
@@ -81,6 +81,30 @@ public class ScrewCapMatch {
         return left + sCount;
     }
 
+    private int choiceV2(int left, int right, Comparable c,Comparable[] arr) {
+        int i= left, j = left;
+        int pivot = -1;
+        for (; j <= right ; j++) {
+            int compare = arr[j].compareTo(c);
+            if (compare <= 0) {
+                swap(arr, i, j);
+                if (compare == 0) {
+                    pivot = i;
+                }
+                i++;
+            }
+
+        }
+        swap(arr, pivot, i-1);
+        return i-1;
+    }
+
+    private void swap(Comparable[] arr,int i,int j) {
+        Comparable t = arr[i];
+        arr[i] = arr[j];
+        arr[j] = t;
+    }
+
 
     private Screw[] initScrew() {
         List<Screw> screws = new ArrayList<>(n);
@@ -101,7 +125,7 @@ public class ScrewCapMatch {
     }
 
     public static void main(String[] args) {
-        ScrewCapMatch screwCapMatch = new ScrewCapMatch(20);
+        ScrewCapMatch screwCapMatch = new ScrewCapMatch(1000);
         screwCapMatch.print();
         screwCapMatch.match();
         screwCapMatch.print();

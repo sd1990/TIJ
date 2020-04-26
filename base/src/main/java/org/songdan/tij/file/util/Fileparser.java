@@ -2,10 +2,7 @@ package org.songdan.tij.file.util;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * TODO completion javadoc.
@@ -16,24 +13,20 @@ import java.util.Set;
 public class Fileparser {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
-        File file = new File("TIJ/base/target/classes/org/songdan/tij/file/util/123.txt");
+        File file = new File("/Users/songdan/github/TIJ/base/src/main/java/org/songdan/tij/file/util/write_all.log");
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            List<String> set = extractSingleStr(reader);
-            file = new File("TIJ/base/target/classes/org/songdan/tij/file/util/456.txt");
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-            List<String> set2 = extractSingleStr(reader);
-
-            System.out.println(set.size());
-            System.out.println(set2.size());
-            set.removeAll(set2);
-            List<List<String>> partition = partition(set, 100);
-            System.out.println(partition.size());
-            for (List<String> list : partition) {
-                String join = String.join(",", list);
-                System.out.println("["+join+"]");
+            List<String> lines = extractSingleStr(reader);
+            Set<String> poiIds = new HashSet<>();
+            for (int i = 0; i < lines.size(); i++) {
+                String str = lines.get(i);
+                String[] strs = str.split(",");
+                String[] wmPoiIds = strs[0].split(":");
+                poiIds.add(wmPoiIds[1]);
             }
+            System.out.println(poiIds.size());
+            System.out.println(poiIds);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
