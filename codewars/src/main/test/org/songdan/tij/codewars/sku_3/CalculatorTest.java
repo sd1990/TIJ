@@ -54,7 +54,12 @@ public class CalculatorTest {
 
     @Test
     public void backetRecusive() {
-        assertEquals("floats 1", new Double(40), Calculator.evaluate("(2+3)*((2*2)+4)"), 1e-4);
+        assertEquals("floats 1", new Double(0), Calculator.evaluate("(2+3)*((2*-2)+4)"), 1e-4);
+    }
+
+    @Test
+    public void backetRecusiveV2() {
+        assertEquals("floats 1", new Double(40), Calculator.evaluate("(2+3)*(-1*(2*-2)+4)"), 1e-4);
     }
 
 }

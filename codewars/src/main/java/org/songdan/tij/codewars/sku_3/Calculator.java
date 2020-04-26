@@ -40,15 +40,15 @@ public class Calculator {
         char[] chs = expression.toCharArray();
         StringBuilder num = new StringBuilder();
         //标示-是否是跟随在上一个操作符之后
-        boolean flag = false;
         for (int i = 0; i < chs.length; i++) {
+            ExecuteStack executeStack = bkStack.peek();
             String s = String.valueOf(chs[i]);
             if (" ".equals(s)) {
                 continue;
             }
             //处理负数
             if ("-".equals(s)) {
-                if (flag || i == 0) {
+                if (executeStack.flag || executeStack.i == 0) {
                     num.append(s);
                     continue;
                 }
@@ -58,13 +58,13 @@ public class Calculator {
                 continue;
             }
             if (RIGHT_BRACKET.equals(s)) {
-                ExecuteStack executeStack = bkStack.pop();
+                ExecuteStack popExecuteStack = bkStack.pop();
                 if (num.length() > 0) {
-                    executeStack.numStack.push(Double.valueOf(num.toString()));
+                    popExecuteStack.numStack.push(Double.valueOf(num.toString()));
                     num = new StringBuilder();
                 }
-                Stack<String> exeOpStack = executeStack.opStack;
-                Stack<Double> exeNumStack = executeStack.numStack;
+                Stack<String> exeOpStack = popExecuteStack.opStack;
+                Stack<Double> exeNumStack = popExecuteStack.numStack;
                 while (!exeOpStack.isEmpty()) {
                     String op = exeOpStack.pop();
                     Double num2 = exeNumStack.pop();
@@ -75,7 +75,6 @@ public class Calculator {
                 topExeStack.numStack.push(exeNumStack.pop());
                 continue;
             }
-            ExecuteStack executeStack = bkStack.peek();
             if (operates.contains(s)) {
                 if (num.length()>0) {
                     executeStack.numStack.push(Double.valueOf(num.toString()));
@@ -90,11 +89,12 @@ public class Calculator {
                     executeStack.numStack.push(calculator0(num1, num2, op));
                 }
                 executeStack.opStack.push(s);
-                flag = true;
+                executeStack.flag = true;
             } else {
                 num.append(s);
-                flag = false;
+                executeStack.flag = false;
             }
+            executeStack.i++;
         }
         ExecuteStack executeStack = bkStack.pop();
         if (num.length() > 0) {
@@ -113,6 +113,8 @@ public class Calculator {
     static class ExecuteStack{
         Stack<Double> numStack = new Stack<>();
         Stack<String> opStack = new Stack<>();
+        boolean flag = false;
+        int i = 0;
     }
 
     private static boolean isHigher(String currentOp,String topOp) {
