@@ -39,7 +39,6 @@ public class Calculator {
         bkStack.push(new ExecuteStack());
         char[] chs = expression.toCharArray();
         StringBuilder num = new StringBuilder();
-        //标示-是否是跟随在上一个操作符之后
         for (int i = 0; i < chs.length; i++) {
             ExecuteStack executeStack = bkStack.peek();
             String s = String.valueOf(chs[i]);
