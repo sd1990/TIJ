@@ -43,6 +43,19 @@ public class DRoot {
         return n;
     }
 
+    public static int digital_root_for_1(int n) {
+        while (n > 9) {
+            int num = n;
+            int sum = 0;
+            while (num > 9) {
+                sum += num % 10;
+                num = num / 10;
+            }
+            n = sum;
+        }
+        return n;
+    }
+
     public static int digital_root(int n) {
         if (n < 10) {
             return n;
