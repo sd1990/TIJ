@@ -3,9 +3,11 @@ package org.songdan.tij.string;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.gson.GsonBuilder;
 import org.songdan.tij.generics.Sets;
 
 public class StringDemo {
@@ -78,5 +80,12 @@ public class StringDemo {
         String str1 = "str";
         String str2 = "str";
         System.out.println(str1==str2);
+
+        System.out.println(String.valueOf(1));
+        ArrayList<Object> list = new ArrayList<>();
+        list.add(2);
+        list.add(1);
+        System.out.println(list);
+        System.out.println(new GsonBuilder().create().toJson(list));
     }
 }

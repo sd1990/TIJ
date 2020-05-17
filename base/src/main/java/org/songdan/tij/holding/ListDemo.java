@@ -1,8 +1,11 @@
 package org.songdan.tij.holding;
 
+import com.google.gson.GsonBuilder;
+
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.function.Predicate;
 
 /**
  * List的常见操作，主要讨论remove操作
@@ -26,6 +29,9 @@ public class ListDemo {
         personList.add(songdan);
         personList.add(new Person("dengke", 23));
         testReverse(personList);
+        List<Integer> list = new ArrayList<>();
+        System.out.println(list.stream().anyMatch(num->0==num));
+        System.out.println(list.stream().allMatch(num->0==num));
 //        System.out.println(personList);
 
     }
