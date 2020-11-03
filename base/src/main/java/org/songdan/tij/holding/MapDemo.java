@@ -14,8 +14,17 @@ public class MapDemo {
     public static void main(String[] args) {
 //        testOrder();
         HashMap<Object, Object> map = new HashMap<>(2);
-        map.put(1, 1);
+        map.put(10241234, 1);
         map.put(2, 2);
+        int h = Integer.valueOf(1024123456).hashCode();
+        System.out.println(h>>>16);
+        System.out.println(h ^ (h >>> 16));
+        Integer k = 32768;
+        h ^= k.hashCode();
+
+        //二次散列
+        h ^= (h >>> 20) ^ (h >>> 12);
+        System.out.println(h ^ (h >>> 7) ^ (h >>> 4));
 
     }
 

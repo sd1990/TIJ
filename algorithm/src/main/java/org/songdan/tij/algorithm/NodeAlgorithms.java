@@ -186,6 +186,7 @@ public class NodeAlgorithms {
 
         Node<Integer> head = new Node<>(1);
         head.next(2).next(3).next(4).next(5);
+        head = reverse(head);
         System.out.println(head);
         System.out.println(reverseKGroupRecursive(head,3));
 //        System.out.println(reverseKGroup(head,3));

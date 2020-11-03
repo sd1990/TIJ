@@ -114,6 +114,39 @@ public class StackAndQueue {
 		}
 	}
 
+	public static class Stack2QueueV2<E> implements Queue<E>{
+
+		private Stack<E> first = new DefaultStack<>();
+		private Stack<E> second = new DefaultStack<>();
+
+
+		@Override
+		public void offer(E e) {
+			first.push(e);
+		}
+
+		@Override
+		public E poll() {
+			if (second.isEmpty()) {
+				while (!first.isEmpty()) {
+					second.push(first.pop());
+				}
+			}
+			return second.pop();
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return first.isEmpty();
+		}
+
+		@Override
+		public String toString() {
+
+			return first.toString();
+		}
+	}
+
 	public static class Queue2Stack<E> implements Stack<E> {
 
 		private Queue<E> first = new DefaultQueue<>();
@@ -166,6 +199,16 @@ public class StackAndQueue {
 		stack2Queue.offer(4);
 		while (!stack2Queue.isEmpty()) {
 			System.out.println(stack2Queue.poll());
+		}
+		System.out.println("==============");
+		Stack2QueueV2<Integer> stack2QueueV2 = new Stack2QueueV2<>();
+		stack2QueueV2.offer(1);
+		stack2QueueV2.offer(2);
+		stack2QueueV2.offer(3);
+		System.out.println(stack2QueueV2.poll());
+		stack2QueueV2.offer(4);
+		while (!stack2QueueV2.isEmpty()) {
+			System.out.println(stack2QueueV2.poll());
 		}
 		System.out.println("==============");
 		Queue2Stack<Integer> stack = new Queue2Stack<>();

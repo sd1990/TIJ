@@ -94,6 +94,8 @@ public class RegexpDemo {
 		System.out.println(doublePattern.matcher("-0.0").matches());
 		System.out.println(doublePattern.matcher("-12.0").matches());
 
+		System.out.println(Pattern.compile("[^(abd)]").matcher("c").matches());
+
 	}
 
 }

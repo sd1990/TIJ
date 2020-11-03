@@ -3,6 +3,7 @@ package org.songdan.tij.string;
 import com.alibaba.fastjson.JSONObject;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Scanner;
@@ -40,5 +41,13 @@ public class StringBuilderDemo {
         System.out.println(false ^ false);
         System.out.println(true ^ false);
         System.out.println(false ^ true);
+        String SEPARATOR = "\n";
+        String res = new MessageFormat("如下:\n{0}").format(new Object[]{1, 2, 3});
+        System.out.println(res);
+        System.out.println(JSONObject.toJSONString(res));
+        String[] split = "如下:\n{0}".split("\n");
+        for (String s1 : split) {
+            System.out.println(s1);
+        }
     }
 }
