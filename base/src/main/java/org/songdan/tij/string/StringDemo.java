@@ -88,5 +88,6 @@ public class StringDemo {
         System.out.println(list);
         System.out.println(new GsonBuilder().create().toJson(list));
         System.out.println(new MessageFormat("{0,number,#0.00}--{1,number,#0.00}--{2,number,#0.00}--{3,number,#0.00}").format(new Object[]{1,2.1,2.11,0.1}));
+        System.out.println(new MessageFormat("label_{0}_{1}_{2}").format(new Object[]{1, 2, 3}));
     }
 }

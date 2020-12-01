@@ -2,6 +2,7 @@ package org.songdan.tij.number;
 
 import javafx.util.converter.BigIntegerStringConverter;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.NumberFormat;
 
@@ -42,6 +43,10 @@ public class Num2Binary {
         System.out.println(numberFormat.format(100001.010001));
         numberFormat.setGroupingUsed(true);
         System.out.println(numberFormat.format(100001.010001));
+        System.out.println(String.valueOf(12.10));
+
+        System.out.println(BigDecimal.valueOf(1.1122233344455567E49).longValue());
+        System.out.println(BigDecimal.valueOf(11.001).stripTrailingZeros().toPlainString());
     }
 
 }

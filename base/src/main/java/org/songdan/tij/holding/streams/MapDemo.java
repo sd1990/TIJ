@@ -1,7 +1,12 @@
 package org.songdan.tij.holding.streams;
 
+import com.google.common.collect.Lists;
+import lombok.Data;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -15,6 +20,25 @@ public class MapDemo {
         List<Integer> collect = integers.stream().map(element -> element * 2).collect(Collectors.toList());
         System.out.println(integers);
         System.out.println(collect);
+        Person person1 = new Person();
+        person1.setName("songdan");
+        person1.setAge(1);
+        Person person2 = new Person();
+        person2.setName("songdan");
+        person2.setAge(2);
+        List<Person> list = Lists.newArrayList(person1, person2);
+        Map<String, List<Person>> lgsAreaMap = list.stream().collect(Collectors.toMap(Person::getName, Lists::newArrayList, (x1, x2) -> {
+            x1.addAll(x2);
+            return x1;
+        }));
+        System.out.println(lgsAreaMap);
+    }
+
+    @Data
+    @ToString
+    public static class Person{
+        private String name;
+        private Integer age;
     }
 
     private static List<Integer> buildOriginList() {
