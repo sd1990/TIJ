@@ -108,8 +108,17 @@ public class AviatorTest {
         System.out.println(pattern.matcher("[1]").matches());
         System.out.println(pattern.matcher("[1,2]").matches());
         System.out.println(pattern.matcher("[1,2,3]").matches());
-
+        expression = AviatorEvaluator.compile("!string.contains(context.discount_cls,'1')||context.fee_mode!=4||context.tech_discount_rate>0");
+        map = new HashMap<>();
+        innerMap = new HashMap<>();
+        map.put("context", innerMap);
+        innerMap.put("fee_mode", 4);
+        innerMap.put("discount_cls", "[1 , 2,3]");
+        innerMap.put("wm_poi_logistics_id", 103);
+        System.out.println(expression.execute(map));
     }
+
+
 
     public static BigDecimal getJsonStringForPath(String strJson, String strJPath) {
         Configuration conf = Configuration.builder().jsonProvider(new GsonJsonProvider())

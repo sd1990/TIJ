@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 public class Fileparser8 {
 
 	public static void main(String[] args) throws IOException, URISyntaxException {
-		File file = new File("/Users/songdan/Desktop/error_log_all.tx");
+		File file = new File("/Users/songdan/Desktop/error_log_20201222.txt");
 		Set<String> set1 = extractSingleStr(new BufferedReader(new FileReader(file)));
 //		String demo = "triggerStateRecord,error wmPoiId=1964787";
 //		Set<String> set1 = new HashSet<>();

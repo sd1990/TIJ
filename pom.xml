@@ -12,7 +12,8 @@
 		<module>effective-java</module>
 		<module>interview</module>
 		<module>codewars</module>
-	</modules>
+        <module>test-frame</module>
+    </modules>
 	<packaging>pom</packaging>
 	<description/>
 
@@ -31,6 +32,7 @@
 		<java.target.version>1.8</java.target.version>
 
 		<file.encoding>UTF-8</file.encoding>
+		<testable.version>0.4.3</testable.version>
 	</properties>
 
 	<dependencies>
@@ -93,6 +95,12 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.16</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba.testable</groupId>
+			<artifactId>testable-all</artifactId>
+			<version>${testable.version}</version>
 		</dependency>
 
 	</dependencies>

@@ -4,12 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
-/**
- * 资源死锁
- *
- * @author: Songdan
- * @create: 2020-06-14 22:47
- **/
+
 public class Resource {
 
     private ThreadPoolExecutor threadPool = new ThreadPoolExecutor(3, 5,

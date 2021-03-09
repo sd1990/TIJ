@@ -4,9 +4,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalField;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -42,6 +45,22 @@ public class CalenderDemo {
         LocalDate lastDayOfWeek = date.plusDays(7-dayOfWeek.getValue());
         System.out.println(firstDayOfWeek);
         System.out.println(lastDayOfWeek);
+        ChronoField[] values = ChronoField.values();
+        LocalDateTime localDateTime = LocalDateTime.now().plusDays(30).withHour(0).withMinute(0).withSecond(0);
+        System.out.println(localDateTime.atZone(ZoneId.systemDefault()).toEpochSecond());
+        Set<String> allZones = ZoneId.getAvailableZoneIds();
+        for (String id : allZones) {
+            System.out.println("zoneId:"+id+",name:"+localDateTime.atZone(ZoneId.of(id)).toString());
+        }
+//        System.out.println(localDateTime.toEpochSecond(ZoneOffset.from(ZoneId.systemDefault())));
+        for (ChronoField chronoField : values) {
+            try {
+                System.out.println("field:" + chronoField + ",show name:" + chronoField.getDisplayName(Locale.CHINA) + "，value:" + localDateTime.getLong(chronoField));
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
 
 
     }

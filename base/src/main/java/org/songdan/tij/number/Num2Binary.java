@@ -1,5 +1,6 @@
 package org.songdan.tij.number;
 
+import com.google.common.collect.Range;
 import javafx.util.converter.BigIntegerStringConverter;
 
 import java.math.BigDecimal;
@@ -47,6 +48,8 @@ public class Num2Binary {
 
         System.out.println(BigDecimal.valueOf(1.1122233344455567E49).longValue());
         System.out.println(BigDecimal.valueOf(11.001).stripTrailingZeros().toPlainString());
+        Range<Integer> range = Range.open(30, 100);
+        System.out.println(String.format("%s的取值范围是:%s~%s", "xxx", range.lowerEndpoint(), range.upperEndpoint()));
     }
 
 }
