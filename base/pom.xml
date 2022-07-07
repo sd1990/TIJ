@@ -22,7 +22,7 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-http</artifactId>
-            <version>RELEASE</version>
+            <version>9.4.48.v20220622</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
